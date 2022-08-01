@@ -1,0 +1,11 @@
+body {
+    padding: 10%;
+    text-align: center;
+}
+form#register {
+    display: inline-block;
+    text-align: right;
+}
+p {
+    margin: auto;
+}
