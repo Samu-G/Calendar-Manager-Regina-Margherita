@@ -1,4 +1,4 @@
-package com.example.demo.repository.student;
+package com.example.demo.models.student;
 
 public enum Gender {
     MALE,

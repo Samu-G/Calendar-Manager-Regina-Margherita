@@ -1,4 +1,4 @@
-package com.example.demo.repository.student;
+package com.example.demo.models.student;
 
 import lombok.*;
 
@@ -30,7 +30,7 @@ public class Student {
     @Enumerated(EnumType.STRING)
     private Gender Gender;
 
-    public Student(String name, String surname, String email, com.example.demo.repository.student.Gender gender) {
+    public Student(String name, String surname, String email, com.example.demo.models.student.Gender gender) {
         this.name = name;
         this.surname = surname;
         this.email = email;

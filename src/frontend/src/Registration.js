@@ -105,7 +105,7 @@ const Registration = () => {
 
 
                 <Form.Item
-                    name="user"
+                    name="account"
                     label="password"
                     tooltip="ti servirà per effettuare il login ed inviare i tuoi feedback"
                     rules={[

@@ -1,6 +1,6 @@
 package com.example.demo.controllers;
 
-import com.example.demo.repository.student.Student;
+import com.example.demo.models.student.Student;
 import com.example.demo.services.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
