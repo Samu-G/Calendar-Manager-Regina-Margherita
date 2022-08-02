@@ -1,7 +1,6 @@
 package com.example.demo.controllers;
 
 import com.example.demo.models.user.Account;
-import com.example.demo.models.user.Role;
 import com.example.demo.services.AccountService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +24,7 @@ public class AccountController {
     public ResponseEntity<Account> saveAccount(@RequestBody Account account) {
         return ResponseEntity.created(null).body(accountService.saveAccount(account));
     }
-
-
 }
+
+
+
