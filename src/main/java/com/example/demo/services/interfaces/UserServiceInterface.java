@@ -7,8 +7,8 @@ import com.example.demo.models.user.Account;
 import java.util.List;
 
 public interface UserServiceInterface {
-    List<Account> getUsers();
-    Account saveUser(Account account) throws studentNotFoundExeption, studentAlreadyRegisterExeption;
-    Account getUserByUsername(String username);
-    void addRoleToUser(String username, String roleName);
+    List<Account> getAccounts();
+    Account saveAccount(Account account) throws studentNotFoundExeption, studentAlreadyRegisterExeption;
+    Account getAccountByUsername(String username);
+    void addRoleToAccount(String username, String roleName);
 }

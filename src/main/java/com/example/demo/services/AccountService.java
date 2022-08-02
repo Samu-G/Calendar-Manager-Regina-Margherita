@@ -6,7 +6,7 @@ import com.example.demo.models.user.Account;
 import com.example.demo.models.user.Role;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.StudentRepository;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.repository.AccountRepository;
 import com.example.demo.services.interfaces.RoleServiceInterface;
 import com.example.demo.services.interfaces.UserServiceInterface;
 import lombok.AllArgsConstructor;
@@ -18,8 +18,8 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 @Slf4j
-public class UserService implements UserServiceInterface, RoleServiceInterface {
-    private final UserRepository userRepository;
+public class AccountService implements UserServiceInterface, RoleServiceInterface {
+    private final AccountRepository accountRepository;
     private final RoleRepository roleRepository;
     private final StudentRepository studentRepository;
 
@@ -30,37 +30,37 @@ public class UserService implements UserServiceInterface, RoleServiceInterface {
     }
 
     @Override
-    public List<Account> getUsers() {
+    public List<Account> getAccounts() {
         log.info("Getting users from database");
-        return userRepository.findAll();
+        return accountRepository.findAll();
     }
 
     @Override
-    public Account saveUser(Account account) throws studentNotFoundExeption, studentAlreadyRegisterExeption {
+    public Account saveAccount(Account account) {
         String name = account.getName();
         String surname = account.getSurname();
 
         if (studentRepository.findStudentByNameAndSurname(name, surname) == null) {
             log.info("Student " + name + surname + " isn't present in the student list");
-            throw new studentNotFoundExeption();
-        } else if (userRepository.findByNameAndSurname(name, surname) != null) {
+            return null;
+        } else if (accountRepository.findByNameAndSurname(name, surname) != null) {
             log.info("Student called " + name + surname + " is already registered");
-            throw new studentAlreadyRegisterExeption();
+            return null;
         } else {
             log.info("Student called " + name + surname + " create his own account with id: " + account.getId());
-            return userRepository.save(account);
+            return accountRepository.save(account);
         }
     }
 
     @Override
-    public Account getUserByUsername(String username) {
+    public Account getAccountByUsername(String username) {
         log.info("Getting user with username: " + username + " from database");
-        return userRepository.findByUsername(username);
+        return accountRepository.findByUsername(username);
     }
 
     @Override
-    public void addRoleToUser(String username, String roleName) {
-        Account account = userRepository.findByUsername(username);
+    public void addRoleToAccount(String username, String roleName) {
+        Account account = accountRepository.findByUsername(username);
         Role role = roleRepository.findByName(roleName);
         log.info("Setting role " + roleName + " to the user " + account.getId() + ", name: " + account.getName() + ", surname: " + account.getSurname());
         account.setRole(role);
