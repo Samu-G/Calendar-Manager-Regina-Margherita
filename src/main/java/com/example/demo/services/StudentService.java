@@ -17,6 +17,11 @@ public class StudentService implements StudentServiceInterface {
 
     private final StudentRepository studentRepository;
 
+    @Override
+    public Student getStudentByNameAndSurname(String name, String surname) {
+       return studentRepository.findStudentByNameAndSurname(name, surname);
+    }
+
     @GetMapping
     public List<Student> getAllStudents() {
         return studentRepository.findAll();

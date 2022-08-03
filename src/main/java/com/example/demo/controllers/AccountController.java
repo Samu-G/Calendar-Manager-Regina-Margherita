@@ -1,5 +1,7 @@
 package com.example.demo.controllers;
 
+import com.example.demo.exeption.StudentAlreadyRegisterException;
+import com.example.demo.exeption.StudentNotFoundException;
 import com.example.demo.models.user.Account;
 import com.example.demo.services.AccountService;
 import lombok.AllArgsConstructor;
@@ -22,7 +24,17 @@ public class AccountController {
 
     @PostMapping("/save")
     public ResponseEntity<Account> saveAccount(@RequestBody Account account) {
-        return ResponseEntity.created(null).body(accountService.saveAccount(account));
+        ResponseEntity<Account> response;
+        Account newAccount;
+        try {
+            newAccount = accountService.saveStudentAccount(account);
+            response = ResponseEntity.created(null).body(newAccount);
+        } catch (StudentNotFoundException ex) {
+            response = ResponseEntity.notFound().build();
+        } catch (StudentAlreadyRegisterException ey) {
+            response = ResponseEntity.badRequest().build();
+        }
+        return response;
     }
 
     @PostMapping("/role/addRoleToAccount")

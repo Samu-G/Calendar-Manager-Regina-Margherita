@@ -6,7 +6,7 @@ import {
 } from 'antd';
 import "./Registration.css"
 import React, {useState} from "react";
-import {addNewAccount, setRoleToNewAccount} from "./client";
+import {addNewStudentAccount} from "./client";
 import {errorNotification, successNotification} from "./Notification";
 import {LoadingOutlined} from "@ant-design/icons";
 
@@ -51,21 +51,23 @@ const Registration = () => {
     const onFinish = account => {
         setSubmitting(true);
         console.log(JSON.stringify(account, null, 2));
-        addNewAccount(account)
-            .then(() => {
+        addNewStudentAccount(account)
+            .then((response) => {
 
-                console.log("account added");
-                successNotification(
-                    "Ti sei registrato con successo!",
-                    `${account.name} benvenuto, ora potrai accedere al servizio come ${account.role}`
-                )
-            }).catch(err => {
-            console.log(err);
-            errorNotification(
-                "Errore",
-                `Caro ${account.name}, c'è stato un errore durante la fase di registrazione. Conttata l'amministratrice`
-            )
-        }).finally(() => {
+                if (response.ok) {
+                    console.log("account added");
+                    successNotification(
+                        "Ti sei registrato con successo!",
+                        `${account.name} benvenuto, ora potrai accedere al servizio come ${account.role}`
+                    )
+                } else {
+                    errorNotification(
+                        "Errore",
+                        `Caro ${account.name}, c'è stato un errore durante la fase di registrazione. Conttata l'amministratrice`
+                    )
+                }
+
+            }).finally(() => {
             setSubmitting(false);
         })
         console.log('Received values of form: ', account);
@@ -76,7 +78,7 @@ const Registration = () => {
             <h1>Registrati</h1>
             <Divider/>
             <p>Per potersi registrare, è necessario che la coordinatrice abbia inserito il tuo nome e cognome
-                all'interno della lista degli studenti o docenti.</p>
+                all'interno della lista degli studenti.</p>
             <p>Qualora riscontrassi delle anomalie a registrarti, contatta la
                 amministratrice che saprà aiutarti per utilizzare il servizio.</p>
             <Divider/>

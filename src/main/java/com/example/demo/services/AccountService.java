@@ -1,7 +1,7 @@
 package com.example.demo.services;
 
-import com.example.demo.exeption.studentAlreadyRegisterExeption;
-import com.example.demo.exeption.studentNotFoundExeption;
+import com.example.demo.exeption.StudentAlreadyRegisterException;
+import com.example.demo.exeption.StudentNotFoundException;
 import com.example.demo.models.user.Account;
 import com.example.demo.models.user.Role;
 import com.example.demo.repository.RoleRepository;
@@ -36,17 +36,17 @@ public class AccountService implements UserServiceInterface, RoleServiceInterfac
     }
 
     @Override
-    public Account saveAccount(Account account) {
+    public Account saveStudentAccount(Account account) throws StudentNotFoundException, StudentAlreadyRegisterException {
         String name = account.getName();
         String surname = account.getSurname();
         account.setRole(roleRepository.findByName("ROLE_STUDENT"));
 
         if (studentRepository.findStudentByNameAndSurname(name, surname) == null) {
             log.info("Student " + name + " " + surname + " isn't present in the student list");
-            return null;
+            throw new StudentNotFoundException();
         } else if (accountRepository.findByNameAndSurname(name, surname) != null) {
             log.info("Student called " + name + " " + surname + " is already registered");
-            return null;
+            throw new StudentAlreadyRegisterException();
         } else {
             Account added = accountRepository.save(account);
             log.info(account.getRole() + " called " + name  + " " + surname + " create his own account with id: " + added.getId());
