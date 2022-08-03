@@ -23,3 +23,24 @@ export const addNewStudent = student =>
             body: JSON.stringify(student)
         }
     );
+
+export const addNewAccount = account =>
+    fetch("api/account/save", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(account)
+        }
+    );
+
+export const setRoleToNewAccount = (account, role) =>
+    fetch("api/account/role/addRoleToAccount", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(account, role)
+        }
+    );
+

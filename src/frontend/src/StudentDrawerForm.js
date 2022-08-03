@@ -12,7 +12,7 @@ function StudentDrawerForm({showDrawer, setShowDrawer, fetchStudents}) {
     const [submitting, setSubmitting] = useState(false);
 
     const onFinish = student => {
-        setSubmitting(true)
+        setSubmitting(true);
         console.log(JSON.stringify(student, null, 2));
         addNewStudent(student)
             .then(() => {

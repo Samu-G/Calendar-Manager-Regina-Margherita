@@ -13,7 +13,7 @@ const Login = () => {
         <>
             <h1>Benvenuto :)</h1>
             <Divider/>
-            <p>Da qui puoi accedere ai servizi informatici erogati dalla Scuola Regina Margherita.</p>
+            <h2>Da qui puoi accedere ai servizi informatici erogati dalla Scuola Regina Margherita.</h2>
             <p>Inserisci le tue credenziali per inviare un feedback, altrimenti puoi registrati e riceverai il tuo
                 calendario
                 giornaliero direttamente sulla tua email.</p>
@@ -29,11 +29,11 @@ const Login = () => {
 
 
                 <Form.Item
-                    name="email"
+                    name="username"
                     rules={[
                         {
                             required: true,
-                            message: 'inserisci la tua email',
+                            message: 'inserisci il tuo username',
                         },
                     ]}
                 >
@@ -41,7 +41,7 @@ const Login = () => {
                         type="text"
                         className="form-control"
                         prefix={<UserOutlined className="site-form-item-icon"/>}
-                        placeholder="Email"
+                        placeholder="Username"
                     />
                 </Form.Item>
 
@@ -51,7 +51,7 @@ const Login = () => {
                     rules={[
                         {
                             required: true,
-                            message: 'hai dimenticato la password',
+                            message: 'inserisci la password',
                         },
                     ]}
                 >

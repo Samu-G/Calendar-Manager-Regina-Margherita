@@ -39,16 +39,18 @@ public class AccountService implements UserServiceInterface, RoleServiceInterfac
     public Account saveAccount(Account account) {
         String name = account.getName();
         String surname = account.getSurname();
+        account.setRole(roleRepository.findByName("ROLE_STUDENT"));
 
         if (studentRepository.findStudentByNameAndSurname(name, surname) == null) {
-            log.info("Student " + name + surname + " isn't present in the student list");
+            log.info("Student " + name + " " + surname + " isn't present in the student list");
             return null;
         } else if (accountRepository.findByNameAndSurname(name, surname) != null) {
-            log.info("Student called " + name + surname + " is already registered");
+            log.info("Student called " + name + " " + surname + " is already registered");
             return null;
         } else {
-            log.info("Student called " + name + surname + " create his own account with id: " + account.getId());
-            return accountRepository.save(account);
+            Account added = accountRepository.save(account);
+            log.info(account.getRole() + " called " + name  + " " + surname + " create his own account with id: " + added.getId());
+            return added;
         }
     }
 
@@ -64,6 +66,11 @@ public class AccountService implements UserServiceInterface, RoleServiceInterfac
         Role role = roleRepository.findByName(roleName);
         log.info("Setting role " + roleName + " to the user " + account.getId() + ", name: " + account.getName() + ", surname: " + account.getSurname());
         account.setRole(role);
+    }
+
+    @Override
+    public Role findRoleByName(String name) {
+        return roleRepository.findByName(name);
     }
 }
 

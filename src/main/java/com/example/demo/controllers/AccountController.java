@@ -9,22 +9,33 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api")
+@RequestMapping(path = "/api/account")
 @AllArgsConstructor
 public class AccountController {
 
     private final AccountService accountService;
 
-    @GetMapping("/accounts/get")
+    @GetMapping("/get")
     public ResponseEntity<List<Account>> getAccounts() {
         return ResponseEntity.ok().body(accountService.getAccounts());
     }
 
-    @PostMapping("/account/save")
+    @PostMapping("/save")
     public ResponseEntity<Account> saveAccount(@RequestBody Account account) {
         return ResponseEntity.created(null).body(accountService.saveAccount(account));
     }
+
+    @PostMapping("/role/addRoleToAccount")
+    public ResponseEntity<?> addRoleStudentToAccount(@RequestBody RoleToAccountForm form) {
+        form.setRoleName("ROLE_STUDENT");
+        accountService.addRoleToAccount(form.getUsername(), form.getRoleName());
+        return ResponseEntity.ok().build();
+    }
+
 }
+
+
+
 
 
 

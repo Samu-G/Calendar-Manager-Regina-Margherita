@@ -26,14 +26,12 @@ public class Student {
     private Long id;
     private String name;
     private String surname;
-    private String email;
     @Enumerated(EnumType.STRING)
     private Gender Gender;
 
-    public Student(String name, String surname, String email, com.example.demo.models.student.Gender gender) {
+    public Student(String name, String surname, Gender gender) {
         this.name = name;
         this.surname = surname;
-        this.email = email;
         Gender = gender;
     }
 }

@@ -2,9 +2,13 @@ import {
     Button,
     Divider,
     Form,
-    Input
+    Input, Row, Spin
 } from 'antd';
 import "./Registration.css"
+import React, {useState} from "react";
+import {addNewAccount, setRoleToNewAccount} from "./client";
+import {errorNotification, successNotification} from "./Notification";
+import {LoadingOutlined} from "@ant-design/icons";
 
 const formItemLayout = {
     labelCol: {
@@ -38,26 +42,49 @@ const tailFormItemLayout = {
     },
 };
 
+const antIcon = <LoadingOutlined style={{fontSize: 24}} spin/>;
+
 const Registration = () => {
     const [form] = Form.useForm();
+    const [submitting, setSubmitting] = useState(false);
 
-    const onFinish = (values) => {
-        console.log('Received values of form: ', values);
+    const onFinish = account => {
+        setSubmitting(true);
+        console.log(JSON.stringify(account, null, 2));
+        addNewAccount(account)
+            .then(() => {
+
+                console.log("account added");
+                successNotification(
+                    "Ti sei registrato con successo!",
+                    `${account.name} benvenuto, ora potrai accedere al servizio come ${account.role}`
+                )
+            }).catch(err => {
+            console.log(err);
+            errorNotification(
+                "Errore",
+                `Caro ${account.name}, c'è stato un errore durante la fase di registrazione. Conttata l'amministratrice`
+            )
+        }).finally(() => {
+            setSubmitting(false);
+        })
+        console.log('Received values of form: ', account);
     };
 
     return (
         <>
             <h1>Registrati</h1>
             <Divider/>
+            <p>Per potersi registrare, è necessario che la coordinatrice abbia inserito il tuo nome e cognome
+                all'interno della lista degli studenti o docenti.</p>
+            <p>Qualora riscontrassi delle anomalie a registrarti, contatta la
+                amministratrice che saprà aiutarti per utilizzare il servizio.</p>
+            <Divider/>
             <Form
                 {...formItemLayout}
                 form={form}
                 name="register"
                 onFinish={onFinish}
-                initialValues={{
-                    residence: ['zhejiang', 'hangzhou', 'xihu'],
-                    prefix: '86',
-                }}
                 scrollToFirstError
             >
                 <Form.Item
@@ -89,10 +116,11 @@ const Registration = () => {
                 <Form.Item
                     name="email"
                     label="email"
+                    tooltip="a questo indirizzo email riceverai ogni giorno il tuo calendario"
                     rules={[
                         {
                             type: 'email',
-                            message: 'The input is not valid E-mail!',
+                            message: 'La email inserita non è valida',
                         },
                         {
                             required: true,
@@ -103,15 +131,32 @@ const Registration = () => {
                     <Input/>
                 </Form.Item>
 
+                <Form.Item
+                    name="username"
+                    label="username"
+                    rules={[
+                        {
+                            type: 'string',
+                            message: 'C`è qualcosa che non va',
+                        },
+                        {
+                            required: true,
+                            message: 'inserisci un username',
+                        }
+                    ]}
+                >
+                    <Input/>
+                </Form.Item>
+
 
                 <Form.Item
-                    name="account"
+                    name="password"
                     label="password"
                     tooltip="ti servirà per effettuare il login ed inviare i tuoi feedback"
                     rules={[
                         {
                             required: true,
-                            message: 'attenzione, ti sei dimenticato di inserire la password'
+                            message: 'inserisci una password'
                         },
                     ]}
                 >
@@ -123,6 +168,9 @@ const Registration = () => {
                         Registrati
                     </Button>
                 </Form.Item>
+                <Row>
+                    {submitting && <Spin indicator={antIcon}/>}
+                </Row>
             </Form>
         </>
     );
