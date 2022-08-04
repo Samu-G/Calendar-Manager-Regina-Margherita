@@ -2,6 +2,7 @@ package com.example.demo.services;
 
 import com.example.demo.exeption.StudentAlreadyRegisterException;
 import com.example.demo.exeption.StudentNotFoundException;
+import com.example.demo.exeption.UsernameAlreadyTakenException;
 import com.example.demo.models.user.Account;
 import com.example.demo.models.user.Role;
 import com.example.demo.repository.RoleRepository;
@@ -36,17 +37,23 @@ public class AccountService implements UserServiceInterface, RoleServiceInterfac
     }
 
     @Override
-    public Account saveStudentAccount(Account account) throws StudentNotFoundException, StudentAlreadyRegisterException {
-        String name = account.getName();
-        String surname = account.getSurname();
+    public Account saveStudentAccount(Account account) throws StudentNotFoundException, StudentAlreadyRegisterException, UsernameAlreadyTakenException {
+        String name = account.getName().toUpperCase();
+        account.setName(name);
+        String surname = account.getSurname().toUpperCase();
+        account.setSurname(surname);
+        String username = account.getUsername().toUpperCase();
         account.setRole(roleRepository.findByName("ROLE_STUDENT"));
 
         if (studentRepository.findStudentByNameAndSurname(name, surname) == null) {
             log.info("Student " + name + " " + surname + " isn't present in the student list");
             throw new StudentNotFoundException();
-        } else if (accountRepository.findByNameAndSurname(name, surname) != null) {
+        } else if (accountRepository.findAccountByNameAndSurname(name, surname) != null) {
             log.info("Student called " + name + " " + surname + " is already registered");
             throw new StudentAlreadyRegisterException();
+        } else if(accountRepository.findByUsername(username) != null) {
+            log.info("Username " + username + " already taken. Student called " + name + " " + surname + " is trying to register");
+            throw new UsernameAlreadyTakenException();
         } else {
             Account added = accountRepository.save(account);
             log.info(account.getRole() + " called " + name  + " " + surname + " create his own account with id: " + added.getId());

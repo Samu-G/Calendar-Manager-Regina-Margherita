@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import com.example.demo.exeption.StudentAlreadyRegisterException;
 import com.example.demo.exeption.StudentNotFoundException;
+import com.example.demo.exeption.UsernameAlreadyTakenException;
 import com.example.demo.models.user.Account;
 import com.example.demo.services.AccountService;
 import lombok.AllArgsConstructor;
@@ -28,11 +29,13 @@ public class AccountController {
         Account newAccount;
         try {
             newAccount = accountService.saveStudentAccount(account);
-            response = ResponseEntity.created(null).body(newAccount);
+            response = ResponseEntity.ok().body(newAccount);
         } catch (StudentNotFoundException ex) {
-            response = ResponseEntity.notFound().build();
+            response = ResponseEntity.status(513).build();
         } catch (StudentAlreadyRegisterException ey) {
-            response = ResponseEntity.badRequest().build();
+            response = ResponseEntity.status(514).build();
+        } catch (UsernameAlreadyTakenException ez) {
+            response = ResponseEntity.status(515).build();
         }
         return response;
     }

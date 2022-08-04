@@ -7,7 +7,7 @@ import {
 import "./Registration.css"
 import React, {useState} from "react";
 import {addNewStudentAccount} from "./client";
-import {errorNotification, successNotification} from "./Notification";
+import {errorNotification, successNotification, warningNotification} from "./Notification";
 import {LoadingOutlined} from "@ant-design/icons";
 
 const formItemLayout = {
@@ -58,15 +58,24 @@ const Registration = () => {
                     console.log("account added");
                     successNotification(
                         "Ti sei registrato con successo!",
-                        `${account.name} benvenuto, ora potrai accedere al servizio come ${account.role}`
+                        `${account.name} benvenuto, ora potrai accedere al servizio come Studente`
                     )
-                } else {
+                } else if (response.status === 513) {
                     errorNotification(
                         "Errore",
                         `Caro ${account.name}, c'è stato un errore durante la fase di registrazione. Conttata l'amministratrice`
                     )
+                } else if (response.status === 514) {
+                    warningNotification(
+                        "Attenzione",
+                        `Caro ${account.name}, esiste già un account collegato al tuo nome e cognome. Torna indietro e recupera la tua password, altrimenti contatta l'amministratrice`
+                    )
+                } else if (response.status === 514) {
+                    warningNotification(
+                        "Attenzione",
+                        `Lo username ${account.username} da te scelto è già stato utilizzato. Inseriscine uno diverso`
+                    )
                 }
-
             }).finally(() => {
             setSubmitting(false);
         })

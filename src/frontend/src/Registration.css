@@ -9,3 +9,6 @@ form#register {
 p {
     margin: auto;
 }
+.ant-notification-notice {
+    text-align: left;
+}
