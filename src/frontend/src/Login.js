@@ -1,12 +1,18 @@
 import {LockOutlined, UserOutlined} from '@ant-design/icons';
 import {Button, Checkbox, Divider, Form, Input} from 'antd';
-import React from 'react';
+import React, {useState} from 'react';
 import "./Login.css"
+import {loginAccount} from "./client";
 
 const Login = () => {
+    const [form] = Form.useForm();
+    const [submitting, setSubmitting] = useState(false);
 
-    const onFinish = (values) => {
-        console.log('Received values of form: ', values);
+    const onFinish = login => {
+        console.log('Received values of form: ', login);
+        setSubmitting(true);
+        console.log(JSON.stringify(login, null, 2));
+        loginAccount(login);
     };
 
     return (
@@ -62,10 +68,6 @@ const Login = () => {
                     />
                 </Form.Item>
                 <Form.Item>
-                    <Form.Item name="remember" valuePropName="checked" noStyle>
-                        <Checkbox>Ricordami</Checkbox>
-                    </Form.Item>
-
                     <a className="login-form-forgot" href="/recuperaPassword">
                         Ho dimenticato la password
                     </a>

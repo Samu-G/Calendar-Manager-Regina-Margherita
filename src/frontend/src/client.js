@@ -33,3 +33,13 @@ export const addNewStudentAccount = account =>
             body: JSON.stringify(account)
         }
     );
+
+export const loginAccount = login =>
+    fetch("api/account/login", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(login)
+        }
+    );

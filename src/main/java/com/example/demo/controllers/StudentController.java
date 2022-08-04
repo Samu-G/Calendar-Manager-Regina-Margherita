@@ -11,18 +11,18 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "api/v1/students")
+@RequestMapping(path = "/api")
 @AllArgsConstructor
 public class StudentController {
 
     private final StudentService studentService;
 
-    @RequestMapping
+    @RequestMapping("/admin/getAllStudent")
     public List<Student> getAllStudents() {
         return studentService.getAllStudents();
     }
 
-    @PostMapping
+    @PostMapping("/admin/addStudent")
     public void addStudent(@RequestBody Student student) {
         studentService.addStudent(student);
     }

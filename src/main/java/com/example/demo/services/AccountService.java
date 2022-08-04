@@ -12,17 +12,47 @@ import com.example.demo.services.interfaces.RoleServiceInterface;
 import com.example.demo.services.interfaces.UserServiceInterface;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 @Slf4j
-public class AccountService implements UserServiceInterface, RoleServiceInterface {
+public class AccountService implements UserServiceInterface, RoleServiceInterface, UserDetailsService {
     private final AccountRepository accountRepository;
     private final RoleRepository roleRepository;
     private final StudentRepository studentRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        //troviamo l'account sul DB corrispondente a quell'username
+        Account account = accountRepository.findByUsername(username);
+        if (account == null) {
+            log.error("Account with username: " + username + " not found in database.");
+            throw new UsernameNotFoundException("Account with username: " + username + " not found in database.");
+        } else {
+            log.info("Account with username: " + username + " FOUND in database.");
+        }
+        //creiamo una collezione di SimpleGrantedAuthority
+        //aggiungiamo una nuova SimpleGrantedAuthority con il nome del ruolo alla collezione
+        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(account.getRole().getName()));
+
+        return new org.springframework.security.core.userdetails.User(
+                account.getUsername(),
+                account.getPassword(),
+                authorities
+        );
+    }
 
     @Override
     public Role saveRole(Role role) {
@@ -55,6 +85,7 @@ public class AccountService implements UserServiceInterface, RoleServiceInterfac
             log.info("Username " + username + " already taken. Student called " + name + " " + surname + " is trying to register");
             throw new UsernameAlreadyTakenException();
         } else {
+            account.setPassword(passwordEncoder.encode(account.getPassword()));
             Account added = accountRepository.save(account);
             log.info(account.getRole() + " called " + name  + " " + surname + " create his own account with id: " + added.getId());
             return added;
