@@ -6,8 +6,8 @@ import {
 } from 'antd';
 import "./Registration.css"
 import React, {useState} from "react";
-import {addNewStudentAccount} from "./client";
-import {errorNotification, successNotification, warningNotification} from "./Notification";
+import {addNewStudentAccount} from "../client";
+import {errorNotification, successNotification, warningNotification} from "../notification/Notification";
 import {LoadingOutlined} from "@ant-design/icons";
 
 const formItemLayout = {

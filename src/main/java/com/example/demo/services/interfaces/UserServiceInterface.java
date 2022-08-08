@@ -3,7 +3,7 @@ package com.example.demo.services.interfaces;
 import com.example.demo.exeption.StudentAlreadyRegisterException;
 import com.example.demo.exeption.StudentNotFoundException;
 import com.example.demo.exeption.UsernameAlreadyTakenException;
-import com.example.demo.models.user.Account;
+import com.example.demo.models.users.Account;
 
 import java.util.List;
 

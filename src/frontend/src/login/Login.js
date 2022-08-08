@@ -2,7 +2,7 @@ import {LockOutlined, UserOutlined} from '@ant-design/icons';
 import {Button, Checkbox, Divider, Form, Input} from 'antd';
 import React, {useState} from 'react';
 import "./Login.css"
-import {loginAccount} from "./client";
+import {loginAccount} from "../client";
 
 const Login = () => {
     const [form] = Form.useForm();

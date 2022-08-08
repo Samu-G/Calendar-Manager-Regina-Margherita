@@ -1,4 +1,4 @@
-package com.example.demo.models.user;
+package com.example.demo.models.users;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,13 +13,10 @@ import static javax.persistence.GenerationType.AUTO;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Role {
-
     @Id
     @GeneratedValue(strategy = AUTO)
     private Long id;
-
     private String name;
-
     @Override
     public String toString() {
         return name;

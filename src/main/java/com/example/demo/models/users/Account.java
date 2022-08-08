@@ -1,4 +1,4 @@
-package com.example.demo.models.user;
+package com.example.demo.models.users;
 
 import lombok.*;
 

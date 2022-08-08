@@ -11,11 +11,21 @@ const checkStatus = response => {
 }
 
 export const getAllStudents = () =>
-    fetch("api/v1/students")
+    fetch("/api/admin/getAllStudent")
         .then(checkStatus);
 
+export const flipIsPresent = student =>
+    fetch("api/admin/flipPresentToStudent", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(student)
+        }
+    );
+
 export const addNewStudent = student =>
-    fetch("api/v1/students", {
+    fetch("api/admin/addStudent", {
             headers: {
                 'Content-Type': 'application/json'
             },

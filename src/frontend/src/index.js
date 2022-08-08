@@ -8,17 +8,18 @@ import {
 
 import './index.css';
 
-import Login from "./Login";
-import Registration from "./Registration";
+import Login from "./login/Login";
+import Registration from "./registration/Registration";
 import App from "./App";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <BrowserRouter>
-        <Routes>
-            <Route path="/" element={<Login/>}/>
-            <Route path="/registrati" element={<Registration/>}/>
-            <Route path="/app" element={<App/>}/>
-        </Routes>
-    </BrowserRouter>
+    // <BrowserRouter>
+    //     <Routes>
+    //         <Route path="/" element={<Login/>}/>
+    //         <Route path="/registrati" element={<Registration/>}/>
+    //         <Route path="/app" element={<App/>}/>
+    //     </Routes>
+    // </BrowserRouter>
+    <App/>
 );

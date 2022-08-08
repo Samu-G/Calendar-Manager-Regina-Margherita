@@ -32,4 +32,8 @@ public class StudentService implements StudentServiceInterface {
         //controlla se la email è già stata usata
         studentRepository.save(student);
     }
+
+    public void flipPresentToStudent(Student student) {
+        studentRepository.flipPresentToStudent(student);
+    }
 }

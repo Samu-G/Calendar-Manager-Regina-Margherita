@@ -3,8 +3,8 @@ package com.example.demo.services;
 import com.example.demo.exeption.StudentAlreadyRegisterException;
 import com.example.demo.exeption.StudentNotFoundException;
 import com.example.demo.exeption.UsernameAlreadyTakenException;
-import com.example.demo.models.user.Account;
-import com.example.demo.models.user.Role;
+import com.example.demo.models.users.Account;
+import com.example.demo.models.users.Role;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.StudentRepository;
 import com.example.demo.repository.AccountRepository;
@@ -12,11 +12,11 @@ import com.example.demo.services.interfaces.RoleServiceInterface;
 import com.example.demo.services.interfaces.UserServiceInterface;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+/*import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;*/
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,11 +26,11 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 @Slf4j
-public class AccountService implements UserServiceInterface, RoleServiceInterface, UserDetailsService {
+public class AccountService implements UserServiceInterface, RoleServiceInterface/*, UserDetailsService*/ {
     private final AccountRepository accountRepository;
     private final RoleRepository roleRepository;
     private final StudentRepository studentRepository;
-    private final PasswordEncoder passwordEncoder;
+  /*  private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -52,7 +52,7 @@ public class AccountService implements UserServiceInterface, RoleServiceInterfac
                 account.getPassword(),
                 authorities
         );
-    }
+    }*/
 
     @Override
     public Role saveRole(Role role) {
@@ -85,7 +85,7 @@ public class AccountService implements UserServiceInterface, RoleServiceInterfac
             log.info("Username " + username + " already taken. Student called " + name + " " + surname + " is trying to register");
             throw new UsernameAlreadyTakenException();
         } else {
-            account.setPassword(passwordEncoder.encode(account.getPassword()));
+            // account.setPassword(passwordEncoder.encode(account.getPassword()));
             Account added = accountRepository.save(account);
             log.info(account.getRole() + " called " + name  + " " + surname + " create his own account with id: " + added.getId());
             return added;
