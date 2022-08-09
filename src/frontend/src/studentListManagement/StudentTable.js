@@ -35,7 +35,7 @@ function StudentTable() {
             .then(data => {
                 setStudents(data);
                 setFetching(false);
-                console.log(data);
+                console.log("student list update successfully");
             })
     }
 
@@ -49,13 +49,7 @@ function StudentTable() {
         flipIsPresent(student)
             .then(() => {
                     console.log("flipped isPresent var. from student")
-                    getAllStudents()
-                        .then(res => res.json())
-                        .then(data => {
-                                setStudents(data);
-                                console.log("student list update successfully");
-                            }
-                        )
+                    fetchStudents()
                 }
             );
     }
@@ -84,9 +78,6 @@ function StudentTable() {
             }
         }
 
-        function studentWeek(student) {
-
-        }
 
         return <>
             <Table
@@ -105,7 +96,7 @@ function StudentTable() {
                                     <p>Presente in struttura: {studentIsPresent(student)}</p>
                                     <br/>
                                     <p>Attivo nei giorni di:</p>
-                                    <p>{studentWeek(student)}</p>
+
                                 </Col>
 
                                 <Col span={12}>
