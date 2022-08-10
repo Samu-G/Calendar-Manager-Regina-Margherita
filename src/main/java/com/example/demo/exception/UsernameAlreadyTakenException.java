@@ -1,4 +1,4 @@
-package com.example.demo.exeption;
+package com.example.demo.exception;
 
 public class UsernameAlreadyTakenException extends Exception{
 }

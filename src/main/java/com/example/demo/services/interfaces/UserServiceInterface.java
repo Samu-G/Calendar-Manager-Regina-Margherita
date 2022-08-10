@@ -1,8 +1,8 @@
 package com.example.demo.services.interfaces;
 
-import com.example.demo.exeption.StudentAlreadyRegisterException;
-import com.example.demo.exeption.StudentNotFoundException;
-import com.example.demo.exeption.UsernameAlreadyTakenException;
+import com.example.demo.exception.StudentAlreadyRegisterException;
+import com.example.demo.exception.StudentNotFoundException;
+import com.example.demo.exception.UsernameAlreadyTakenException;
 import com.example.demo.models.users.Account;
 
 import java.util.List;

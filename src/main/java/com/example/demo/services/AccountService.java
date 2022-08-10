@@ -1,8 +1,8 @@
 package com.example.demo.services;
 
-import com.example.demo.exeption.StudentAlreadyRegisterException;
-import com.example.demo.exeption.StudentNotFoundException;
-import com.example.demo.exeption.UsernameAlreadyTakenException;
+import com.example.demo.exception.StudentAlreadyRegisterException;
+import com.example.demo.exception.StudentNotFoundException;
+import com.example.demo.exception.UsernameAlreadyTakenException;
 import com.example.demo.models.users.Account;
 import com.example.demo.models.users.Role;
 import com.example.demo.repository.RoleRepository;
@@ -19,8 +19,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;*/
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Service

@@ -2,6 +2,8 @@ package com.example.demo.controllers;
 
 import com.example.demo.models.student.Student;
 import com.example.demo.services.StudentService;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,6 +35,16 @@ public class StudentController {
     @PostMapping("admin/flipPresentToStudent")
     public void flipPresentToStudent(@RequestBody Student student) {
         studentService.flipPresentToStudent(student);
+    }
+
+    @PostMapping("/admin/setDayOfPresentToStudent")
+    public void setDaysOfPresenceToStudent(@RequestBody ObjectNode json) {
+        studentService.setDaysOfPresenceToStudent(json);
+    }
+
+    @PostMapping("/admin/setCurrentYearToStudent")
+    public void setCurrentYearToStudent(@RequestBody ObjectNode json) {
+        studentService.setCurrentYearToStudent(json);
     }
 
 }

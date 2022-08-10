@@ -24,6 +24,27 @@ export const flipIsPresent = student =>
         }
     );
 
+export const setDayOfPresentToStudent = (studentId, day) =>
+    fetch("api/admin/setDayOfPresentToStudent", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({id: studentId, day: day})
+        }
+    );
+
+export const setCurrentYearToStudent = (studentId, currentYear) =>
+    fetch("api/admin/setCurrentYearToStudent", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({id: studentId, currentYear: currentYear})
+        }
+    );
+
+
 export const addNewStudent = student =>
     fetch("api/admin/addStudent", {
             headers: {

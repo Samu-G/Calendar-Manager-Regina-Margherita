@@ -4,6 +4,7 @@ import com.example.demo.models.student.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface StudentRepository extends JpaRepository<Student, Long> {
 
     public Student getStudentsById(Long id);
+
     public Student findStudentByNameAndSurname(String name, String surname);
 
     @Modifying
@@ -26,4 +28,30 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
             setIsPresentByStudentId("Si", student.getId());
         }
     }
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE Student s SET s.lun = :isPresent WHERE s.id = :studentId")
+    void setMondayIsPresentToStudent(@Param("studentId") Long studentId, @Param("isPresent") String isPresent);
+    @Modifying
+    @Transactional
+    @Query("UPDATE Student s SET s.mar = :isPresent WHERE s.id = :studentId")
+    void setTuesdayIsPresentToStudent(@Param("studentId") Long studentId, @Param("isPresent") String isPresent);
+    @Modifying
+    @Transactional
+    @Query("UPDATE Student s SET s.mer = :isPresent WHERE s.id = :studentId")
+    void setWednesdayIsPresentToStudent(@Param("studentId") Long studentId, @Param("isPresent") String isPresent);
+    @Modifying
+    @Transactional
+    @Query("UPDATE Student s SET s.gio = :isPresent WHERE s.id = :studentId")
+    void setThursdayIsPresentToStudent(@Param("studentId") Long studentId, @Param("isPresent") String isPresent);
+    @Modifying
+    @Transactional
+    @Query("UPDATE Student s SET s.ven = :isPresent WHERE s.id = :studentId")
+    void setFridayIsPresentToStudent(@Param("studentId") Long studentId, @Param("isPresent") String isPresent);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE Student s SET s.currentYear = :currentYear WHERE s.id = :studentId")
+    void setCurrentYearToStudent(@Param("studentId") Long studentId, @Param("currentYear") String currentYear);
 }
