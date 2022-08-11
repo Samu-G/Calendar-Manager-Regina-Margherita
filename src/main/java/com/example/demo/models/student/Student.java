@@ -1,5 +1,6 @@
 package com.example.demo.models.student;
 
+import com.example.demo.models.subjects.Subject;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,31 +31,11 @@ public class Student implements Comparable<Student> {
     private String gio;
     private String ven;
 
+    @ManyToMany
+    private List<Subject> subjectsFollowedList;
+
     @Override
     public int compareTo(Student other) {
         return this.name.compareTo(other.name);
     }
-
-
-//    @ElementCollection
-//    List<String> subjectsList;
-//    @ElementCollection
-//    List<String> feedbackList;
-
-//    public Student(String name, String surname, boolean isPresent, boolean lun, boolean mar, boolean mer, boolean gio, boolean ven) {
-//        this.name = name;
-//        this.surname = surname;
-//        this.isPresent = isPresent;
-//        this.lun = lun;
-//        this.mar = mar;
-//        this.mer = mer;
-//        this.gio = gio;
-//        this.ven = ven;
-//        subjectsList = new ArrayList<>();
-//        subjectsList.add("matematica");
-//        subjectsList.add("fisica");
-//        feedbackList = new ArrayList<>();
-//        feedbackList.add("prova1");
-//        feedbackList.add("prova2");
-//    }
 }

@@ -33,7 +33,6 @@ public class StudentService implements StudentServiceInterface {
 
     @PostMapping
     public void addStudent(Student student) {
-        //controlla se la email è già stata usata
         studentRepository.save(student);
     }
 

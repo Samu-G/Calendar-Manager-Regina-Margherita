@@ -1,12 +1,17 @@
 package com.example.demo.repository;
 
 import com.example.demo.models.student.Student;
+import com.example.demo.models.subjects.Subject;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
@@ -29,22 +34,34 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
         }
     }
 
+    default void addSubjectToStudent(Long studentId, Subject subject) {
+        Student s = getStudentsById(studentId);
+        System.out.println(s.getSubjectsFollowedList());
+        s.getSubjectsFollowedList().add(subject);
+        System.out.println(s.getSubjectsFollowedList());
+        save(s);
+    }
+
     @Modifying
     @Transactional
     @Query("UPDATE Student s SET s.lun = :isPresent WHERE s.id = :studentId")
     void setMondayIsPresentToStudent(@Param("studentId") Long studentId, @Param("isPresent") String isPresent);
+
     @Modifying
     @Transactional
     @Query("UPDATE Student s SET s.mar = :isPresent WHERE s.id = :studentId")
     void setTuesdayIsPresentToStudent(@Param("studentId") Long studentId, @Param("isPresent") String isPresent);
+
     @Modifying
     @Transactional
     @Query("UPDATE Student s SET s.mer = :isPresent WHERE s.id = :studentId")
     void setWednesdayIsPresentToStudent(@Param("studentId") Long studentId, @Param("isPresent") String isPresent);
+
     @Modifying
     @Transactional
     @Query("UPDATE Student s SET s.gio = :isPresent WHERE s.id = :studentId")
     void setThursdayIsPresentToStudent(@Param("studentId") Long studentId, @Param("isPresent") String isPresent);
+
     @Modifying
     @Transactional
     @Query("UPDATE Student s SET s.ven = :isPresent WHERE s.id = :studentId")

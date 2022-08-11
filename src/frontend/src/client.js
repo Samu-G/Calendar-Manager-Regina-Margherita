@@ -14,6 +14,20 @@ export const getAllStudents = () =>
     fetch("/api/admin/getAllStudent")
         .then(checkStatus);
 
+export const getAllSubjects = () =>
+    fetch("api/admin/getAllSubjects")
+        .then(checkStatus);
+
+export const addSubjectToStudent = (studentId, subjectName) =>
+    fetch("api/admin/addSubjectToStudent", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({id: studentId, subjectName: subjectName})
+        }
+    );
+
 export const flipIsPresent = student =>
     fetch("api/admin/flipPresentToStudent", {
             headers: {
