@@ -18,6 +18,26 @@ export const getAllSubjects = () =>
     fetch("api/admin/getAllSubjects")
         .then(checkStatus);
 
+export const saveSubjectByName = subjectName =>
+    fetch("api/admin/saveSubjectByName", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(subjectName)
+        }
+    );
+
+export const deleteSubjectById = subjectId =>
+    fetch("api/admin/deleteSubjectById", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(subjectId)
+        }
+    );
+
 export const addSubjectToStudent = (studentId, subjectName) =>
     fetch("api/admin/addSubjectToStudent", {
             headers: {

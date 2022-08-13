@@ -4,7 +4,7 @@ import {
     BarChartOutlined,
     CalendarOutlined,
     CarryOutOutlined,
-    CommentOutlined,
+    CommentOutlined, ExperimentOutlined,
     MailOutlined,
     SolutionOutlined,
     TeamOutlined
@@ -31,20 +31,10 @@ export default function Sider(props) {
                 <Menu.Item key="5" icon={<SolutionOutlined/>} onClick={handleClick}>
                     Docenti
                 </Menu.Item>
-                <Menu.SubMenu
-                    key="sub1"
-                    title="Feedback"
-                    icon={<CommentOutlined/>}
-                        onClick={handleClick}
-                >
-                    <Menu.Item key="6" onClick={handleClick}>
-                        feedback docenti
-                    </Menu.Item>
-                    <Menu.Item key="7" onClick={handleClick}>
-                        feedback studenti
-                    </Menu.Item>
-                </Menu.SubMenu>
-                <Menu.Item key="8" icon={<MailOutlined/>} onClick={handleClick}>
+                <Menu.Item key="6" icon={<ExperimentOutlined />} onClick={handleClick}>
+                    Materie
+                </Menu.Item>
+                <Menu.Item key="7" icon={<MailOutlined/>} onClick={handleClick}>
                     Emailing
                 </Menu.Item>
             </Menu>

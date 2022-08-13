@@ -19,6 +19,7 @@ public class SubjectService {
 
     private final StudentRepository studentRepository;
 
+    @GetMapping
     public Subject getSubjectByNameAndYear(String name, int year) {
         return subjectRepository.findSubjectByNameOfTheSubjectAndYearOfTeaching(name, year);
     }
@@ -45,5 +46,28 @@ public class SubjectService {
         System.out.println(subjectName);
         Subject subject = subjectRepository.findSubjectByNameOfTheSubject(subjectName);
         studentRepository.addSubjectToStudent(studentId, subject);
+    }
+
+    @PostMapping
+    public void deleteSubjectById(Long id) {
+        System.out.println(id);
+        Subject subject = subjectRepository.getSubjectsById(id);
+        subjectRepository.delete(subject);
+    }
+
+    @PostMapping
+    public void saveSubjectByName(ObjectNode json) {
+        String subjectName = json.get("name").toString();
+        StringBuilder sb = new StringBuilder(subjectName);
+        sb.deleteCharAt(subjectName.length() - 1);
+        sb.deleteCharAt(0);
+        subjectName = sb.toString();
+        subjectName= subjectName.toUpperCase();
+        System.out.println(subjectName);
+        Subject alreadyExsist = subjectRepository.getSubjectsByNameOfTheSubject(subjectName);
+        if(alreadyExsist == null) {
+            Subject newSubject = new Subject(null, subjectName, 1);
+            subjectRepository.save(newSubject);
+        }
     }
 }

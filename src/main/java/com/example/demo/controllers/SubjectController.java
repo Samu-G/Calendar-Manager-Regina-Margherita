@@ -25,6 +25,16 @@ public class SubjectController {
         return subjectList;
     }
 
+    @RequestMapping("/admin/deleteSubjectById")
+    public void deleteSubjectById(@RequestBody Long id) {
+        subjectService.deleteSubjectById(id);
+    }
+
+    @RequestMapping("/admin/saveSubjectByName")
+    public void saveSubjectByName(@RequestBody ObjectNode json) {
+        subjectService.saveSubjectByName(json);
+    }
+
     @RequestMapping("/admin/addSubjectToStudent")
     public void addSubjectToStudent(@RequestBody ObjectNode json) {
         subjectService.addSubjectToStudent(json);

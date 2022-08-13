@@ -12,7 +12,7 @@ import {
     PageHeader,
     Descriptions,
     List,
-    Typography, AutoComplete
+    AutoComplete
 } from 'antd';
 import React, {useEffect, useState} from 'react';
 import {
@@ -21,8 +21,9 @@ import {
     getAllStudents, getAllSubjects, setCurrentYearToStudent,
     setDayOfPresentToStudent
 } from "../client";
-import {DownOutlined, LoadingOutlined} from "@ant-design/icons";
+import {DownOutlined, LoadingOutlined, PlusOutlined} from "@ant-design/icons";
 import {Content, Header} from "antd/es/layout/layout";
+import StudentDrawerForm from "./StudentDrawerForm";
 
 const columns = [
     {
@@ -175,7 +176,7 @@ function StudentTable() {
 
         }
 
-        const DropdownChooseYear = (object) => {
+        const RenderDropdownChooseYear = (object) => {
 
             const handleMenuClick = (e) => {
                 let student = object.user;
@@ -322,7 +323,10 @@ function StudentTable() {
 
         return <>
             <Header className="site-layout-background" style={{padding: 0}}>
-
+                <StudentDrawerForm
+                    showDrawer={showDrawer}
+                    setShowDrawer={setShowDrawer}
+                />
                 <div>
                     <PageHeader
                         ghost={false}
@@ -348,6 +352,16 @@ function StudentTable() {
                         dataSource={students}
                         columns={columns}
                         bordered
+                        title={() =>
+                            <Button
+                                onClick={() => setShowDrawer(!showDrawer)}
+                                type="primary"
+                                shape="round"
+                                icon={<PlusOutlined/>}
+                                size="small">
+                                Aggiungi un nuovo studente
+                            </Button>
+                        }
                         pagination={{pageSize: 50}}
                         scroll={{y: 1000}}
                         rowKey={student => student.id}
@@ -373,7 +387,7 @@ function StudentTable() {
                                             <br/>
                                             <p>Cognome: {student.surname}</p>
                                             <br/>
-                                            <p>Anno scolastico: {student.currentYear} <DropdownChooseYear
+                                            <p>Anno scolastico: {student.currentYear} <RenderDropdownChooseYear
                                                 user={student}/></p>
                                         </Col>
                                     </Row>
