@@ -12,7 +12,7 @@ import {
     PageHeader,
     Descriptions,
     List,
-    AutoComplete
+    AutoComplete, Input
 } from 'antd';
 import React, {useEffect, useState} from 'react';
 import {
@@ -24,6 +24,7 @@ import {
 import {DownOutlined, LoadingOutlined, PlusOutlined} from "@ant-design/icons";
 import {Content, Header} from "antd/es/layout/layout";
 import StudentDrawerForm from "./StudentDrawerForm";
+import FiscalCodeForm from "./FiscalCodeForm";
 
 const columns = [
     {
@@ -89,6 +90,16 @@ function StudentTable() {
             );
     }
 
+    function setFiscalCodeToStudent(student) {
+        console.log(student);
+        // setFCToStudent(student.id, newFiscalCode)
+        //     .then(() => {
+        //         console.log("set fiscal code to student");
+        //         message.info('Codice fiscale aggiornato');
+        //         fetchStudents()
+        //     })
+    }
+
     function studentIsPresent(student) {
         if (student.isPresent === "Si") {
             return <>
@@ -107,6 +118,7 @@ function StudentTable() {
             </>
         }
     }
+
 
     const renderStudents = () => {
         if (fetching) {
@@ -387,6 +399,10 @@ function StudentTable() {
                                             <p>Nome: {student.name}</p>
                                             <br/>
                                             <p>Cognome: {student.surname}</p>
+                                            <br/>
+
+                                            <FiscalCodeForm student = {student} fetchStudents={fetchStudents}/>
+
                                             <br/>
                                             <p>Anno scolastico: {student.currentYear} <RenderDropdownChooseYear
                                                 user={student}/></p>

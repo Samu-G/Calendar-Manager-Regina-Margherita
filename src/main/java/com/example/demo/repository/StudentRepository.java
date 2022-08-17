@@ -71,4 +71,11 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     @Transactional
     @Query("UPDATE Student s SET s.currentYear = :currentYear WHERE s.id = :studentId")
     void setCurrentYearToStudent(@Param("studentId") Long studentId, @Param("currentYear") String currentYear);
+
+
+    default void setFiscalCodeToStudent(Long studentId, String fiscalCode) {
+        Student s = getStudentsById(studentId);
+        s.setFiscalCode(fiscalCode);
+        save(s);
+    }
 }

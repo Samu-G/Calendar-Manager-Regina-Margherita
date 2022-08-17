@@ -42,24 +42,24 @@ function StudentDrawerForm({showDrawer, setShowDrawer, fetchStudents}) {
             student.fiscalCode = "non ancora inserito"
         }
 
-        alert(JSON.stringify(student, null, 2));
 
         console.log(student)
 
 
         addNewStudent(student)
             .then(() => {
-
-                fetchStudents()
-                console.log("student added succesfuly")
+                fetchStudents();
+                console.log("student added succesfuly");
+                message.success(student.name + " " + student.surname + " è stato aggiunto");
+                setShowDrawer(false);
             })
-            .catch(err => {
-                console.log(err)
+            .catch((err) => {
+                console.log("UN ERRORE" + err);
+                message.error("Errore nella aggiunta di un nuovo studente. Controllare lo stato del server");
             })
     };
 
     const onFinishFailed = errorInfo => {
-        alert(JSON.stringify(errorInfo, null, 2));
 
     };
 

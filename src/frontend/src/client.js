@@ -83,6 +83,16 @@ export const setCurrentYearToStudent = (studentId, currentYear) =>
         }
     );
 
+export const setFCToStudent = (studentId, fiscalCode) =>
+    fetch("api/admin/setFiscalCodeToStudent", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({id: studentId, fiscalCode: fiscalCode})
+        }
+    );
+
 
 export const addNewStudent = student =>
     fetch("api/admin/addStudent", {

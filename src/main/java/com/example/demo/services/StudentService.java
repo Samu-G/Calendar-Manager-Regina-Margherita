@@ -33,6 +33,10 @@ public class StudentService implements StudentServiceInterface {
 
     @PostMapping
     public void addStudent(Student student) {
+        String normalizedName = student.getName().substring(0,1).toUpperCase() + student.getName().substring(1).toLowerCase();
+        String normalizedSurname = student.getSurname().substring(0,1).toUpperCase() + student.getSurname().substring(1).toLowerCase();
+        student.setName(normalizedName);
+        student.setSurname(normalizedSurname);
         studentRepository.save(student);
     }
 
@@ -95,5 +99,16 @@ public class StudentService implements StudentServiceInterface {
         currentYear = sb.toString();
         System.out.println(currentYear);
         studentRepository.setCurrentYearToStudent(studentId, currentYear);
+    }
+
+    public void setFiscalCodeToStudent(ObjectNode json) {
+        Long studentId = json.get("id").asLong();
+        String fiscalCode = json.get("fiscalCode").toString();
+        StringBuilder sb = new StringBuilder(fiscalCode);
+        sb.deleteCharAt(fiscalCode.length() - 1);
+        sb.deleteCharAt(0);
+        fiscalCode = sb.toString().toUpperCase();
+        System.out.println(fiscalCode);
+        studentRepository.setFiscalCodeToStudent(studentId, fiscalCode);
     }
 }

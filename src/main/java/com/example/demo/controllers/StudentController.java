@@ -47,4 +47,9 @@ public class StudentController {
         studentService.setCurrentYearToStudent(json);
     }
 
+    @PostMapping("/admin/setFiscalCodeToStudent")
+    public void setFiscalCodeToStudent(@RequestBody ObjectNode json) {
+        studentService.setFiscalCodeToStudent(json);
+    }
+
 }
