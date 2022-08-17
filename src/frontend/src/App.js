@@ -4,6 +4,7 @@ import Sider from "./Sider";
 import './App.css';
 import StudentListManagement from "./studentListManagement/StudentListManagement";
 import SubjectListManagement from "./subjectListManagement/SubjectListManagement";
+import TeacherListManagement from "./teacherListManagement/TeacherListManagement";
 
 const {Content} = Layout;
 
@@ -14,7 +15,7 @@ export default function App() {
         2: <div>Option 2</div>,
         3: <div>Option 3</div>,
         4: StudentListManagement(),
-        5: <div>Option 5</div>,
+        5: TeacherListManagement(),
         6: SubjectListManagement(),
         7: <div>Option 7</div>,
     };

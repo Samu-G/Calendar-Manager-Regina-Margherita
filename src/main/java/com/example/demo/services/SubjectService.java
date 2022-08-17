@@ -20,8 +20,8 @@ public class SubjectService {
     private final StudentRepository studentRepository;
 
     @GetMapping
-    public Subject getSubjectByNameAndYear(String name, int year) {
-        return subjectRepository.findSubjectByNameOfTheSubjectAndYearOfTeaching(name, year);
+    public Subject getSubjectByName(String name) {
+        return subjectRepository.findSubjectByNameOfTheSubject(name);
     }
 
     @PostMapping
@@ -66,7 +66,7 @@ public class SubjectService {
         System.out.println(subjectName);
         Subject alreadyExsist = subjectRepository.getSubjectsByNameOfTheSubject(subjectName);
         if(alreadyExsist == null) {
-            Subject newSubject = new Subject(null, subjectName, 1);
+            Subject newSubject = new Subject(null, subjectName);
             subjectRepository.save(newSubject);
         }
     }

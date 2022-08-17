@@ -15,8 +15,13 @@ export const getAllStudents = () =>
         .then(checkStatus);
 
 export const getAllSubjects = () =>
-    fetch("api/admin/getAllSubjects")
+    fetch("/api/admin/getAllSubjects")
         .then(checkStatus);
+
+export const getAllTeachers = () =>
+    fetch("/api/admin/getAllTeachers")
+        .then(checkStatus);
+
 
 export const saveSubjectByName = subjectName =>
     fetch("api/admin/saveSubjectByName", {

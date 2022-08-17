@@ -19,18 +19,20 @@ public class Student implements Comparable<Student> {
     @Id
     @GeneratedValue(strategy = AUTO)
     private Long id;
+
+    /*Compulsory field*/
     private String name;
     private String surname;
+    private String fiscalCode;
+
+    /*Not compulsory field*/
     private String currentYear;
-
     private String isPresent;
-
     private String lun;
     private String mar;
     private String mer;
     private String gio;
     private String ven;
-
     @ManyToMany
     private List<Subject> subjectsFollowedList;
 

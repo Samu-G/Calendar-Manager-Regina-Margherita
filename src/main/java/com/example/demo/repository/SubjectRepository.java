@@ -13,6 +13,5 @@ public interface SubjectRepository extends JpaRepository<Subject, Long> {
     public Subject getSubjectsByNameOfTheSubject(String s);
 
     public Subject findSubjectByNameOfTheSubject(String s);
-    public Subject findSubjectByNameOfTheSubjectAndYearOfTeaching(String nameOfTheSubject, int yearOfTeaching);
 
 }

@@ -242,7 +242,7 @@ function StudentTable() {
                 student.subjectsFollowedList.forEach(
                     (elem) => {
                         subjectsFollowedListId.push(elem.id)
-                        list.push("•   " + elem.nameOfTheSubject + " anno scolastico: " + elem.yearOfTeaching)
+                        list.push("•   " + elem.nameOfTheSubject)
                     }
                 )
                 return list;
@@ -326,6 +326,7 @@ function StudentTable() {
                 <StudentDrawerForm
                     showDrawer={showDrawer}
                     setShowDrawer={setShowDrawer}
+                    fetchStudents={fetchStudents}
                 />
                 <div>
                     <PageHeader

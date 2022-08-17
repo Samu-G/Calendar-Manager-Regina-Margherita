@@ -37,8 +37,9 @@ public class Application {
                           StudentService studentService,
                           SubjectService subjectService,
                           TeacherService teacherService) {
-        /*Role definition*/
+
         return args -> {
+            /*Role definition*/
             if (accountService.findRoleByName("ROLE_ADMIN") == null) {
                 accountService.saveRole(new Role(null, "ROLE_ADMIN"));
             }
@@ -50,29 +51,29 @@ public class Application {
             }
 
             /*Subject example*/
-            Subject storia1 = new Subject(null, "STORIA", 1);
-            Subject diritto2 = new Subject(null, "DIRITTO", 2);
+            Subject storia1 = new Subject(null, "STORIA");
+            Subject diritto2 = new Subject(null, "DIRITTO ED ECONOMIA");
 
-            if (subjectService.getSubjectByNameAndYear("STORIA", 1) == null) {
+            if (subjectService.getSubjectByName("STORIA") == null) {
                 subjectService.addSubject(storia1);
             }
-            if (subjectService.getSubjectByNameAndYear("DIRITTO", 2) == null) {
+            if (subjectService.getSubjectByName("DIRITTO ED ECONOMIA") == null) {
                 subjectService.addSubject(diritto2);
             }
 
             List<Subject> subjectList = new ArrayList<>();
-            subjectList.add(subjectService.getSubjectByNameAndYear("STORIA", 1));
-            subjectList.add(subjectService.getSubjectByNameAndYear("DIRITTO", 2));
+            subjectList.add(subjectService.getSubjectByName("STORIA"));
+            subjectList.add(subjectService.getSubjectByName("DIRITTO"));
 
             /*Student example*/
 
-            Student a = new Student(null, "NOME1", "COGNOME1", "1",
+            Student a = new Student(null, "NOME1", "COGNOME1", "no codice fiscale", "1",
                     "Si", "Si", "Si", "Si", "Si", "Si", subjectList);
             if (studentService.getStudentByNameAndSurname(a.getName(), a.getSurname()) == null) {
                 studentService.addStudent(a);
             }
 
-            Student b = new Student(null, "NOME2", "COGNOME2", "2",
+            Student b = new Student(null, "NOME2", "COGNOME2", "no codice fiscale", "2",
                     "No", "Si", "Si", "Si", "Si", "Si", subjectList);
             if (studentService.getStudentByNameAndSurname(b.getName(), b.getSurname()) == null) {
                 studentService.addStudent(b);
@@ -81,13 +82,13 @@ public class Application {
             /*teacher example*/
 
             /*time slot example*/
-            TimeSlot from830to900 = new TimeSlot(null, Time.valueOf("09:00:00"), Time.valueOf("09:30:00"));
+            TimeSlot from900to930 = new TimeSlot(null, Time.valueOf("09:00:00"), Time.valueOf("09:30:00"));
             if(teacherService.getTimeSlotByBeginTimeAndEndTime(Time.valueOf("09:00:00"),Time.valueOf("09:30:00")) == null) {
-                teacherService.addTimeSlot(from830to900);
+                teacherService.addTimeSlot(from900to930);
             }
 
             List <TimeSlot> timeSlotList = new ArrayList<>();
-            timeSlotList.add(from830to900);
+            timeSlotList.add(from900to930);
 
             Teacher teacher1 = new Teacher(null, "NOME1", "COGNOME1", false, timeSlotList, subjectList);
             if(teacherService.getTeacherByNameAndSurname("NOME1", "COGNOME1") == null) {

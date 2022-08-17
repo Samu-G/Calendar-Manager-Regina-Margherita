@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.sql.Time;
+import java.util.List;
 
 @AllArgsConstructor
 @Service
@@ -37,5 +38,10 @@ public class TeacherService {
     @GetMapping
     public Teacher getTeacherByNameAndSurname(String name, String surname) {
         return teacherRepository.findTeacherByNameAndSurname(name, surname);
+    }
+
+    @GetMapping
+    public List<Teacher> getAllTeachers() {
+        return teacherRepository.findAll();
     }
 }

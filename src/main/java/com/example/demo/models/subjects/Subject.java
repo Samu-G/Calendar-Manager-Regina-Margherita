@@ -20,7 +20,6 @@ public class Subject implements Comparable<Subject> {
     @GeneratedValue(strategy = AUTO)
     private Long id;
     private String nameOfTheSubject;
-    private int yearOfTeaching;
 
     @Override
     public int compareTo(Subject other) {
