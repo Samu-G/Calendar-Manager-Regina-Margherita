@@ -72,6 +72,16 @@ export const addSubjectToTeacher = (teacherId, subjectName) =>
         }
     );
 
+export const setDayOfAttendanceToTeacherId = (teacherId, presenceDaysList) =>
+    fetch("api/admin/setDayOfAttendanceToTeacher", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({id: teacherId, presenceDaysList: presenceDaysList})
+        }
+    );
+
 
 export const flipIsPresent = student =>
     fetch("api/admin/flipPresentToStudent", {

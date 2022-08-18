@@ -30,4 +30,9 @@ public class TeacherController {
         teacherService.deleteSubjectFromTheTeacher(json);
     }
 
+    @RequestMapping("admin/setDayOfAttendanceToTeacher")
+    public void setDayOfAttendanceToTeacher(@RequestBody ObjectNode json) {
+        teacherService.setDayOfAttendanceToTeacher(json);
+    }
+
 }

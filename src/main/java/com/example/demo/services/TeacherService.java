@@ -6,6 +6,7 @@ import com.example.demo.models.timeSlot.TimeSlot;
 import com.example.demo.repository.SubjectRepository;
 import com.example.demo.repository.TeacherRepository;
 import com.example.demo.repository.TimeSlotRepository;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.sql.Time;
+import java.util.Iterator;
 import java.util.List;
 
 @AllArgsConstructor
@@ -59,12 +61,33 @@ public class TeacherService {
         Long teacherId = json.get("id").asLong();
         String subjectName = json.get("subjectName").toString();
         subjectName = subjectName.substring(5, subjectName.length() - 1);
-        System.out.println(teacherId);
-        System.out.println(subjectName);
-
         Teacher teacher = teacherRepository.findTeacherById(teacherId);
         Subject toRemove = subjectRepository.findSubjectByNameOfTheSubject(subjectName);
         teacher.getSubjectTeached().remove(toRemove);
+        teacherRepository.save(teacher);
+    }
+
+    public void setDayOfAttendanceToTeacher(ObjectNode json) {
+        Long teacherId = json.get("id").asLong();
+        Iterator<JsonNode> presenceDaysList = json.get("presenceDaysList").elements();
+        System.out.println(teacherId);
+        Teacher teacher = teacherRepository.findTeacherById(teacherId);
+        teacher.setMondayIsPresent(false);
+        teacher.setTuesdayIsPresent(false);
+        teacher.setWednesdayIsPresent(false);
+        teacher.setThursdayIsPresent(false);
+        teacher.setFridayIsPresent(false);
+        while (presenceDaysList.hasNext()) {
+            String specificDay = presenceDaysList.next().toString();
+            specificDay = specificDay.substring(1, specificDay.length() - 1);
+            switch (specificDay) {
+                case "Lunedi" -> teacher.setMondayIsPresent(true);
+                case "Martedi" -> teacher.setTuesdayIsPresent(true);
+                case "Mercoledi" -> teacher.setWednesdayIsPresent(true);
+                case "Giovedi" -> teacher.setThursdayIsPresent(true);
+                case "Venerdi" -> teacher.setFridayIsPresent(true);
+            }
+        }
         teacherRepository.save(teacher);
     }
 }

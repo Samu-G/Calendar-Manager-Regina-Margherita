@@ -4,6 +4,7 @@ import {Button, Col, Descriptions, Divider, PageHeader, Row, Spin, Table} from "
 import {getAllTeachers} from "../client";
 import {Content, Header} from "antd/es/layout/layout";
 import RenderSubjectTeached from "./RenderSubjectTeached";
+import RenderPresenceCheckBox from "./RenderPresenceCheckBox";
 
 const antIcon = <LoadingOutlined style={{fontSize: 24}} spin/>;
 
@@ -115,8 +116,7 @@ function TeacherTable() {
                                     <div style={{margin: 5}}>
                                         <Row>
                                             <Col span={12}>
-                                                <Divider orientation="left" orientationMargin="0">Gestione
-                                                    insegnamenti:</Divider>
+                                                <Divider orientation="left" orientationMargin="0">Gestione insegnamenti:</Divider>
                                                 <p>Materie insegnate:</p>
                                                 <RenderSubjectTeached teacher={teacher} fetchTeachers={fetchTeachers}/>
                                             </Col>
@@ -130,8 +130,8 @@ function TeacherTable() {
                                         </Row>
 
                                         <Row>
-                                            <Divider orientation="left" orientationMargin="0">Gestione
-                                                presenza:</Divider>
+                                            <Divider orientation="left" orientationMargin="0">Gestione presenza:</Divider>
+                                            <RenderPresenceCheckBox teacher={teacher}/>
                                         </Row>
                                     </div>
                                 ),
