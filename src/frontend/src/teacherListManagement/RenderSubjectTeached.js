@@ -1,6 +1,6 @@
-import {AutoComplete, Col, List, message, Row} from "antd";
+import {AutoComplete, Button, Col, Divider, List, message, Row} from "antd";
 import React from "react";
-import {addSubjectToTeacher, getAllSubjects} from "../client";
+import {addSubjectToTeacher, deleteSubjectFromTheTeacher, getAllSubjects} from "../client";
 
 function RenderSubjectTeached({teacher, fetchTeachers}) {
 
@@ -45,12 +45,11 @@ function RenderSubjectTeached({teacher, fetchTeachers}) {
 
     function onSelect(val) {
         addSubjectToTeacher(teacher.id, val)
-             .then(() => {
-                     message.success(teacher.name + " " + teacher.surname + " ora insegna " + val);
-                     fetchTeachers();
-                 }
-
-             );
+            .then(() => {
+                    message.success(teacher.name + " " + teacher.surname + " ora insegna " + val);
+                    fetchTeachers();
+                }
+            );
     }
 
     loadSubjectsList();
@@ -73,12 +72,32 @@ function RenderSubjectTeached({teacher, fetchTeachers}) {
                                 option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
                             }
                             onSelect={(val, option) => {
-                                onSelect(val)
-                                val = ""
+                                onSelect(val);
                             }}
                         />
                     }
-                    renderItem={item => <List.Item>{item}</List.Item>}/>
+                    renderItem={(item) => (
+                            <Row>
+                                <Col span={15}>
+                                    <List.Item> {item} </List.Item>
+                                </Col>
+                                <Col span={4}>
+                                    <Button type="primary" danger onClick={() => {
+                                        console.log(item);
+                                        console.log(teacher.id)
+                                        deleteSubjectFromTheTeacher(teacher.id, item)
+                                            .then(() => {
+                                                fetchTeachers()
+                                                message.success("Materie insegnate da " + teacher.name + " aggiornate con successo");
+                                            })
+                                    }}>
+                                        Cancella materia
+                                    </Button>
+                                </Col>
+                                <Divider style={{margin: 7}}/>
+                            </Row>
+                        )
+                    }/>
             </Col>
         </Row>
 

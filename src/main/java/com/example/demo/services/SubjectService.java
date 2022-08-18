@@ -67,7 +67,7 @@ public class SubjectService {
     @PostMapping
     public void deleteSubjectById(Long id) {
         System.out.println(id);
-        Subject subject = subjectRepository.getSubjectsById(id);
+        Subject subject = subjectRepository.findSubjectById(id);
         subjectRepository.delete(subject);
     }
 
@@ -80,7 +80,7 @@ public class SubjectService {
         subjectName = sb.toString();
         subjectName= subjectName.toUpperCase();
         System.out.println(subjectName);
-        Subject alreadyExsist = subjectRepository.getSubjectsByNameOfTheSubject(subjectName);
+        Subject alreadyExsist = subjectRepository.findSubjectByNameOfTheSubject(subjectName);
         if(alreadyExsist == null) {
             Subject newSubject = new Subject(null, subjectName);
             subjectRepository.save(newSubject);

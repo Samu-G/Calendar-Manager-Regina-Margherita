@@ -2,7 +2,9 @@ package com.example.demo.controllers;
 
 import com.example.demo.models.teacher.Teacher;
 import com.example.demo.services.TeacherService;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +23,11 @@ public class TeacherController {
         List<Teacher> teacherList = teacherService.getAllTeachers();
         Collections.sort(teacherList);
         return teacherList;
+    }
+
+    @RequestMapping("/admin/deleteSubjectFromTheTeacher")
+    public void deleteSubjectFromTheTeacher(@RequestBody ObjectNode json) {
+        teacherService.deleteSubjectFromTheTeacher(json);
     }
 
 }

@@ -42,6 +42,16 @@ export const deleteSubjectById = subjectId =>
         }
     );
 
+export const deleteSubjectFromTheTeacher = (teacherId, subjectName) =>
+    fetch("api/admin/deleteSubjectFromTheTeacher", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({id: teacherId, subjectName: subjectName})
+        }
+    );
+
 export const addSubjectToStudent = (studentId, subjectName) =>
     fetch("api/admin/addSubjectToStudent", {
             headers: {

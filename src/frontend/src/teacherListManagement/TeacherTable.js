@@ -12,7 +12,6 @@ function TeacherTable() {
     const [fetching, setFetching] = useState(true);
     const [teachers, setTeachers] = useState([]);
     const [showDrawer, setShowDrawer] = useState(false);
-    const [numOfPresentTeacher, setNumberOfPresentTeacher] = useState(0);
 
 
     const columns = [
@@ -57,15 +56,15 @@ function TeacherTable() {
     }
 
     function getIsPresentTeacher(teachers) {
-        let numOfPresentTeacher = 0;
-        console.log(teachers);
-        teachers.forEach(teacher => {
-                if (teacher.present) {
-                    numOfPresentTeacher++;
-                }
-            }
-        );
-        setNumberOfPresentTeacher(numOfPresentTeacher);
+        // let numOfPresentTeacher = 0;
+        // console.log(teachers);
+        // teachers.forEach(teacher => {
+        //         if (teacher.present) {
+        //             numOfPresentTeacher++;
+        //         }
+        //     }
+        // );
+        // setNumberOfPresentTeacher(numOfPresentTeacher);
     }
 
     useEffect(() => {
@@ -88,8 +87,6 @@ function TeacherTable() {
                         <Descriptions size="medium" column={2}>
                             <Descriptions.Item label="Docenti"> {teachers.length} </Descriptions.Item>
                             <br/>
-                            <Descriptions.Item
-                                label="Docenti attivi per il calendario"> {numOfPresentTeacher} </Descriptions.Item>
                         </Descriptions>
                     </PageHeader>
                 </div>
