@@ -375,7 +375,7 @@ function StudentTable() {
                                 Aggiungi un nuovo studente
                             </Button>
                         }
-                        pagination={{pageSize: 50}}
+                        pagination={{pageSize: 25}}
                         scroll={{y: 1000}}
                         rowKey={student => student.id}
                         expandable={{

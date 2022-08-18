@@ -39,4 +39,9 @@ public class SubjectController {
     public void addSubjectToStudent(@RequestBody ObjectNode json) {
         subjectService.addSubjectToStudent(json);
     }
+
+    @RequestMapping("/admin/addSubjectToTeacher")
+    public void addSubjectToTeacher(@RequestBody ObjectNode json) {
+        subjectService.addSubjectToTeacher(json);
+    }
 }

@@ -27,9 +27,14 @@ public class Teacher implements Comparable<Teacher> {
     //generic data
     private String name;
     private String surname;
-    private boolean isPresent;
 
     //attendance and teaching data
+    private boolean mondayIsPresent;
+    private boolean tuesdayIsPresent;
+    private boolean wednesdayIsPresent;
+    private boolean thursdayIsPresent;
+    private boolean fridayIsPresent;
+
     @ManyToMany
     private List<TimeSlot> timeSlotsOfPresence;
 
@@ -39,16 +44,6 @@ public class Teacher implements Comparable<Teacher> {
     @Override
     public int compareTo(Teacher other) {
         return this.name.compareTo(other.name);
-    }
-
-    public int compareBasedOnPresence(Teacher other) {
-        if (this.isPresent() && !other.isPresent()) {
-            return 1;
-        } else if (!this.isPresent() && other.isPresent()) {
-            return -1;
-        } else {
-            return 0;
-        }
     }
 
 }

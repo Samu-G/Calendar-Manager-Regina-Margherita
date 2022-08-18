@@ -3,6 +3,7 @@ package com.example.demo.services;
 import com.example.demo.models.subjects.Subject;
 import com.example.demo.repository.StudentRepository;
 import com.example.demo.repository.SubjectRepository;
+import com.example.demo.repository.TeacherRepository;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,8 @@ public class SubjectService {
     private final SubjectRepository subjectRepository;
 
     private final StudentRepository studentRepository;
+
+    private final TeacherRepository teacherRepository;
 
     @GetMapping
     public Subject getSubjectByName(String name) {
@@ -49,6 +52,19 @@ public class SubjectService {
     }
 
     @PostMapping
+    public void addSubjectToTeacher(ObjectNode json) {
+        Long teacherId = json.get("id").asLong();
+        String subjectName = json.get("subjectName").toString();
+        StringBuilder sb = new StringBuilder(subjectName);
+        sb.deleteCharAt(subjectName.length() - 1);
+        sb.deleteCharAt(0);
+        subjectName = sb.toString();
+        System.out.println(subjectName);
+        Subject subject = subjectRepository.findSubjectByNameOfTheSubject(subjectName);
+        teacherRepository.addSubjectToTeacher(teacherId, subject);
+    }
+
+    @PostMapping
     public void deleteSubjectById(Long id) {
         System.out.println(id);
         Subject subject = subjectRepository.getSubjectsById(id);
@@ -70,4 +86,6 @@ public class SubjectService {
             subjectRepository.save(newSubject);
         }
     }
+
+
 }

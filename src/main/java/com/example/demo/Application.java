@@ -5,6 +5,7 @@ import com.example.demo.models.subjects.Subject;
 import com.example.demo.models.teacher.Teacher;
 import com.example.demo.models.timeSlot.TimeSlot;
 import com.example.demo.models.users.Role;
+import com.example.demo.repository.TimeSlotRepository;
 import com.example.demo.services.AccountService;
 import com.example.demo.services.StudentService;
 import com.example.demo.services.SubjectService;
@@ -36,7 +37,8 @@ public class Application {
     CommandLineRunner run(AccountService accountService,
                           StudentService studentService,
                           SubjectService subjectService,
-                          TeacherService teacherService) {
+                          TeacherService teacherService,
+                          TimeSlotRepository timeSlotRepository) {
 
         return args -> {
             /*Role definition*/
@@ -51,19 +53,38 @@ public class Application {
             }
 
             /*Subject example*/
-            Subject storia1 = new Subject(null, "STORIA");
-            Subject diritto2 = new Subject(null, "DIRITTO ED ECONOMIA");
+            Subject italiano = new Subject(null, "ITALIANO");
+            Subject storia = new Subject(null, "STORIA");
+            Subject latino = new Subject(null, "LATINO");
+            Subject greco = new Subject(null, "GRECO");
+            Subject matematica = new Subject(null, "MATEMATICA");
+            Subject fisica = new Subject(null, "FISICA");
+            Subject scienzeDellaTerra = new Subject(null, "SCIENZE DELLA TERRA");
+            Subject chimica = new Subject(null, "CHIMICA");
+            Subject biologia = new Subject(null, "BIOLOGIA");
+            Subject dirittoEdEconomia = new Subject(null, "DIRITTO ED ECONOMIA");
+            Subject english = new Subject(null, "ENGLISH");
+            Subject deutsch = new Subject(null, "DEUTSCH");
 
-            if (subjectService.getSubjectByName("STORIA") == null) {
-                subjectService.addSubject(storia1);
-            }
-            if (subjectService.getSubjectByName("DIRITTO ED ECONOMIA") == null) {
-                subjectService.addSubject(diritto2);
-            }
+
+            if (subjectService.getSubjectByName("ITALIANO") == null) subjectService.addSubject(italiano);
+            if (subjectService.getSubjectByName("STORIA") == null) subjectService.addSubject(storia);
+            if (subjectService.getSubjectByName("LATINO") == null) subjectService.addSubject(latino);
+            if (subjectService.getSubjectByName("GRECO") == null) subjectService.addSubject(greco);
+            if (subjectService.getSubjectByName("MATEMATICA") == null) subjectService.addSubject(matematica);
+            if (subjectService.getSubjectByName("FISICA") == null) subjectService.addSubject(fisica);
+            if (subjectService.getSubjectByName("SCIENZE DELLA TERRA") == null)
+                subjectService.addSubject(scienzeDellaTerra);
+            if (subjectService.getSubjectByName("CHIMICA") == null) subjectService.addSubject(chimica);
+            if (subjectService.getSubjectByName("BIOLOGIA") == null) subjectService.addSubject(biologia);
+            if (subjectService.getSubjectByName("DIRITTO ED ECONOMIA") == null)
+                subjectService.addSubject(dirittoEdEconomia);
+            if (subjectService.getSubjectByName("ENGLISH") == null) subjectService.addSubject(english);
+            if (subjectService.getSubjectByName("DEUTSCH") == null) subjectService.addSubject(deutsch);
 
             List<Subject> subjectList = new ArrayList<>();
-            subjectList.add(subjectService.getSubjectByName("STORIA"));
-            subjectList.add(subjectService.getSubjectByName("DIRITTO"));
+            subjectList.add(subjectService.getSubjectByName("ITALIANO"));
+            subjectList.add(subjectService.getSubjectByName("LATINO"));
 
             /*Student example*/
 
@@ -79,23 +100,32 @@ public class Application {
                 studentService.addStudent(b);
             }
 
-            /*teacher example*/
-
             /*time slot example*/
             TimeSlot from900to930 = new TimeSlot(null, Time.valueOf("09:00:00"), Time.valueOf("09:30:00"));
-            if(teacherService.getTimeSlotByBeginTimeAndEndTime(Time.valueOf("09:00:00"),Time.valueOf("09:30:00")) == null) {
-                teacherService.addTimeSlot(from900to930);
-            }
+            timeSlotRepository.save(from900to930);
 
-            List <TimeSlot> timeSlotList = new ArrayList<>();
+
+            List<TimeSlot> timeSlotList = new ArrayList<>();
             timeSlotList.add(from900to930);
 
-            Teacher teacher1 = new Teacher(null, "NOME1", "COGNOME1", false, timeSlotList, subjectList);
-            if(teacherService.getTeacherByNameAndSurname("NOME1", "COGNOME1") == null) {
-                teacherService.addTeacher(teacher1);
-            }
+
+
+            /*teacher example*/
+
+            Teacher teacher1 = new Teacher(null, "NOME1", "COGNOME1",
+                    true, true, true, true, true
+                    , timeSlotList, subjectList);
+            teacherService.addTeacher(teacher1);
+
+            Teacher teacher2 = new Teacher(null, "NOME2", "COGNOME2",
+                    true, true, false, true, false
+                    , timeSlotList, subjectList);
+            teacherService.addTeacher(teacher2);
+
 
         };
+
+
     }
 
 }

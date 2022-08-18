@@ -22,6 +22,10 @@ public class TeacherService {
 
     @PostMapping
     public void addTeacher(Teacher teacher) {
+        String normalizedName = teacher.getName().substring(0,1).toUpperCase() + teacher.getName().substring(1).toLowerCase();
+        String normalizedSurname = teacher.getSurname().substring(0,1).toUpperCase() + teacher.getSurname().substring(1).toLowerCase();
+        teacher.setName(normalizedName);
+        teacher.setSurname(normalizedSurname);
         teacherRepository.save(teacher);
     }
 

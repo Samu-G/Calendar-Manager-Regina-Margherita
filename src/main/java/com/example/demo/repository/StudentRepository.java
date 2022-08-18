@@ -9,14 +9,10 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
 
-    public Student getStudentsById(Long id);
+    public Student findStudentsById(Long id);
 
     public Student findStudentByNameAndSurname(String name, String surname);
 
@@ -26,7 +22,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     public void setIsPresentByStudentId(String isPresent, Long studentId);
 
     default void flipPresentToStudent(Student student) {
-        Student s = getStudentsById(student.getId());
+        Student s = findStudentsById(student.getId());
         if (s.getIsPresent().equals("Si")) {
             setIsPresentByStudentId("No", student.getId());
         } else if (s.getIsPresent().equals("No")) {
@@ -35,7 +31,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     }
 
     default void addSubjectToStudent(Long studentId, Subject subject) {
-        Student s = getStudentsById(studentId);
+        Student s = findStudentsById(studentId);
         System.out.println(s.getSubjectsFollowedList());
         s.getSubjectsFollowedList().add(subject);
         System.out.println(s.getSubjectsFollowedList());
@@ -74,7 +70,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
 
     default void setFiscalCodeToStudent(Long studentId, String fiscalCode) {
-        Student s = getStudentsById(studentId);
+        Student s = findStudentsById(studentId);
         s.setFiscalCode(fiscalCode);
         save(s);
     }

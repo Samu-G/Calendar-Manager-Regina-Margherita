@@ -33,7 +33,7 @@ function SubjectTable() {
             key: 'name',
         },
         {
-            title: 'Action',
+            title: 'Azioni',
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">

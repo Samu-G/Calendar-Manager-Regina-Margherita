@@ -22,7 +22,6 @@ export const getAllTeachers = () =>
     fetch("/api/admin/getAllTeachers")
         .then(checkStatus);
 
-
 export const saveSubjectByName = subjectName =>
     fetch("api/admin/saveSubjectByName", {
             headers: {
@@ -52,6 +51,17 @@ export const addSubjectToStudent = (studentId, subjectName) =>
             body: JSON.stringify({id: studentId, subjectName: subjectName})
         }
     );
+
+export const addSubjectToTeacher = (teacherId, subjectName) =>
+    fetch("api/admin/addSubjectToTeacher", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({id: teacherId, subjectName: subjectName})
+        }
+    );
+
 
 export const flipIsPresent = student =>
     fetch("api/admin/flipPresentToStudent", {
@@ -92,7 +102,6 @@ export const setFCToStudent = (studentId, fiscalCode) =>
             body: JSON.stringify({id: studentId, fiscalCode: fiscalCode})
         }
     );
-
 
 export const addNewStudent = student =>
     fetch("api/admin/addStudent", {
