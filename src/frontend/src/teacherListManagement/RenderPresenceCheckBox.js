@@ -3,17 +3,16 @@ import React, {useState} from "react";
 import {setDayOfAttendanceToTeacherId, setDayOfPresentToStudent} from "../client";
 
 
-
-function RenderPresenceCheckBox({teacher}) {
+function RenderPresenceCheckBox({teacher, fetchTeachers}) {
 
     function setDefaultCheckedList() {
-        // let list = [];
-        // if (teacher.lun === "Si") list.push('Lunedi')
-        // if (teacher.mar === "Si") list.push('Martedi')
-        // if (teacher.mer === "Si") list.push('Mercoledi')
-        // if (teacher.gio === "Si") list.push('Giovedi')
-        // if (teacher.ven === "Si") list.push('Venerdi')
-        // return list;
+        let list = [];
+        if (teacher.mondayIsPresent) list.push('Lunedi')
+        if (teacher.tuesdayIsPresent) list.push('Martedi')
+        if (teacher.wednesdayIsPresent) list.push('Mercoledi')
+        if (teacher.thursdayIsPresent) list.push('Giovedi')
+         if (teacher.fridayIsPresent) list.push('Venerdi')
+        return list;
     }
 
     const CheckboxGroup = Checkbox.Group;
@@ -28,40 +27,27 @@ function RenderPresenceCheckBox({teacher}) {
         console.log(list);
         console.log(teacher.id);
         setDayOfAttendanceToTeacherId(teacher.id, list)
+            .then(() => {
+                message.success("Giorni di presenza modificati con successo")
+                fetchTeachers()
+            })
     }
 
 
-
-
     const onChange = (list) => {
-        // console.log(teacher)
         setCheckedList(list);
         setIndeterminate(!!list.length && list.length < plainOptions.length);
         setCheckAll(list.length === plainOptions.length);
-        setDayOfAttendanceToTeacher(list);
-    };
-
-    const onCheckAllChange = (e) => {
-        // setCheckedList(e.target.checked ? plainOptions : []);
-        // setIndeterminate(false);
-        // setCheckAll(e.target.checked);
-        //
-        // if (e.target.checked) {
-        //     setDayOfPresentStudentVar(student, plainOptions);
-        // } else {
-        //     setDayOfPresentStudentVar(student, []);
-        // }
+        if (checkAll) {
+            setDayOfAttendanceToTeacher(plainOptions);
+        } else {
+            setDayOfAttendanceToTeacher(list);
+        }
     };
 
     return (
-        <div>
-        <Checkbox indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}
-                  style={{marginLeft: 10, marginTop: 5}}>
-            Seleziona tutti
-        </Checkbox>
-    <CheckboxGroup options={plainOptions} value={checkedList} onChange={onChange}
-                   style={{marginLeft: 10}}/>
-        </div>
+            <CheckboxGroup options={plainOptions} value={checkedList} onChange={onChange}
+                           style={{marginLeft: 10, marginTop: 5}}/>
     );
 }
 

@@ -1,6 +1,5 @@
 package com.example.demo.models.teacher;
 
-import com.example.demo.models.student.Student;
 import com.example.demo.models.subjects.Subject;
 import com.example.demo.models.timeSlot.TimeSlot;
 import lombok.AllArgsConstructor;
@@ -36,7 +35,15 @@ public class Teacher implements Comparable<Teacher> {
     private boolean fridayIsPresent;
 
     @ManyToMany
-    private List<TimeSlot> timeSlotsOfPresence;
+    private List<TimeSlot> mondayTimeSlots;
+    @ManyToMany
+    private List<TimeSlot> tuesdayTimeSlots;
+    @ManyToMany
+    private List<TimeSlot> wednesdayTimeSlots;
+    @ManyToMany
+    private List<TimeSlot> thursdayTimeSlots;
+    @ManyToMany
+    private List<TimeSlot> fridayTimeSlots;
 
     @ManyToMany
     private List<Subject> subjectTeached;

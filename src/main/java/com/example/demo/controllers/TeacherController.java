@@ -35,4 +35,9 @@ public class TeacherController {
         teacherService.setDayOfAttendanceToTeacher(json);
     }
 
+    @RequestMapping("/admin/setTimeSlotToTeacher")
+    public void setTimeSlotToTeacher(@RequestBody ObjectNode json) {
+        System.out.println(json);
+    }
+
 }

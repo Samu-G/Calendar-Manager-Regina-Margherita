@@ -82,6 +82,15 @@ export const setDayOfAttendanceToTeacherId = (teacherId, presenceDaysList) =>
         }
     );
 
+export const setTimeSlotToTeacherId = (teacherId, dayName, timeSlot, checked) =>
+    fetch("api/admin/setTimeSlotToTeacher", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({id: teacherId, dayName: dayName, timeSlot: timeSlot, checked: checked})
+        }
+    );
 
 export const flipIsPresent = student =>
     fetch("api/admin/flipPresentToStudent", {

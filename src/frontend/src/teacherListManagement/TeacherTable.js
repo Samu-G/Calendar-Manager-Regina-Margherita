@@ -5,6 +5,7 @@ import {getAllTeachers} from "../client";
 import {Content, Header} from "antd/es/layout/layout";
 import RenderSubjectTeached from "./RenderSubjectTeached";
 import RenderPresenceCheckBox from "./RenderPresenceCheckBox";
+import TimeSlotManagementTable from "./TimeSlotManagementTable";
 
 const antIcon = <LoadingOutlined style={{fontSize: 24}} spin/>;
 
@@ -108,7 +109,7 @@ function TeacherTable() {
                                     Aggiungi un nuovo docente
                                 </Button>
                             }
-                            pagination={{pageSize: 25}}
+                            pagination={{pageSize: 300}}
                             scroll={{y: 1000}}
                             rowKey={teacher => teacher.id}
                             expandable={{
@@ -116,13 +117,15 @@ function TeacherTable() {
                                     <div style={{margin: 5}}>
                                         <Row>
                                             <Col span={12}>
-                                                <Divider orientation="left" orientationMargin="0">Gestione insegnamenti:</Divider>
+                                                <Divider orientation="left" orientationMargin="0">Gestione
+                                                    insegnamenti:</Divider>
                                                 <p>Materie insegnate:</p>
                                                 <RenderSubjectTeached teacher={teacher} fetchTeachers={fetchTeachers}/>
                                             </Col>
 
                                             <Col span={12}>
-                                                <Divider orientation="left" orientationMargin="0">Dati generici:</Divider>
+                                                <Divider orientation="left" orientationMargin="0">Dati
+                                                    generici:</Divider>
                                                 <p>Nome: {teacher.name}</p>
                                                 <br/>
                                                 <p>Cognome: {teacher.surname}</p>
@@ -130,8 +133,20 @@ function TeacherTable() {
                                         </Row>
 
                                         <Row>
-                                            <Divider orientation="left" orientationMargin="0">Gestione presenza:</Divider>
-                                            <RenderPresenceCheckBox teacher={teacher}/>
+                                            <Divider orientation="left" orientationMargin="0">Gestione giorni di
+                                                presenza:</Divider>
+                                            <div>
+                                                <RenderPresenceCheckBox teacher={teacher}
+                                                                        fetchTeachers={fetchTeachers}/>
+                                            </div>
+                                        </Row>
+
+                                        <Row>
+                                            <Divider orientation="left" orientationMargin="0">Gestione fasce orarie di
+                                                presenza:</Divider>
+                                            <div >
+                                                <TimeSlotManagementTable teacher={teacher}/>
+                                            </div>
                                         </Row>
                                     </div>
                                 ),
