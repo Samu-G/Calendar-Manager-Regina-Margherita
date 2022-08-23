@@ -1,8 +1,7 @@
 package com.example.demo.repository;
 
-import com.example.demo.models.subjects.Subject;
-import com.example.demo.models.teacher.Teacher;
-import com.example.demo.models.timeSlot.TimeSlot;
+import com.example.demo.models.Subject;
+import com.example.demo.models.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +14,7 @@ public interface TeacherRepository extends JpaRepository<Teacher, Long> {
 
     default void addSubjectToTeacher(Long teacherId, Subject subject) {
         Teacher t = findTeacherById(teacherId);
-        t.getSubjectTeached().add(subject);
+        t.getSubjectsTeached().add(subject);
         save(t);
     }
 }

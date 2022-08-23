@@ -14,6 +14,27 @@ export const getAllStudents = () =>
     fetch("/api/admin/getAllStudent")
         .then(checkStatus);
 
+export const getAllStudentsPresentOnMonday = () =>
+    fetch("api/admin/getAllStudentsPresentOnMonday")
+        .then(checkStatus)
+
+export const getAllStudentsPresentOnTuesday = () =>
+    fetch("api/admin/getAllStudentsPresentOnTuesday")
+        .then(checkStatus)
+
+export const getAllStudentsPresentOnWednesday = () =>
+    fetch("api/admin/getAllStudentsPresentOnWednesday")
+        .then(checkStatus)
+
+export const getAllStudentsPresentOnThursday = () =>
+    fetch("api/admin/getAllStudentsPresentOnThursday")
+        .then(checkStatus)
+
+export const getAllStudentsPresentOnFriday = () =>
+    fetch("api/admin/getAllStudentsPresentOnFriday")
+        .then(checkStatus)
+
+
 export const getAllSubjects = () =>
     fetch("/api/admin/getAllSubjects")
         .then(checkStatus);
@@ -21,6 +42,26 @@ export const getAllSubjects = () =>
 export const getAllTeachers = () =>
     fetch("/api/admin/getAllTeachers")
         .then(checkStatus);
+
+export const getAllTeachersPresentOnMonday = () =>
+    fetch("api/admin/getAllTeachersPresentOnMonday")
+        .then(checkStatus)
+
+export const getAllTeachersPresentOnTuesday = () =>
+    fetch("api/admin/getAllTeachersPresentOnTuesday")
+        .then(checkStatus)
+
+export const getAllTeachersPresentOnWednesday = () =>
+    fetch("api/admin/getAllTeachersPresentOnWednesday")
+        .then(checkStatus)
+
+export const getAllTeachersPresentOnThursday = () =>
+    fetch("api/admin/getAllTeachersPresentOnThursday")
+        .then(checkStatus)
+
+export const getAllTeachersPresentOnFriday = () =>
+    fetch("api/admin/getAllTeachersPresentOnFriday")
+        .then(checkStatus)
 
 export const saveSubjectByName = subjectName =>
     fetch("api/admin/saveSubjectByName", {

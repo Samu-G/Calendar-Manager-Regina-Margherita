@@ -2,21 +2,19 @@ import React, {useState} from 'react'
 import {Layout} from 'antd';
 import Sider from "./Sider";
 import './App.css';
-import StudentListManagement from "./studentListManagement/StudentListManagement";
-import SubjectListManagement from "./subjectListManagement/SubjectListManagement";
-import TeacherListManagement from "./teacherListManagement/TeacherListManagement";
+import CalendarCreatorMain from "./calendarCreator/CalendarCreatorMain";
 
 const {Content} = Layout;
 
 export default function App() {
 
     const components = {
-        1: <div>Option 1</div>,
+        1: CalendarCreatorMain(),
         2: <div>Option 2</div>,
         3: <div>Option 3</div>,
-        4: StudentListManagement(),
-        5: TeacherListManagement(),
-        6: SubjectListManagement(),
+        4: <div>Opzione Lista studenti</div>,
+        5: <div>Opzione Lista docenti</div>,
+        6: <div>Opzione Lista materie</div>,
         7: <div>Option 7</div>,
     };
 

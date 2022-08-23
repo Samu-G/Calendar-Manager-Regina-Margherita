@@ -1,6 +1,6 @@
 package com.example.demo.controllers;
 
-import com.example.demo.models.teacher.Teacher;
+import com.example.demo.models.Teacher;
 import com.example.demo.services.TeacherService;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.AllArgsConstructor;
@@ -25,15 +25,50 @@ public class TeacherController {
         return teacherList;
     }
 
+    @RequestMapping("/admin/getAllTeachersPresentOnMonday")
+    public List<Teacher> getAllTeachersPresentOnMonday() {
+        List<Teacher> teachersPresentOnMonday = teacherService.getAllTeachersPresentOnMonday();
+        Collections.sort(teachersPresentOnMonday);
+        return teachersPresentOnMonday;
+    }
+
+    @RequestMapping("/admin/getAllTeachersPresentOnTuesday")
+    public List<Teacher> getAllTeachersPresentOnTuesday() {
+        List<Teacher> teachersPresentOnTuesday = teacherService.getAllTeachersPresentOnTuesday();
+        Collections.sort(teachersPresentOnTuesday);
+        return teachersPresentOnTuesday;
+    }
+
+    @RequestMapping("/admin/getAllTeachersPresentOnWednesday")
+    public List<Teacher> getAllTeachersPresentOnWednesday() {
+        List<Teacher> teachersPresentOnWednesday = teacherService.getAllTeachersPresentOnWednesday();
+        Collections.sort(teachersPresentOnWednesday);
+        return teachersPresentOnWednesday;
+    }
+
+    @RequestMapping("/admin/getAllTeachersPresentOnThursday")
+    public List<Teacher> getAllTeachersPresentOnThursday() {
+        List<Teacher> teachersPresentOnThursday = teacherService.getAllTeachersPresentOnThursday();
+        Collections.sort(teachersPresentOnThursday);
+        return teachersPresentOnThursday;
+    }
+
+    @RequestMapping("/admin/getAllTeachersPresentOnFriday")
+    public List<Teacher> getAllTeachersPresentOnFriday() {
+        List<Teacher> teachersPresentOnFriday = teacherService.getAllTeachersPresentOnFriday();
+        Collections.sort(teachersPresentOnFriday);
+        return teachersPresentOnFriday;
+    }
+
     @RequestMapping("/admin/deleteSubjectFromTheTeacher")
     public void deleteSubjectFromTheTeacher(@RequestBody ObjectNode json) {
         teacherService.deleteSubjectFromTheTeacher(json);
     }
 
-    @RequestMapping("admin/setDayOfAttendanceToTeacher")
-    public void setDayOfAttendanceToTeacher(@RequestBody ObjectNode json) {
-        teacherService.setDayOfAttendanceToTeacher(json);
-    }
+//    @RequestMapping("admin/setDayOfAttendanceToTeacher")
+//    public void setDayOfAttendanceToTeacher(@RequestBody ObjectNode json) {
+//        teacherService.setDayOfAttendanceToTeacher(json);
+//    }
 
     @RequestMapping("/admin/setTimeSlotToTeacher")
     public void setTimeSlotToTeacher(@RequestBody ObjectNode json) {

@@ -1,12 +1,9 @@
-package com.example.demo.models.student;
+package com.example.demo.models;
 
-import com.example.demo.models.subjects.Subject;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
 
-import java.util.Comparator;
 import java.util.List;
 
 import static javax.persistence.GenerationType.AUTO;
@@ -20,21 +17,21 @@ public class Student implements Comparable<Student> {
     @GeneratedValue(strategy = AUTO)
     private Long id;
 
-    /*Compulsory field*/
+    //generic data
     private String name;
     private String surname;
     private String fiscalCode;
+    private String emailAddress;
+    private int currentYear;
+    private boolean isPresent;
 
-    /*Not compulsory field*/
-    private String currentYear;
-    private String isPresent;
-    private String lun;
-    private String mar;
-    private String mer;
-    private String gio;
-    private String ven;
+    //attendance
     @ManyToMany
-    private List<Subject> subjectsFollowedList;
+    private List<Day> daysOfPresence;
+
+    // subjects followed
+    @ManyToMany
+    private List<Subject> subjectsFollowed;
 
     @Override
     public int compareTo(Student other) {

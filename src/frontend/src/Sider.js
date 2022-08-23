@@ -15,7 +15,11 @@ export default function Sider(props) {
     const {handleClick} = props;
     return (
         <Layout.Sider>
-            <Menu theme="dark" mode="inline" openKeys={"1"}>
+            <Menu theme="dark"
+                  mode="inline"
+                /*openKeys={"1"}*/
+                  defaultSelectedKeys={['1']}
+            >
                 <Menu.Item key="1" icon={<CalendarOutlined/>} onClick={handleClick}>
                     Crea calendario
                 </Menu.Item>
@@ -33,9 +37,6 @@ export default function Sider(props) {
                 </Menu.Item>
                 <Menu.Item key="6" icon={<ExperimentOutlined />} onClick={handleClick}>
                     Materie
-                </Menu.Item>
-                <Menu.Item key="7" icon={<MailOutlined/>} onClick={handleClick}>
-                    Emailing
                 </Menu.Item>
             </Menu>
         </Layout.Sider>

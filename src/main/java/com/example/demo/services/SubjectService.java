@@ -1,6 +1,6 @@
 package com.example.demo.services;
 
-import com.example.demo.models.subjects.Subject;
+import com.example.demo.models.Subject;
 import com.example.demo.repository.StudentRepository;
 import com.example.demo.repository.SubjectRepository;
 import com.example.demo.repository.TeacherRepository;
@@ -21,11 +21,6 @@ public class SubjectService {
     private final StudentRepository studentRepository;
 
     private final TeacherRepository teacherRepository;
-
-    @GetMapping
-    public Subject getSubjectByName(String name) {
-        return subjectRepository.findSubjectByNameOfTheSubject(name);
-    }
 
     @PostMapping
     public void addSubject(Subject subject) {

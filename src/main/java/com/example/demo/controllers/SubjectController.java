@@ -1,6 +1,6 @@
 package com.example.demo.controllers;
 
-import com.example.demo.models.subjects.Subject;
+import com.example.demo.models.Subject;
 import com.example.demo.services.SubjectService;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.AllArgsConstructor;

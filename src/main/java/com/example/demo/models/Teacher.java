@@ -1,7 +1,5 @@
-package com.example.demo.models.teacher;
+package com.example.demo.models;
 
-import com.example.demo.models.subjects.Subject;
-import com.example.demo.models.timeSlot.TimeSlot;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,30 +21,30 @@ public class Teacher implements Comparable<Teacher> {
     @Id
     @GeneratedValue(strategy = AUTO)
     private Long id;
+
     //generic data
     private String name;
     private String surname;
+    private String fiscalCode;
+    private String emailAddress;
 
-    //attendance and teaching data
-    private boolean mondayIsPresent;
-    private boolean tuesdayIsPresent;
-    private boolean wednesdayIsPresent;
-    private boolean thursdayIsPresent;
-    private boolean fridayIsPresent;
+    //attendance
+    @ManyToMany
+    private List<Day> daysOfPresence;
+    @ManyToMany
+    private List<TimeSlot> timeSlotsOfPresenceOnMonday;
+    @ManyToMany
+    private List<TimeSlot> timeSlotsOfPresenceOnTuesday;
+    @ManyToMany
+    private List<TimeSlot> timeSlotsOfPresenceOnWednesday;
+    @ManyToMany
+    private List<TimeSlot> timeSlotsOfPresenceOnThursday;
+    @ManyToMany
+    private List<TimeSlot> timeSlotsOfPresenceOnFriday;
 
+    //subjects teached
     @ManyToMany
-    private List<TimeSlot> mondayTimeSlots;
-    @ManyToMany
-    private List<TimeSlot> tuesdayTimeSlots;
-    @ManyToMany
-    private List<TimeSlot> wednesdayTimeSlots;
-    @ManyToMany
-    private List<TimeSlot> thursdayTimeSlots;
-    @ManyToMany
-    private List<TimeSlot> fridayTimeSlots;
-
-    @ManyToMany
-    private List<Subject> subjectTeached;
+    private List<Subject> subjectsTeached;
 
     @Override
     public int compareTo(Teacher other) {

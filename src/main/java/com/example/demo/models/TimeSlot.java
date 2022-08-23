@@ -1,4 +1,4 @@
-package com.example.demo.models.timeSlot;
+package com.example.demo.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,9 +21,10 @@ public class TimeSlot implements Comparable<TimeSlot>{
     @GeneratedValue(strategy = AUTO)
     private Long id;
 
+    //generic data
+    private String timeSlotName;
     private Time beginTime;
     private Time endTime;
-
 
     @Override
     public int compareTo(TimeSlot other) {

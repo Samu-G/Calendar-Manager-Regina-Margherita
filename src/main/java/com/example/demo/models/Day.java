@@ -1,6 +1,5 @@
-package com.example.demo.models.subjects;
+package com.example.demo.models;
 
-import com.example.demo.models.student.Student;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +7,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
+import java.util.List;
 
 import static javax.persistence.GenerationType.AUTO;
 
@@ -15,14 +17,13 @@ import static javax.persistence.GenerationType.AUTO;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Subject implements Comparable<Subject> {
+public class Day {
     @Id
     @GeneratedValue(strategy = AUTO)
     private Long id;
-    private String nameOfTheSubject;
 
-    @Override
-    public int compareTo(Subject other) {
-        return this.nameOfTheSubject.compareTo(other.nameOfTheSubject);
-    }
+    private String dayName;
+
+    @ManyToMany
+    private List<TimeSlot> timeSlots;
 }
