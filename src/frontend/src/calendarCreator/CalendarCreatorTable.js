@@ -150,6 +150,9 @@ const CalendarCreatorTable = ({date, teachers, students}) => {
         },
     ];
 
+    let titleOfTheCalendar = "";
+    const calendar = [];
+
     useEffect(() => {
         console.log("Calendar Creator Table");
         setCalendarDate(date);
@@ -165,6 +168,13 @@ const CalendarCreatorTable = ({date, teachers, students}) => {
         return data.format('dddd') + " " + data.format('LL');
     }
 
+    function returnTitleOfTheCalendar() {
+        titleOfTheCalendar = "Piano di lavoro giornaliero per " + normalizeDateForItaly();
+        calendar.push({title: titleOfTheCalendar});
+        console.log(calendar);
+        return titleOfTheCalendar;
+    }
+
 
     return <>
         <CalendarCreatorAddRowModal
@@ -177,7 +187,7 @@ const CalendarCreatorTable = ({date, teachers, students}) => {
             setStudentsToBeScheduled={setStudentsToBeScheduled}
         />
         <Header className="site-layout-background" style={{minHeight: 110, padding: 7, paddingTop: 0}}>
-            <Title level={5}>Calendario per {normalizeDateForItaly()} </Title>
+            <Title level={5}> {returnTitleOfTheCalendar()} </Title>
             <Descriptions size="medium" column={2}>
                 <p>Docenti presenti oggi: {listOfTeachers.length}</p>
                 <p>Studenti presenti oggi: {listOfStudents.length}</p>

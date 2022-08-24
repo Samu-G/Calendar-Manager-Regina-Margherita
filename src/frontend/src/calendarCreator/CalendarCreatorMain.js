@@ -145,7 +145,6 @@ const CalendarCreatorMain = () => {
             </Space> </Row> </>
         } else {
             let dayOfTheWeekName = moment(date, 'YYYY-MM-DD').format('dddd');
-            console.log(dayOfTheWeekName);
             switch (dayOfTheWeekName) {
                 case "lunedì":
                     return <CalendarCreatorTable date={date} teachers={teachersPresentOnMonday}
@@ -162,6 +161,7 @@ const CalendarCreatorMain = () => {
                 case "venerdì":
                     return <CalendarCreatorTable date={date} teachers={teachersPresentOnFriday}
                                                  students={studentsPresentOnFriday}/>
+                default: return <Title level={5} type="danger">Non è possibile creare un calendario per un giorno festivo</Title>
             }
         }
     }

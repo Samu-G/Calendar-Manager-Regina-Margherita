@@ -1,6 +1,7 @@
-import {Button, Divider, Dropdown, Modal, Space, message, Menu, Table, Typography} from 'antd';
+import {Button, Divider, Dropdown, Modal, Space, message, Menu, Table, Typography, List} from 'antd';
 import React, {useEffect, useState} from 'react';
 import {DownOutlined} from "@ant-design/icons";
+import CalendarCreatorAddStudentsToTimeSlot from "./CalendarCreatorAddStudentsToTimeSlot";
 
 const {Title} = Typography;
 
@@ -66,6 +67,22 @@ const CalendarCreatorAddRowModal = ({
         />
     );
 
+    function renderTimeSlotsOfPresenceForTeacher() {
+        let timeSlot = [];
+        if (dayName === "lunedì") {
+            timeSlot = teacherSelected["timeSlotsOfPresenceOnMonday"];
+        } else if (dayName === "martedì") {
+            timeSlot = teacherSelected["timeSlotsOfPresenceOnTuesday"];
+        } else if (dayName === "mercoledì") {
+            timeSlot = teacherSelected["timeSlotsOfPresenceOnWednesday"];
+        } else if (dayName === "giovedì") {
+            timeSlot = teacherSelected["timeSlotsOfPresenceOnThursday"];
+        } else if (dayName === "venerdì") {
+            timeSlot = teacherSelected["timeSlotsOfPresenceOnFriday"];
+        }
+        return timeSlot;
+    }
+
     function renderCore() {
         if (!isTeacherSelected) {
             return (
@@ -84,31 +101,38 @@ const CalendarCreatorAddRowModal = ({
                 </>
             );
         } else {
-            let timeSlot = [];
-            if (dayName === "lunedì") {
-                timeSlot = teacherSelected["timeSlotsOfPresenceOnMonday"];
-            } else if (dayName === "martedì") {
-                timeSlot = teacherSelected["timeSlotsOfPresenceOnTuesday"];
-            } else if (dayName === "mercoledì") {
-                timeSlot = teacherSelected["timeSlotsOfPresenceOnWednesday"];
-            } else if (dayName === "giovedì") {
-                timeSlot = teacherSelected["timeSlotsOfPresenceOnThursday"];
-            } else if (dayName === "venerdì") {
-                timeSlot = teacherSelected["timeSlotsOfPresenceOnFriday"];
-            }
+            let timeSlot = renderTimeSlotsOfPresenceForTeacher();
+
             let subjectTeachedByName = [];
             teacherSelected["subjectsTeached"].forEach((subject) => {
-                subjectTeachedByName.push("• " + subject["nameOfTheSubject"] + " ");
-            })
+                subjectTeachedByName.push(subject["nameOfTheSubject"]);
+            });
+
+            const studentsWitchFollowSubjectTeached = [];
+            for (let i = 0; i < studentsToBeScheduled.length; i++) {
+                for (let j = 0; j < studentsToBeScheduled[i]["subjectsFollowed"].length; j++) {
+                    if (subjectTeachedByName.includes(studentsToBeScheduled[i]["subjectsFollowed"][j]["nameOfTheSubject"])) {
+                        studentsWitchFollowSubjectTeached.push(studentsToBeScheduled[i]);
+                        break;
+                    }
+                }
+            }
+
+            console.log(studentsWitchFollowSubjectTeached);
 
             let data = [];
 
+            let key = 1;
             timeSlot.forEach((timeSlot) => {
+
                 data.push({
                     timeSlotName: timeSlot["timeSlotName"],
                     timeSlot: timeSlot["beginTime"] + " - " + timeSlot["endTime"],
                     students: timeSlot["timeSlotName"],
+                    key: key,
                 })
+
+                key = key + 1;
             });
 
             const columns = [
@@ -122,6 +146,11 @@ const CalendarCreatorAddRowModal = ({
                     dataIndex: 'students',
                     key: 'students',
                     width: 500,
+                    render: (_, record) => {
+                        return <CalendarCreatorAddStudentsToTimeSlot
+                            studentsWitchFollowSubjectTeached={studentsWitchFollowSubjectTeached}
+                        />
+                    }
                 }
             ];
 
