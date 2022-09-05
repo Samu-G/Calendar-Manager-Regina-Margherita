@@ -1,6 +1,6 @@
 import {Button, Input, message} from "antd";
 import React, {useState} from "react";
-import {setFCToStudent} from "../client";
+import {setFiscalCodeToStudent} from "../../client";
 
 
 function FiscalCodeForm({student, fetchStudents}) {
@@ -12,7 +12,7 @@ function FiscalCodeForm({student, fetchStudents}) {
     }
 
     const handleClick = () => {
-        setFCToStudent(
+        setFiscalCodeToStudent(
             student.id,
             fiscalCode
         ).then(() => {

@@ -20,7 +20,7 @@ import {
     flipIsPresent,
     getAllStudents, getAllSubjects, setCurrentYearToStudent,
     setDayOfPresentToStudent
-} from "../client";
+} from "../../client";
 import {DownOutlined, LoadingOutlined, PlusOutlined} from "@ant-design/icons";
 import {Content, Header} from "antd/es/layout/layout";
 import StudentDrawerForm from "./StudentDrawerForm";

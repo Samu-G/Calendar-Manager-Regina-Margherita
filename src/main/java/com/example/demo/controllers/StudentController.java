@@ -20,6 +20,31 @@ public class StudentController {
 
     private final StudentService studentService;
 
+    @PostMapping("/admin/addStudent")
+    public void addStudent(@RequestBody ObjectNode json) {
+        studentService.addStudent(json);
+    }
+
+    @PostMapping("/admin/setFiscalCodeToStudent")
+    public void setFiscalCodeToStudent(@RequestBody ObjectNode json) {
+        studentService.setFiscalCodeToStudent(json);
+    }
+
+    @PostMapping("/admin/setEmailAddressToStudent")
+    public void setEmailAddressToStudent(@RequestBody ObjectNode json) {
+        studentService.setEmailAddressToStudent(json);
+    }
+
+    @PostMapping("/admin/setPresenceToStudent")
+    public void setPresenceToStudent(@RequestBody ObjectNode json) {
+        studentService.setPresenceToStudent(json);
+    }
+
+    @PostMapping("/admin/getNameOfTheDaysOfPresenceFromStudent")
+    public List<String> getNameOfTheDaysOfPresenceFromStudent(@RequestBody ObjectNode json) {
+        return studentService.getNameOfTheDaysOfPresenceFromStudent(json);
+    }
+
     @RequestMapping("/admin/getAllStudent")
     public List<Student> getAllStudents() {
         List<Student> studentList = studentService.getAllStudents();
@@ -63,10 +88,7 @@ public class StudentController {
     }
 
 
-    @PostMapping("/admin/addStudent")
-    public void addStudent(@RequestBody Student student) {
-        studentService.addStudent(student);
-    }
+
 
     @PostMapping("admin/flipPresentToStudent")
     public void flipPresentToStudent(@RequestBody Student student) {
@@ -83,9 +105,6 @@ public class StudentController {
 //        studentService.setCurrentYearToStudent(json);
 //    }
 
-    @PostMapping("/admin/setFiscalCodeToStudent")
-    public void setFiscalCodeToStudent(@RequestBody ObjectNode json) {
-        studentService.setFiscalCodeToStudent(json);
-    }
+
 
 }

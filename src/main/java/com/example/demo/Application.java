@@ -47,8 +47,8 @@ public class Application {
             Day friday = createFriday(timeSlotRepository, dayRepository);
 
             // Creazione del docente "Prova" "Docente"
-//            Teacher provaDocente = createProvaDocenteExample(subjectRepository, teacherRepository, timeSlotRepository, monday, tuesday, wednesday, thursday);
-//            Student provaStudente = provaStudente(studentRepository, subjectRepository, monday, tuesday, wednesday, thursday);
+            Teacher provaDocente = createProvaDocenteExample(subjectRepository, teacherRepository, timeSlotRepository, monday, tuesday, wednesday, thursday);
+            Student provaStudente = provaStudente(studentRepository, subjectRepository, monday, tuesday, wednesday, thursday);
 //
 //            // Creazione di un calendario di prova
 //            TimeSlot timeSlotReference = timeSlotRepository.findTimeSlotByTimeSlotName("monday_from_08_30_to_09_00");

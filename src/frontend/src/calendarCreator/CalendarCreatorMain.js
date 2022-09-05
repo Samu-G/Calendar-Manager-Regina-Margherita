@@ -113,7 +113,6 @@ const CalendarCreatorMain = () => {
         fetchTeachers();
         fetchStudents();
         console.log("Calendar creator main mounted.");
-        console.log(teachers);
     }, []);
 
     function renderCreateCalendarButton() {

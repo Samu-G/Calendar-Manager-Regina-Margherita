@@ -4,8 +4,7 @@ import {
     BarChartOutlined,
     CalendarOutlined,
     CarryOutOutlined,
-    CommentOutlined, ExperimentOutlined,
-    MailOutlined,
+    ExperimentOutlined,
     SolutionOutlined,
     TeamOutlined
 } from "@ant-design/icons";
@@ -35,7 +34,7 @@ export default function Sider(props) {
                 <Menu.Item key="5" icon={<SolutionOutlined/>} onClick={handleClick}>
                     Docenti
                 </Menu.Item>
-                <Menu.Item key="6" icon={<ExperimentOutlined />} onClick={handleClick}>
+                <Menu.Item key="6" icon={<ExperimentOutlined/>} onClick={handleClick}>
                     Materie
                 </Menu.Item>
             </Menu>

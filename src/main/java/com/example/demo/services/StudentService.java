@@ -1,6 +1,8 @@
 package com.example.demo.services;
 
+import com.example.demo.models.Day;
 import com.example.demo.models.Student;
+import com.example.demo.models.Subject;
 import com.example.demo.models.Teacher;
 import com.example.demo.repository.DayRepository;
 import com.example.demo.repository.StudentRepository;
@@ -21,8 +23,70 @@ public class StudentService {
 
     private final DayRepository dayRepository;
 
-    public Student getStudentByNameAndSurname(String name, String surname) {
-        return studentRepository.findStudentByNameAndSurname(name, surname);
+    @PostMapping
+    public void addStudent(ObjectNode json) {
+        String name = json.get("name").textValue();
+        name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+        String surname = json.get("surname").textValue();
+        surname = surname.substring(0, 1).toUpperCase() + surname.substring(1).toLowerCase();
+        String fiscalCode = json.get("fiscalCode").textValue();
+        fiscalCode = fiscalCode.toUpperCase();
+        String emailAddress = json.get("emailAddress").textValue();
+        emailAddress = emailAddress.toLowerCase();
+        int currentYear = 1;
+        boolean isPresent = true;
+        List<Day> daysOfPresenceOfTheStudent = new ArrayList<>();
+        daysOfPresenceOfTheStudent.add(dayRepository.findDayByDayName("Monday"));
+        daysOfPresenceOfTheStudent.add(dayRepository.findDayByDayName("Tuesday"));
+        daysOfPresenceOfTheStudent.add(dayRepository.findDayByDayName("Wednesday"));
+        daysOfPresenceOfTheStudent.add(dayRepository.findDayByDayName("Thursday"));
+        daysOfPresenceOfTheStudent.add(dayRepository.findDayByDayName("Friday"));
+        List<Subject> subjectsFollowed = new ArrayList<>();
+
+        Student aNewStudent = new Student(null, name, surname, fiscalCode, emailAddress, currentYear, isPresent,
+                daysOfPresenceOfTheStudent, subjectsFollowed);
+
+        studentRepository.save(aNewStudent);
+    }
+
+    @PostMapping
+    public void setFiscalCodeToStudent(ObjectNode json) {
+        Long studentId = json.get("studentId").asLong();
+        String fiscalCode = json.get("newFiscalCode").textValue();
+        Student toEdit = studentRepository.findStudentsById(studentId);
+        toEdit.setFiscalCode(fiscalCode);
+        studentRepository.save(toEdit);
+    }
+
+    @PostMapping
+    public void setEmailAddressToStudent(ObjectNode json) {
+        Long studentId = json.get("studentId").asLong();
+        String emailAddress = json.get("newEmailAddress").textValue();
+        Student toEdit = studentRepository.findStudentsById(studentId);
+        toEdit.setEmailAddress(emailAddress);
+        studentRepository.save(toEdit);
+    }
+
+    @PostMapping
+    public void setPresenceToStudent(ObjectNode json) {
+        Long studentId = json.get("studentId").asLong();
+        boolean isPresent = json.get("isPresent").asBoolean();
+        System.out.println(studentId);
+        System.out.println(isPresent);
+        Student toEdit = studentRepository.findStudentsById(studentId);
+        toEdit.setPresent(isPresent);
+        studentRepository.save(toEdit);
+    }
+
+    @GetMapping
+    public List<String> getNameOfTheDaysOfPresenceFromStudent(ObjectNode json) {
+        List<String> nameOfTheDaysOfPresenceList = new ArrayList<>();
+        Long studentId = json.get("studentId").asLong();
+        Student student = studentRepository.findStudentsById(studentId);
+        for(Day day : student.getDaysOfPresence()) {
+            nameOfTheDaysOfPresenceList.add(day.getDayName());
+        }
+        return nameOfTheDaysOfPresenceList;
     }
 
     @GetMapping
@@ -34,8 +98,8 @@ public class StudentService {
     public List<Student> getAllStudentsPresentOnMonday() {
         List<Student> studentsList = getAllStudents();
         List<Student> studentsPresentOnMonday = new ArrayList<>();
-        for(Student s : studentsList) {
-            if(s.getDaysOfPresence().contains(dayRepository.findDayByDayName("Monday"))) {
+        for (Student s : studentsList) {
+            if (s.getDaysOfPresence().contains(dayRepository.findDayByDayName("Monday"))) {
                 studentsPresentOnMonday.add(s);
             }
         }
@@ -46,8 +110,8 @@ public class StudentService {
     public List<Student> getAllStudentsPresentOnTuesday() {
         List<Student> studentsList = getAllStudents();
         List<Student> studentsPresentOnTuesday = new ArrayList<>();
-        for(Student s : studentsList) {
-            if(s.getDaysOfPresence().contains(dayRepository.findDayByDayName("Tuesday"))) {
+        for (Student s : studentsList) {
+            if (s.getDaysOfPresence().contains(dayRepository.findDayByDayName("Tuesday"))) {
                 studentsPresentOnTuesday.add(s);
             }
         }
@@ -58,8 +122,8 @@ public class StudentService {
     public List<Student> getAllStudentsPresentOnWednesday() {
         List<Student> studentsList = getAllStudents();
         List<Student> studentsPresentOnWednesday = new ArrayList<>();
-        for(Student s : studentsList) {
-            if(s.getDaysOfPresence().contains(dayRepository.findDayByDayName("Wednesday"))) {
+        for (Student s : studentsList) {
+            if (s.getDaysOfPresence().contains(dayRepository.findDayByDayName("Wednesday"))) {
                 studentsPresentOnWednesday.add(s);
             }
         }
@@ -70,8 +134,8 @@ public class StudentService {
     public List<Student> getAllStudentsPresentOnThursday() {
         List<Student> studentsList = getAllStudents();
         List<Student> studentsPresentOnThursday = new ArrayList<>();
-        for(Student s : studentsList) {
-            if(s.getDaysOfPresence().contains(dayRepository.findDayByDayName("Thursday"))) {
+        for (Student s : studentsList) {
+            if (s.getDaysOfPresence().contains(dayRepository.findDayByDayName("Thursday"))) {
                 studentsPresentOnThursday.add(s);
             }
         }
@@ -82,22 +146,15 @@ public class StudentService {
     public List<Student> getAllStudentsPresentOnFriday() {
         List<Student> studentsList = getAllStudents();
         List<Student> studentsPresentOnFriday = new ArrayList<>();
-        for(Student s : studentsList) {
-            if(s.getDaysOfPresence().contains(dayRepository.findDayByDayName("Friday"))) {
+        for (Student s : studentsList) {
+            if (s.getDaysOfPresence().contains(dayRepository.findDayByDayName("Friday"))) {
                 studentsPresentOnFriday.add(s);
             }
         }
         return studentsPresentOnFriday;
     }
 
-    @PostMapping
-    public void addStudent(Student student) {
-        String normalizedName = student.getName().substring(0,1).toUpperCase() + student.getName().substring(1).toLowerCase();
-        String normalizedSurname = student.getSurname().substring(0,1).toUpperCase() + student.getSurname().substring(1).toLowerCase();
-        student.setName(normalizedName);
-        student.setSurname(normalizedSurname);
-        studentRepository.save(student);
-    }
+
 
     @PostMapping
     public void flipPresentToStudent(Student student) {
@@ -160,14 +217,5 @@ public class StudentService {
 //        studentRepository.setCurrentYearToStudent(studentId, currentYear);
 //    }
 
-    public void setFiscalCodeToStudent(ObjectNode json) {
-        Long studentId = json.get("id").asLong();
-        String fiscalCode = json.get("fiscalCode").toString();
-        StringBuilder sb = new StringBuilder(fiscalCode);
-        sb.deleteCharAt(fiscalCode.length() - 1);
-        sb.deleteCharAt(0);
-        fiscalCode = sb.toString().toUpperCase();
-        System.out.println(fiscalCode);
-        studentRepository.setFiscalCodeToStudent(studentId, fiscalCode);
-    }
+
 }

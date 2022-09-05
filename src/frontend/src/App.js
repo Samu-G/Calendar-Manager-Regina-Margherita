@@ -3,6 +3,7 @@ import {Layout} from 'antd';
 import Sider from "./Sider";
 import './App.css';
 import CalendarCreatorMain from "./calendarCreator/CalendarCreatorMain";
+import StudentManagementMain from "./studentManagement/StudentManagementMain";
 
 const {Content} = Layout;
 
@@ -12,7 +13,7 @@ export default function App() {
         1: CalendarCreatorMain(),
         2: <div>Option 2</div>,
         3: <div>Option 3</div>,
-        4: <div>Opzione Lista studenti</div>,
+        4: StudentManagementMain(),
         5: <div>Opzione Lista docenti</div>,
         6: <div>Opzione Lista materie</div>,
         7: <div>Option 7</div>,

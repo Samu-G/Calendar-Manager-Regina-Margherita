@@ -163,15 +163,7 @@ export const setCurrentYearToStudent = (studentId, currentYear) =>
         }
     );
 
-export const setFCToStudent = (studentId, fiscalCode) =>
-    fetch("api/admin/setFiscalCodeToStudent", {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify({id: studentId, fiscalCode: fiscalCode})
-        }
-    );
+/*New Function*/
 
 export const addNewStudent = student =>
     fetch("api/admin/addStudent", {
@@ -181,7 +173,50 @@ export const addNewStudent = student =>
             method: 'POST',
             body: JSON.stringify(student)
         }
-    );
+    ).then(checkStatus);
+
+export const setFiscalCodeToStudent = (studentId, newFiscalCode) =>
+    fetch("api/admin/setFiscalCodeToStudent", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({studentId: studentId, newFiscalCode: newFiscalCode})
+        }
+    ).then(checkStatus);
+
+export const setEmailAddressToStudent = (studentId, newEmailAddress) =>
+    fetch("api/admin/setEmailAddressToStudent", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({studentId: studentId, newEmailAddress: newEmailAddress})
+        }
+    ).then(checkStatus);
+
+export const setPresenceToStudent = (studentId, isPresent) =>
+    fetch("api/admin/setPresenceToStudent", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({studentId: studentId, isPresent: isPresent})
+        }
+    ).then(checkStatus);
+
+export const getNameOfTheDaysOfPresenceFromStudent = (studentId) =>
+    fetch("api/admin/getNameOfTheDaysOfPresenceFromStudent", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({studentId: studentId})
+        }
+    ).then(checkStatus);
+
+
+/************/
 
 export const addNewStudentAccount = account =>
     fetch("api/account/save", {

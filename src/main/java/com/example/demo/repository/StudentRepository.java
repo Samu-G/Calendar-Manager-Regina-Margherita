@@ -69,9 +69,4 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 //    void setCurrentYearToStudent(@Param("studentId") Long studentId, @Param("currentYear") String currentYear);
 //
 
-    default void setFiscalCodeToStudent(Long studentId, String fiscalCode) {
-        Student s = findStudentsById(studentId);
-        s.setFiscalCode(fiscalCode);
-        save(s);
-    }
 }

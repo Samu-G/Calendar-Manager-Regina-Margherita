@@ -21,7 +21,7 @@ import {
     getAllSubjects,
     setCurrentYearToStudent,
     setDayOfPresentToStudent
-} from "../client";
+} from "../../client";
 import {DownOutlined} from "@ant-design/icons";
 
 const {Option} = Select;
