@@ -7,6 +7,8 @@ import SetEmailAddressForm from "./studentManagementTable/studentManagementTable
 import SetStudentIsPresentButton from "./studentManagementTable/studentManagementTableRow/SetStudentIsPresentButton";
 import SetStudentAttendanceDaysCheckBox
     from "./studentManagementTable/studentManagementTableRow/SetStudentAttendanceDaysCheckBox";
+import DeleteStudentButton from "./studentManagementTable/studentManagementTableRow/DeleteStudentButton";
+import SetSubjectFollowedTag from "./studentManagementTable/studentManagementTableRow/SetSubjectFollowedTag";
 
 const {Text, Title} = Typography;
 
@@ -49,25 +51,37 @@ const StudentManagementTable = ({studentList, showDrawer, setShowDrawer, fetchSt
                 }
                 expandable={{
                     expandedRowRender: (student) => (
-                        <Row>
-                            <Col span={12}>
-                                <Title level={5}>Gestisci la presenza</Title>
-                                <Space direction="vertical" style={{paddingLeft: 10}}>
-                                    <SetStudentIsPresentButton student={student} fetchStudents={fetchStudents}/>
-                                    <SetStudentAttendanceDaysCheckBox student={student} fetchStudents={fetchStudents}/>
-                                </Space>
-                            </Col>
+                        <>
+                            <Row>
+                                <Col span={12}>
+                                    <Title level={5}>Dati sulla presenza</Title>
+                                    <Space direction="vertical" style={{paddingLeft: 10}}>
+                                        <SetStudentIsPresentButton student={student} fetchStudents={fetchStudents}/>
+                                        <SetStudentAttendanceDaysCheckBox student={student}
+                                                                          fetchStudents={fetchStudents}/>
+                                    </Space>
+                                    <Title level={5} style={{paddingTop: 16}}>Materie seguite</Title>
+                                    <Space direction="vertical" style={{paddingLeft: 10}}>
+                                        <SetSubjectFollowedTag student={student} fetchStudents={fetchStudents}/>
+                                    </Space>
+                                </Col>
 
-                            <Col span={12}>
-                                <Title level={5}>Dati generici</Title>
-                                <Space direction="vertical" style={{paddingLeft: 10}}>
-                                    <Text>Nome: {student["name"]} </Text>
-                                    <Text>Cognome: {student["surname"]} </Text>
-                                    <SetFiscalCodeForm student={student} fetchStudents={fetchStudents}/>
-                                    <SetEmailAddressForm student={student} fetchStudents={fetchStudents}/>
-                                </Space>
-                            </Col>
-                        </Row>
+                                <Col span={12}>
+                                    <Title level={5}>Dati generici</Title>
+                                    <Space direction="vertical" style={{paddingLeft: 10}}>
+                                        <Text>Nome: {student["name"]} </Text>
+                                        <Text>Cognome: {student["surname"]} </Text>
+                                        <SetFiscalCodeForm student={student} fetchStudents={fetchStudents}/>
+                                        <SetEmailAddressForm student={student} fetchStudents={fetchStudents}/>
+                                    </Space>
+                                </Col>
+                            </Row>
+
+                            <Row>
+                                <Divider/>
+                                <DeleteStudentButton student={student} fetchStudents={fetchStudents}/>
+                            </Row>
+                        </>
                     ),
                 }}
                 columns={columns}

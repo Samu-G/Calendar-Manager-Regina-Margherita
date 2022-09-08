@@ -19,7 +19,7 @@ import {
     addSubjectToStudent,
     flipIsPresent,
     getAllStudents, getAllSubjects, setCurrentYearToStudent,
-    setDayOfPresentToStudent
+    setDaysOfPresenceToStudent
 } from "../../client";
 import {DownOutlined, LoadingOutlined, PlusOutlined} from "@ant-design/icons";
 import {Content, Header} from "antd/es/layout/layout";
@@ -134,7 +134,7 @@ function StudentTable() {
             function setDayOfPresentStudentVar(student, list) {
                 console.log("set day of present student var");
                 console.log(list);
-                setDayOfPresentToStudent(student.id, list)
+                setDaysOfPresenceToStudent(student.id, list)
                     .then(() => {
                         message.info('Modifiche apportate con successo');
                     });

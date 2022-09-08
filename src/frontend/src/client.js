@@ -93,15 +93,7 @@ export const deleteSubjectFromTheTeacher = (teacherId, subjectName) =>
         }
     );
 
-export const addSubjectToStudent = (studentId, subjectName) =>
-    fetch("api/admin/addSubjectToStudent", {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify({id: studentId, subjectName: subjectName})
-        }
-    );
+
 
 export const addSubjectToTeacher = (teacherId, subjectName) =>
     fetch("api/admin/addSubjectToTeacher", {
@@ -143,15 +135,6 @@ export const flipIsPresent = student =>
         }
     );
 
-export const setDayOfPresentToStudent = (studentId, day) =>
-    fetch("api/admin/setDayOfPresentToStudent", {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify({id: studentId, day: day})
-        }
-    );
 
 export const setCurrentYearToStudent = (studentId, currentYear) =>
     fetch("api/admin/setCurrentYearToStudent", {
@@ -215,8 +198,80 @@ export const getNameOfTheDaysOfPresenceFromStudent = (studentId) =>
         }
     ).then(checkStatus);
 
+export const setDaysOfPresenceToStudent = (studentId, daysList) =>
+    fetch("api/admin/setDaysOfPresenceToStudent", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({studentId: studentId, daysList: daysList})
+        }
+    ).then(checkStatus);
+
+export const removeStudent = (studentId) =>
+    fetch("api/admin/removeStudent", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({studentId: studentId})
+        }
+    ).then(checkStatus);
+
+export const getSubjectFollowedByTheStudent = (studentId) =>
+    fetch("api/admin/getSubjectFollowedByTheStudent", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({studentId: studentId})
+        }
+    ).then(checkStatus);
+
+export const getSubjectNotFollowedByTheStudent = (studentId) =>
+    fetch("api/admin/getSubjectNotFollowedByTheStudent", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({studentId: studentId})
+        }
+    ).then(checkStatus);
+
+
+export const removeSubjectFollowedByTheStudent = (studentId, subjectName) =>
+    fetch("api/admin/removeSubjectFollowedByTheStudent", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({studentId: studentId, subjectName: subjectName})
+        }
+    ).then(checkStatus);
+
+export const addSubjectFollowedByTheStudent = (studentId, subjectName) =>
+    fetch("api/admin/addSubjectFollowedByTheStudent", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({studentId: studentId, subjectName: subjectName})
+        }
+    ).then(checkStatus);
+
+
 
 /************/
+
+export const addSubjectToStudent = (studentId, subjectName) =>
+    fetch("api/admin/addSubjectToStudent", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({id: studentId, subjectName: subjectName})
+        }
+    );
 
 export const addNewStudentAccount = account =>
     fetch("api/account/save", {

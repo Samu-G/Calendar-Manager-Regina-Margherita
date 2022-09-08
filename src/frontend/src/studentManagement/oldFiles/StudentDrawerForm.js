@@ -20,7 +20,7 @@ import {
     addSubjectToStudent,
     getAllSubjects,
     setCurrentYearToStudent,
-    setDayOfPresentToStudent
+    setDaysOfPresenceToStudent
 } from "../../client";
 import {DownOutlined} from "@ant-design/icons";
 

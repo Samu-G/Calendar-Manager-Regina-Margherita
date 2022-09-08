@@ -1,14 +1,10 @@
 package com.example.demo.controllers;
 
 import com.example.demo.models.Student;
-import com.example.demo.models.Teacher;
 import com.example.demo.services.StudentService;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -23,6 +19,11 @@ public class StudentController {
     @PostMapping("/admin/addStudent")
     public void addStudent(@RequestBody ObjectNode json) {
         studentService.addStudent(json);
+    }
+
+    @PostMapping("/admin/removeStudent")
+    public void removeStudent(@RequestBody ObjectNode json) {
+        studentService.removeStudent(json);
     }
 
     @PostMapping("/admin/setFiscalCodeToStudent")
@@ -42,8 +43,34 @@ public class StudentController {
 
     @PostMapping("/admin/getNameOfTheDaysOfPresenceFromStudent")
     public List<String> getNameOfTheDaysOfPresenceFromStudent(@RequestBody ObjectNode json) {
-        return studentService.getNameOfTheDaysOfPresenceFromStudent(json);
+        return adaptDaysNameInItalian(studentService.getNameOfTheDaysOfPresenceFromStudent(json));
     }
+
+    @PostMapping("/admin/getSubjectFollowedByTheStudent")
+    public List<String> getSubjectFollowedByTheStudent(@RequestBody ObjectNode json) {
+        return studentService.getSubjectFollowedByTheStudent(json);
+    }
+
+    @PostMapping("/admin/getSubjectNotFollowedByTheStudent")
+    public List<String> getSubjectNotFollowedByTheStudent(@RequestBody ObjectNode json) {
+        return studentService.getSubjectNotFollowedByTheStudent(json);
+    }
+
+    @PostMapping("/admin/removeSubjectFollowedByTheStudent")
+    public void removeSubjectFollowedByTheStudent(@RequestBody ObjectNode json) {
+        studentService.removeSubjectFollowedByTheStudent(json);
+    }
+
+    @PostMapping("/admin/addSubjectFollowedByTheStudent")
+    public void addSubjectFollowedByTheStudent(@RequestBody ObjectNode json) {
+        studentService.addSubjectFollowedByTheStudent(json);
+    }
+
+    @PostMapping("/admin/setDaysOfPresenceToStudent")
+    public void setDaysOfPresenceToStudent(@RequestBody ObjectNode json) {
+        studentService.setDaysOfAttendanceToStudent(json);
+    }
+
 
     @RequestMapping("/admin/getAllStudent")
     public List<Student> getAllStudents() {
@@ -105,6 +132,13 @@ public class StudentController {
 //        studentService.setCurrentYearToStudent(json);
 //    }
 
-
+    private static List<String> adaptDaysNameInItalian(List<String> dayNameList) {
+        Collections.replaceAll(dayNameList, "Monday", "Lunedì");
+        Collections.replaceAll(dayNameList, "Tuesday", "Martedì");
+        Collections.replaceAll(dayNameList, "Wednesday", "Mercoledì");
+        Collections.replaceAll(dayNameList, "Thursday", "Giovedì");
+        Collections.replaceAll(dayNameList, "Friday", "Venerdì");
+        return dayNameList;
+    }
 
 }

@@ -6,6 +6,8 @@ import com.example.demo.models.Subject;
 import com.example.demo.models.Teacher;
 import com.example.demo.repository.DayRepository;
 import com.example.demo.repository.StudentRepository;
+import com.example.demo.repository.SubjectRepository;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,8 @@ public class StudentService {
     private final StudentRepository studentRepository;
 
     private final DayRepository dayRepository;
+
+    private final SubjectRepository subjectRepository;
 
     @PostMapping
     public void addStudent(ObjectNode json) {
@@ -50,6 +54,13 @@ public class StudentService {
     }
 
     @PostMapping
+    public void removeStudent(ObjectNode json) {
+        Long studentId = json.get("studentId").asLong();
+        Student toRemove = studentRepository.findStudentsById(studentId);
+        studentRepository.delete(toRemove);
+    }
+
+    @PostMapping
     public void setFiscalCodeToStudent(ObjectNode json) {
         Long studentId = json.get("studentId").asLong();
         String fiscalCode = json.get("newFiscalCode").textValue();
@@ -71,8 +82,6 @@ public class StudentService {
     public void setPresenceToStudent(ObjectNode json) {
         Long studentId = json.get("studentId").asLong();
         boolean isPresent = json.get("isPresent").asBoolean();
-        System.out.println(studentId);
-        System.out.println(isPresent);
         Student toEdit = studentRepository.findStudentsById(studentId);
         toEdit.setPresent(isPresent);
         studentRepository.save(toEdit);
@@ -83,10 +92,71 @@ public class StudentService {
         List<String> nameOfTheDaysOfPresenceList = new ArrayList<>();
         Long studentId = json.get("studentId").asLong();
         Student student = studentRepository.findStudentsById(studentId);
-        for(Day day : student.getDaysOfPresence()) {
+        for (Day day : student.getDaysOfPresence()) {
             nameOfTheDaysOfPresenceList.add(day.getDayName());
         }
         return nameOfTheDaysOfPresenceList;
+    }
+
+    @PostMapping
+    public List<String> getSubjectFollowedByTheStudent(ObjectNode json) {
+        List<String> nameOfTheSubjectsFollowed = new ArrayList<>();
+        Long studentId = json.get("studentId").asLong();
+        Student student = studentRepository.findStudentsById(studentId);
+        for (Subject subject : student.getSubjectsFollowed()) {
+            nameOfTheSubjectsFollowed.add(subject.getNameOfTheSubject());
+        }
+        return nameOfTheSubjectsFollowed;
+    }
+
+    @PostMapping
+    public List<String> getSubjectNotFollowedByTheStudent(ObjectNode json) {
+        List<Subject> allSubjects = subjectRepository.findAll();
+        List<String> nameOfTheSubjectsNotFollowed = new ArrayList<>();
+        Long studentId = json.get("studentId").asLong();
+        Student student = studentRepository.findStudentsById(studentId);
+        for (Subject subject : allSubjects) {
+            if (!student.getSubjectsFollowed().contains(subject)) {
+                nameOfTheSubjectsNotFollowed.add(subject.getNameOfTheSubject());
+            }
+        }
+        return nameOfTheSubjectsNotFollowed;
+    }
+
+    @PostMapping
+    public void removeSubjectFollowedByTheStudent(ObjectNode json) {
+        Long studentId = json.get("studentId").asLong();
+        String subjectName = json.get("subjectName").textValue();
+        Student student = studentRepository.findStudentsById(studentId);
+        Subject toRemove = subjectRepository.findSubjectByNameOfTheSubject(subjectName);
+        student.getSubjectsFollowed().remove(toRemove);
+        studentRepository.save(student);
+    }
+
+    @PostMapping
+    public void addSubjectFollowedByTheStudent(ObjectNode json) {
+        Student student = studentRepository.findStudentsById(json.get("studentId").asLong());
+        Subject toAdd = subjectRepository.findSubjectByNameOfTheSubject(json.get("subjectName").textValue());
+        student.getSubjectsFollowed().add(toAdd);
+        studentRepository.save(student);
+    }
+
+    @PostMapping
+    public void setDaysOfAttendanceToStudent(ObjectNode json) {
+        Long studentId = json.get("studentId").asLong();
+        Student student = studentRepository.findStudentsById(studentId);
+        student.getDaysOfPresence().clear();
+        List<Day> daysOfPresence = student.getDaysOfPresence();
+        for (JsonNode node : json.get("daysList")) {
+            switch (node.textValue()) {
+                case "Lunedì" -> daysOfPresence.add(dayRepository.findDayByDayName("Monday"));
+                case "Martedì" -> daysOfPresence.add(dayRepository.findDayByDayName("Tuesday"));
+                case "Mercoledì" -> daysOfPresence.add(dayRepository.findDayByDayName("Wednesday"));
+                case "Giovedì" -> daysOfPresence.add(dayRepository.findDayByDayName("Thursday"));
+                case "Venerdì" -> daysOfPresence.add(dayRepository.findDayByDayName("Friday"));
+            }
+        }
+        studentRepository.save(student);
     }
 
     @GetMapping
@@ -155,11 +225,11 @@ public class StudentService {
     }
 
 
-
     @PostMapping
     public void flipPresentToStudent(Student student) {
         studentRepository.flipPresentToStudent(student);
     }
+
 
 //    @PostMapping
 //    public void setDaysOfPresenceToStudent(ObjectNode json) {

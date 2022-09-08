@@ -1,70 +1,69 @@
 import {Checkbox, message} from "antd";
 import React, {useEffect, useState} from "react";
-import {getNameOfTheDaysOfPresenceFromStudent, setDayOfPresentToStudent} from "../../../client";
+import {getNameOfTheDaysOfPresenceFromStudent, setDaysOfPresenceToStudent} from "../../../client";
 
 const CheckboxGroup = Checkbox.Group;
 
-const plainOptions = ['Lunedi', 'Martedi', 'Mercoledi', 'Giovedi', 'Venerdi'];
+const plainOptions = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì"];
 
 const SetStudentAttendanceDaysCheckBox = ({student, fetchStudents}) => {
+    const [checkedList, setCheckedList] = useState([]);
+    const [indeterminate, setIndeterminate] = useState(false);
+    const [checkAll, setCheckAll] = useState(false);
+    const [changed, setChanged] = useState(false);
 
-    function fillCheckedList() {
-        let days = [];
+    const setupCheckedList = () => {
         getNameOfTheDaysOfPresenceFromStudent(student["id"])
             .then(res => res.json())
             .then(data => {
-                days = data;
+                setCheckedList(data);
+                setIndeterminate(!!data.length && data.length < plainOptions.length);
+                setCheckAll(data.length === plainOptions.length);
             }).catch(() => {
             message.error("Errore nella comunicazione con il server");
         });
-        return days;
     }
 
     useEffect(() => {
-        fillCheckedList();
+        setupCheckedList();
         console.log("SetStudentAttendanceDaysCheckBox mounted.");
-    }, [student]);
+    }, []);
 
-    function setDayOfPresentStudentVar(student, list) {
-        console.log("set day of present student var");
-        console.log(list);
-        setDayOfPresentToStudent(student.id, list)
-            .then(() => {
-                message.success('Modifiche apportate con successo');
+    useEffect(() => {
+        if (changed) {
+            setDaysOfPresenceToStudent(student["id"], checkedList)
+                .then(() => {
+                    fetchStudents();
+                    message.success("Giorni di presenza modificati con successo");
+                }).catch(() => {
+                message.error("Errore nella comunicazione con il server");
             });
-    }
+            setChanged(false);
+        }
+    }, [changed]);
 
     const onChange = (list) => {
         setCheckedList(list);
         setIndeterminate(!!list.length && list.length < plainOptions.length);
         setCheckAll(list.length === plainOptions.length);
-        setDayOfPresentStudentVar(student, list);
+        setChanged(true);
     };
 
     const onCheckAllChange = (e) => {
         setCheckedList(e.target.checked ? plainOptions : []);
         setIndeterminate(false);
         setCheckAll(e.target.checked);
-
-        if (e.target.checked) {
-            setDayOfPresentStudentVar(student, plainOptions);
-        } else {
-            setDayOfPresentStudentVar(student, []);
-        }
+        setChanged(true);
     };
-
-    const [checkedList, setCheckedList] = useState(fillCheckedList);
-    const [indeterminate, setIndeterminate] = useState(true);
-    const [checkAll, setCheckAll] = useState(false);
 
     return (
         <>
             <Checkbox indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}
-                      style={{marginLeft: 10, marginTop: 5}}>
+                      style={{marginLeft: 10, marginTop: 5}} disabled={!student["present"]}>
                 Seleziona tutti
             </Checkbox>
             <CheckboxGroup options={plainOptions} value={checkedList} onChange={onChange}
-                           style={{marginLeft: 10}}/>
+                           style={{marginLeft: 10}} disabled={!student["present"]}/>
         </>
     );
 }

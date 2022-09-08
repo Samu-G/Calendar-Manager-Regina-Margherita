@@ -8,9 +8,9 @@ const AddNewStudentDrawerForm = ({showDrawer, setShowDrawer, fetchStudents}) => 
 
     const onFinish = (aNewStudent) => {
         if (aNewStudent["fiscalCode"] === undefined || aNewStudent["fiscalCode"] === "")
-            aNewStudent["fiscalCode"] = "non ancora inserito";
+            aNewStudent["fiscalCode"] = "";
         if (aNewStudent["emailAddress"] === undefined || aNewStudent["emailAddress"] === "")
-            aNewStudent["emailAddress"] = "non ancora inserito";
+            aNewStudent["emailAddress"] = "";
 
         addNewStudent(aNewStudent)
             .then(() => {
