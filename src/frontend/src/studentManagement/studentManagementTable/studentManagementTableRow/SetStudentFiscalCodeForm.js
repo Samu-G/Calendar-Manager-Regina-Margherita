@@ -4,11 +4,11 @@ import {setFiscalCodeToStudent} from "../../../client";
 
 const {Text} = Typography;
 
-const SetFiscalCodeForm = ({student, fetchStudents}) => {
+const SetStudentFiscalCodeForm = ({student, fetchStudents}) => {
     const [fiscalCode, setFiscalCode] = useState(student["fiscalCode"]);
 
     useEffect(() => {
-        console.log("SetFiscalCodeForm mounted")
+        console.log("SetStudentFiscalCodeForm mounted")
     }, [student]);
 
     const handleChange = event => {
@@ -40,4 +40,4 @@ const SetFiscalCodeForm = ({student, fetchStudents}) => {
     );
 }
 
-export default SetFiscalCodeForm;
+export default SetStudentFiscalCodeForm;

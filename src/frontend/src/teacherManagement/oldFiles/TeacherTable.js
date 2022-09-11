@@ -1,7 +1,7 @@
 import {LoadingOutlined, PlusOutlined} from "@ant-design/icons";
 import React, {useEffect, useState} from "react";
 import {Button, Col, Descriptions, Divider, PageHeader, Row, Spin, Table} from "antd";
-import {getAllTeachers} from "../client";
+import {getAllTeachers} from "../../client";
 import {Content, Header} from "antd/es/layout/layout";
 import RenderSubjectTeached from "./RenderSubjectTeached";
 import RenderPresenceCheckBox from "./RenderPresenceCheckBox";

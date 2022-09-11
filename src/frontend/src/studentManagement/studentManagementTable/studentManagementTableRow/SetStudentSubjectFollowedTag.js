@@ -10,7 +10,7 @@ import {
 } from "../../../client";
 
 
-const SetSubjectFollowedTag = ({student, fetchStudents}) => {
+const SetStudentSubjectFollowedTag = ({student, fetchStudents}) => {
     const [tags, setTags] = useState([]);
     const [options, setOptions] = useState([]);
 
@@ -41,7 +41,7 @@ const SetSubjectFollowedTag = ({student, fetchStudents}) => {
     useEffect(() => {
         setupTags();
         setupOptions();
-        console.log("SetSubjectFollowedTag mounted.");
+        console.log("SetStudentSubjectFollowedTag mounted.");
     }, [student]);
 
     const handleClose = (removedTag) => {
@@ -104,4 +104,4 @@ const SetSubjectFollowedTag = ({student, fetchStudents}) => {
     );
 }
 
-export default SetSubjectFollowedTag;
+export default SetStudentSubjectFollowedTag;

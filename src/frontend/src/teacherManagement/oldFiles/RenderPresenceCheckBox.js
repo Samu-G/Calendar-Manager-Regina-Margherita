@@ -1,6 +1,6 @@
 import {Checkbox, message} from "antd";
 import React, {useState} from "react";
-import {setDayOfAttendanceToTeacherId, setDaysOfPresenceToStudent} from "../client";
+import {setDayOfAttendanceToTeacherId, setDaysOfPresenceToStudent} from "../../client";
 
 
 function RenderPresenceCheckBox({teacher, fetchTeachers}) {

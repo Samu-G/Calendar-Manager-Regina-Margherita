@@ -10,9 +10,6 @@ const checkStatus = response => {
     return Promise.reject(error);
 }
 
-export const getAllStudents = () =>
-    fetch("/api/admin/getAllStudent")
-        .then(checkStatus);
 
 export const getAllStudentsPresentOnMonday = () =>
     fetch("api/admin/getAllStudentsPresentOnMonday")
@@ -39,9 +36,6 @@ export const getAllSubjects = () =>
     fetch("/api/admin/getAllSubjects")
         .then(checkStatus);
 
-export const getAllTeachers = () =>
-    fetch("/api/admin/getAllTeachers")
-        .then(checkStatus);
 
 export const getAllTeachersPresentOnMonday = () =>
     fetch("api/admin/getAllTeachersPresentOnMonday")
@@ -94,7 +88,6 @@ export const deleteSubjectFromTheTeacher = (teacherId, subjectName) =>
     );
 
 
-
 export const addSubjectToTeacher = (teacherId, subjectName) =>
     fetch("api/admin/addSubjectToTeacher", {
             headers: {
@@ -125,28 +118,11 @@ export const setTimeSlotToTeacherId = (teacherId, dayName, timeSlot, checked) =>
         }
     );
 
-export const flipIsPresent = student =>
-    fetch("api/admin/flipPresentToStudent", {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify(student)
-        }
-    );
 
-
-export const setCurrentYearToStudent = (studentId, currentYear) =>
-    fetch("api/admin/setCurrentYearToStudent", {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify({id: studentId, currentYear: currentYear})
-        }
-    );
-
-/*New Function*/
+/*New Function FOR STUDENT MANAGEMENT*/
+export const getAllStudents = () =>
+    fetch("/api/admin/getAllStudent")
+        .then(checkStatus);
 
 export const addNewStudent = student =>
     fetch("api/admin/addStudent", {
@@ -260,18 +236,137 @@ export const addSubjectFollowedByTheStudent = (studentId, subjectName) =>
     ).then(checkStatus);
 
 
-
 /************/
 
-export const addSubjectToStudent = (studentId, subjectName) =>
-    fetch("api/admin/addSubjectToStudent", {
+/*New Function FOR TEACHER MANAGEMENT*/
+export const getAllTeachers = () =>
+    fetch("/api/admin/getAllTeachers")
+        .then(checkStatus);
+
+export const addNewTeacher = teacher =>
+    fetch("api/admin/addTeacher", {
             headers: {
                 'Content-Type': 'application/json'
             },
             method: 'POST',
-            body: JSON.stringify({id: studentId, subjectName: subjectName})
+            body: JSON.stringify(teacher)
         }
-    );
+    ).then(checkStatus);
+
+export const setEmailAddressToTeacher = (teacherId, newEmailAddress) =>
+    fetch("api/admin/setEmailAddressToTeacher", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({teacherId: teacherId, newEmailAddress: newEmailAddress})
+        }
+    ).then(checkStatus);
+
+export const setActiveToTeacher = (teacherId, isActive) =>
+    fetch("api/admin/setActiveToTeacher", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({teacherId: teacherId, isActive: isActive})
+        }
+    ).then(checkStatus);
+
+export const getNameOfTheDaysOfPresenceFromTeacher = (teacherId) =>
+    fetch("api/admin/getNameOfTheDaysOfPresenceFromTeacher", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({teacherId: teacherId})
+        }
+    ).then(checkStatus);
+
+export const setDaysOfPresenceToTeacher = (teacherId, daysList) =>
+    fetch("api/admin/setDaysOfPresenceToTeacher", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({teacherId: teacherId, daysList: daysList})
+        }
+    ).then(checkStatus);
+
+export const getSubjectByTeacher = (teacherId) =>
+    fetch("api/admin/getSubjectByTeacher", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({teacherId: teacherId})
+        }
+    ).then(checkStatus);
+
+export const getSubjectNotTeachByTeacher = (teacherId) =>
+    fetch("api/admin/getSubjectNotTeachByTeacher", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({teacherId: teacherId})
+        }
+    ).then(checkStatus);
+
+export const removeSubjectTeachByTeacher = (teacherId, subjectName) =>
+    fetch("api/admin/removeSubjectTeachByTeacher", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({teacherId: teacherId, subjectName: subjectName})
+        }
+    ).then(checkStatus);
+
+export const addSubjectTeachByTeacher = (teacherId, subjectName) =>
+    fetch("api/admin/addSubjectTeachByTeacher", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({teacherId: teacherId, subjectName: subjectName})
+        }
+    ).then(checkStatus);
+
+export const removeTeacher = (teacherId) =>
+    fetch("api/admin/removeTeacher", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({teacherId: teacherId})
+        }
+    ).then(checkStatus);
+
+export const getTimeSlotFromTeacherByDayName = (teacherId, dayName) =>
+    fetch("api/admin/getTimeSlotFromTeacherByDayName", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify
+            ({teacherId: teacherId, dayName: dayName})
+        }
+    ).then(checkStatus);
+
+export const setTimeSlotForTeacherByDayName = (teacherId, dayName, timeSlotsList) =>
+    fetch("api/admin/setTimeSlotForTeacherByDayName", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify
+            ({teacherId: teacherId, dayName: dayName, timeSlotsList: timeSlotsList})
+        }
+    ).then(checkStatus);
+
+/************/
+
 
 export const addNewStudentAccount = account =>
     fetch("api/account/save", {

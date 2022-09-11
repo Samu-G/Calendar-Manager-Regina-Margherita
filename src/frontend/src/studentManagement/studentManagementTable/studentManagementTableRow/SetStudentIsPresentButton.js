@@ -1,6 +1,6 @@
-import {Button, message, Typography} from "antd";
+import {Button, message, Space, Typography} from "antd";
 import React, {useEffect} from "react";
-import {flipIsPresent, setPresenceToStudent} from "../../../client";
+import {setPresenceToStudent} from "../../../client";
 
 const {Text} = Typography;
 
@@ -23,17 +23,17 @@ const SetStudentIsPresentButton = ({student, fetchStudents}) => {
 
     if (student["present"]) {
         return <>
-            <Text>Presente in struttura: </Text>
-            Si <Button style={{marginLeft: 20}} onClick={() => setPresenceVariableToStudent(false)}>
-            Disattiva presenza
-        </Button>
+            <Space>
+                <Text>Presente in struttura: </Text>Si
+                <Button onClick={() => setPresenceVariableToStudent(false)}>Disattiva presenza</Button>
+            </Space>
         </>
     } else {
         return <>
-            <Text>Presente in struttura: </Text>
-            No <Button type="primary" style={{marginLeft: 20}} onClick={() => setPresenceVariableToStudent(true)}>
-            Attiva presenza
-        </Button>
+            <Space>
+                <Text>Presente in struttura: </Text>No
+                <Button type="primary" onClick={() => setPresenceVariableToStudent(true)}>Attiva presenza</Button>
+            </Space>
         </>
     }
 }

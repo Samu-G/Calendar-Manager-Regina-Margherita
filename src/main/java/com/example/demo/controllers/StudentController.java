@@ -132,7 +132,7 @@ public class StudentController {
 //        studentService.setCurrentYearToStudent(json);
 //    }
 
-    private static List<String> adaptDaysNameInItalian(List<String> dayNameList) {
+    public static List<String> adaptDaysNameInItalian(List<String> dayNameList) {
         Collections.replaceAll(dayNameList, "Monday", "Lunedì");
         Collections.replaceAll(dayNameList, "Tuesday", "Martedì");
         Collections.replaceAll(dayNameList, "Wednesday", "Mercoledì");

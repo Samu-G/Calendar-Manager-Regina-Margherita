@@ -124,8 +124,8 @@ public class Application {
     private static Day createMonday(TimeSlotRepository timeSlotRepository, DayRepository dayRepository) {
         List<TimeSlot> mondayTimeSlots = new ArrayList<>();
         TimeSlot monday_from_08_30_to_09_00 = new TimeSlot(null, "monday_from_08_30_to_09_00", Time.valueOf("08:30:00"), Time.valueOf("09:00:00"));
-        TimeSlot monday_from_90_00_to_09_30 = new TimeSlot(null, "monday_from_90_00_to_09_30", Time.valueOf("09:00:00"), Time.valueOf("09:30:00"));
-        TimeSlot monday_from_90_30_to_10_00 = new TimeSlot(null, "monday_from_90_30_to_10_00", Time.valueOf("09:30:00"), Time.valueOf("10:00:00"));
+        TimeSlot monday_from_09_00_to_09_30 = new TimeSlot(null, "monday_from_09_00_to_09_30", Time.valueOf("09:00:00"), Time.valueOf("09:30:00"));
+        TimeSlot monday_from_09_30_to_10_00 = new TimeSlot(null, "monday_from_09_30_to_10_00", Time.valueOf("09:30:00"), Time.valueOf("10:00:00"));
         TimeSlot monday_from_10_00_to_10_30 = new TimeSlot(null, "monday_from_10_00_to_10_30", Time.valueOf("10:00:00"), Time.valueOf("10:30:00"));
         TimeSlot monday_from_10_30_to_11_00 = new TimeSlot(null, "monday_from_10_30_to_11_00", Time.valueOf("10:30:00"), Time.valueOf("11:00:00"));
         TimeSlot monday_from_11_00_to_11_30 = new TimeSlot(null, "monday_from_11_00_to_11_30", Time.valueOf("11:00:00"), Time.valueOf("11:30:00"));
@@ -141,10 +141,10 @@ public class Application {
 
         if (timeSlotRepository.findTimeSlotByTimeSlotName("monday_from_08_30_to_09_00") == null)
             timeSlotRepository.save(monday_from_08_30_to_09_00);
-        if (timeSlotRepository.findTimeSlotByTimeSlotName("monday_from_90_00_to_09_30") == null)
-            timeSlotRepository.save(monday_from_90_00_to_09_30);
-        if (timeSlotRepository.findTimeSlotByTimeSlotName("monday_from_90_30_to_10_00") == null)
-            timeSlotRepository.save(monday_from_90_30_to_10_00);
+        if (timeSlotRepository.findTimeSlotByTimeSlotName("monday_from_09_00_to_09_30") == null)
+            timeSlotRepository.save(monday_from_09_00_to_09_30);
+        if (timeSlotRepository.findTimeSlotByTimeSlotName("monday_from_09_30_to_10_00") == null)
+            timeSlotRepository.save(monday_from_09_30_to_10_00);
         if (timeSlotRepository.findTimeSlotByTimeSlotName("monday_from_10_00_to_10_30") == null)
             timeSlotRepository.save(monday_from_10_00_to_10_30);
         if (timeSlotRepository.findTimeSlotByTimeSlotName("monday_from_10_30_to_11_00") == null)
@@ -171,8 +171,8 @@ public class Application {
             timeSlotRepository.save(monday_from_15_30_to_16_00);
 
         mondayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("monday_from_08_30_to_09_00"));
-        mondayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("monday_from_90_00_to_09_30"));
-        mondayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("monday_from_90_30_to_10_00"));
+        mondayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("monday_from_09_00_to_09_30"));
+        mondayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("monday_from_09_30_to_10_00"));
         mondayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("monday_from_10_00_to_10_30"));
         mondayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("monday_from_10_30_to_11_00"));
         mondayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("monday_from_11_00_to_11_30"));
@@ -196,8 +196,8 @@ public class Application {
     private static Day createTuesday(TimeSlotRepository timeSlotRepository, DayRepository dayRepository) {
         List<TimeSlot> tuesdayTimeSlots = new ArrayList<>();
         TimeSlot tuesday_from_08_30_to_09_00 = new TimeSlot(null, "tuesday_from_08_30_to_09_00", Time.valueOf("08:30:00"), Time.valueOf("09:00:00"));
-        TimeSlot tuesday_from_90_00_to_09_30 = new TimeSlot(null, "tuesday_from_90_00_to_09_30", Time.valueOf("09:00:00"), Time.valueOf("09:30:00"));
-        TimeSlot tuesday_from_90_30_to_10_00 = new TimeSlot(null, "tuesday_from_90_30_to_10_00", Time.valueOf("09:30:00"), Time.valueOf("10:00:00"));
+        TimeSlot tuesday_from_09_00_to_09_30 = new TimeSlot(null, "tuesday_from_09_00_to_09_30", Time.valueOf("09:00:00"), Time.valueOf("09:30:00"));
+        TimeSlot tuesday_from_09_30_to_10_00 = new TimeSlot(null, "tuesday_from_09_30_to_10_00", Time.valueOf("09:30:00"), Time.valueOf("10:00:00"));
         TimeSlot tuesday_from_10_00_to_10_30 = new TimeSlot(null, "tuesday_from_10_00_to_10_30", Time.valueOf("10:00:00"), Time.valueOf("10:30:00"));
         TimeSlot tuesday_from_10_30_to_11_00 = new TimeSlot(null, "tuesday_from_10_30_to_11_00", Time.valueOf("10:30:00"), Time.valueOf("11:00:00"));
         TimeSlot tuesday_from_11_00_to_11_30 = new TimeSlot(null, "tuesday_from_11_00_to_11_30", Time.valueOf("11:00:00"), Time.valueOf("11:30:00"));
@@ -213,10 +213,10 @@ public class Application {
 
         if (timeSlotRepository.findTimeSlotByTimeSlotName("tuesday_from_08_30_to_09_00") == null)
             timeSlotRepository.save(tuesday_from_08_30_to_09_00);
-        if (timeSlotRepository.findTimeSlotByTimeSlotName("tuesday_from_90_00_to_09_30") == null)
-            timeSlotRepository.save(tuesday_from_90_00_to_09_30);
-        if (timeSlotRepository.findTimeSlotByTimeSlotName("tuesday_from_90_30_to_10_00") == null)
-            timeSlotRepository.save(tuesday_from_90_30_to_10_00);
+        if (timeSlotRepository.findTimeSlotByTimeSlotName("tuesday_from_09_00_to_09_30") == null)
+            timeSlotRepository.save(tuesday_from_09_00_to_09_30);
+        if (timeSlotRepository.findTimeSlotByTimeSlotName("tuesday_from_09_30_to_10_00") == null)
+            timeSlotRepository.save(tuesday_from_09_30_to_10_00);
         if (timeSlotRepository.findTimeSlotByTimeSlotName("tuesday_from_10_00_to_10_30") == null)
             timeSlotRepository.save(tuesday_from_10_00_to_10_30);
         if (timeSlotRepository.findTimeSlotByTimeSlotName("tuesday_from_10_30_to_11_00") == null)
@@ -243,8 +243,8 @@ public class Application {
             timeSlotRepository.save(tuesday_from_15_30_to_16_00);
 
         tuesdayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("tuesday_from_08_30_to_09_00"));
-        tuesdayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("tuesday_from_90_00_to_09_30"));
-        tuesdayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("tuesday_from_90_30_to_10_00"));
+        tuesdayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("tuesday_from_09_00_to_09_30"));
+        tuesdayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("tuesday_from_09_30_to_10_00"));
         tuesdayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("tuesday_from_10_00_to_10_30"));
         tuesdayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("tuesday_from_10_30_to_11_00"));
         tuesdayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("tuesday_from_11_00_to_11_30"));
@@ -268,8 +268,8 @@ public class Application {
     private static Day createWednesday(TimeSlotRepository timeSlotRepository, DayRepository dayRepository) {
         List<TimeSlot> wednesdayTimeSlots = new ArrayList<>();
         TimeSlot wednesday_from_08_30_to_09_00 = new TimeSlot(null, "wednesday_from_08_30_to_09_00", Time.valueOf("08:30:00"), Time.valueOf("09:00:00"));
-        TimeSlot wednesday_from_90_00_to_09_30 = new TimeSlot(null, "wednesday_from_90_00_to_09_30", Time.valueOf("09:00:00"), Time.valueOf("09:30:00"));
-        TimeSlot wednesday_from_90_30_to_10_00 = new TimeSlot(null, "wednesday_from_90_30_to_10_00", Time.valueOf("09:30:00"), Time.valueOf("10:00:00"));
+        TimeSlot wednesday_from_09_00_to_09_30 = new TimeSlot(null, "wednesday_from_09_00_to_09_30", Time.valueOf("09:00:00"), Time.valueOf("09:30:00"));
+        TimeSlot wednesday_from_09_30_to_10_00 = new TimeSlot(null, "wednesday_from_09_30_to_10_00", Time.valueOf("09:30:00"), Time.valueOf("10:00:00"));
         TimeSlot wednesday_from_10_00_to_10_30 = new TimeSlot(null, "wednesday_from_10_00_to_10_30", Time.valueOf("10:00:00"), Time.valueOf("10:30:00"));
         TimeSlot wednesday_from_10_30_to_11_00 = new TimeSlot(null, "wednesday_from_10_30_to_11_00", Time.valueOf("10:30:00"), Time.valueOf("11:00:00"));
         TimeSlot wednesday_from_11_00_to_11_30 = new TimeSlot(null, "wednesday_from_11_00_to_11_30", Time.valueOf("11:00:00"), Time.valueOf("11:30:00"));
@@ -285,10 +285,10 @@ public class Application {
 
         if (timeSlotRepository.findTimeSlotByTimeSlotName("wednesday_from_08_30_to_09_00") == null)
             timeSlotRepository.save(wednesday_from_08_30_to_09_00);
-        if (timeSlotRepository.findTimeSlotByTimeSlotName("wednesday_from_90_00_to_09_30") == null)
-            timeSlotRepository.save(wednesday_from_90_00_to_09_30);
-        if (timeSlotRepository.findTimeSlotByTimeSlotName("wednesday_from_90_30_to_10_00") == null)
-            timeSlotRepository.save(wednesday_from_90_30_to_10_00);
+        if (timeSlotRepository.findTimeSlotByTimeSlotName("wednesday_from_09_00_to_09_30") == null)
+            timeSlotRepository.save(wednesday_from_09_00_to_09_30);
+        if (timeSlotRepository.findTimeSlotByTimeSlotName("wednesday_from_09_30_to_10_00") == null)
+            timeSlotRepository.save(wednesday_from_09_30_to_10_00);
         if (timeSlotRepository.findTimeSlotByTimeSlotName("wednesday_from_10_00_to_10_30") == null)
             timeSlotRepository.save(wednesday_from_10_00_to_10_30);
         if (timeSlotRepository.findTimeSlotByTimeSlotName("wednesday_from_10_30_to_11_00") == null)
@@ -315,8 +315,8 @@ public class Application {
             timeSlotRepository.save(wednesday_from_15_30_to_16_00);
 
         wednesdayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("wednesday_from_08_30_to_09_00"));
-        wednesdayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("wednesday_from_90_00_to_09_30"));
-        wednesdayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("wednesday_from_90_30_to_10_00"));
+        wednesdayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("wednesday_from_09_00_to_09_30"));
+        wednesdayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("wednesday_from_09_30_to_10_00"));
         wednesdayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("wednesday_from_10_00_to_10_30"));
         wednesdayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("wednesday_from_10_30_to_11_00"));
         wednesdayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("wednesday_from_11_00_to_11_30"));
@@ -340,8 +340,8 @@ public class Application {
     private static Day createThursday(TimeSlotRepository timeSlotRepository, DayRepository dayRepository) {
         List<TimeSlot> thursdayTimeSlots = new ArrayList<>();
         TimeSlot thursday_from_08_30_to_09_00 = new TimeSlot(null, "thursday_from_08_30_to_09_00", Time.valueOf("08:30:00"), Time.valueOf("09:00:00"));
-        TimeSlot thursday_from_90_00_to_09_30 = new TimeSlot(null, "thursday_from_90_00_to_09_30", Time.valueOf("09:00:00"), Time.valueOf("09:30:00"));
-        TimeSlot thursday_from_90_30_to_10_00 = new TimeSlot(null, "thursday_from_90_30_to_10_00", Time.valueOf("09:30:00"), Time.valueOf("10:00:00"));
+        TimeSlot thursday_from_09_00_to_09_30 = new TimeSlot(null, "thursday_from_09_00_to_09_30", Time.valueOf("09:00:00"), Time.valueOf("09:30:00"));
+        TimeSlot thursday_from_09_30_to_10_00 = new TimeSlot(null, "thursday_from_09_30_to_10_00", Time.valueOf("09:30:00"), Time.valueOf("10:00:00"));
         TimeSlot thursday_from_10_00_to_10_30 = new TimeSlot(null, "thursday_from_10_00_to_10_30", Time.valueOf("10:00:00"), Time.valueOf("10:30:00"));
         TimeSlot thursday_from_10_30_to_11_00 = new TimeSlot(null, "thursday_from_10_30_to_11_00", Time.valueOf("10:30:00"), Time.valueOf("11:00:00"));
         TimeSlot thursday_from_11_00_to_11_30 = new TimeSlot(null, "thursday_from_11_00_to_11_30", Time.valueOf("11:00:00"), Time.valueOf("11:30:00"));
@@ -357,10 +357,10 @@ public class Application {
 
         if (timeSlotRepository.findTimeSlotByTimeSlotName("thursday_from_08_30_to_09_00") == null)
             timeSlotRepository.save(thursday_from_08_30_to_09_00);
-        if (timeSlotRepository.findTimeSlotByTimeSlotName("thursday_from_90_00_to_09_30") == null)
-            timeSlotRepository.save(thursday_from_90_00_to_09_30);
-        if (timeSlotRepository.findTimeSlotByTimeSlotName("thursday_from_90_30_to_10_00") == null)
-            timeSlotRepository.save(thursday_from_90_30_to_10_00);
+        if (timeSlotRepository.findTimeSlotByTimeSlotName("thursday_from_09_00_to_09_30") == null)
+            timeSlotRepository.save(thursday_from_09_00_to_09_30);
+        if (timeSlotRepository.findTimeSlotByTimeSlotName("thursday_from_09_30_to_10_00") == null)
+            timeSlotRepository.save(thursday_from_09_30_to_10_00);
         if (timeSlotRepository.findTimeSlotByTimeSlotName("thursday_from_10_00_to_10_30") == null)
             timeSlotRepository.save(thursday_from_10_00_to_10_30);
         if (timeSlotRepository.findTimeSlotByTimeSlotName("thursday_from_10_30_to_11_00") == null)
@@ -387,8 +387,8 @@ public class Application {
             timeSlotRepository.save(thursday_from_15_30_to_16_00);
 
         thursdayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("thursday_from_08_30_to_09_00"));
-        thursdayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("thursday_from_90_00_to_09_30"));
-        thursdayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("thursday_from_90_30_to_10_00"));
+        thursdayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("thursday_from_09_00_to_09_30"));
+        thursdayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("thursday_from_09_30_to_10_00"));
         thursdayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("thursday_from_10_00_to_10_30"));
         thursdayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("thursday_from_10_30_to_11_00"));
         thursdayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("thursday_from_11_00_to_11_30"));
@@ -412,8 +412,8 @@ public class Application {
     private static Day createFriday(TimeSlotRepository timeSlotRepository, DayRepository dayRepository) {
         List<TimeSlot> fridayTimeSlots = new ArrayList<>();
         TimeSlot friday_from_08_30_to_09_00 = new TimeSlot(null, "friday_from_08_30_to_09_00", Time.valueOf("08:30:00"), Time.valueOf("09:00:00"));
-        TimeSlot friday_from_90_00_to_09_30 = new TimeSlot(null, "friday_from_90_00_to_09_30", Time.valueOf("09:00:00"), Time.valueOf("09:30:00"));
-        TimeSlot friday_from_90_30_to_10_00 = new TimeSlot(null, "friday_from_90_30_to_10_00", Time.valueOf("09:30:00"), Time.valueOf("10:00:00"));
+        TimeSlot friday_from_09_00_to_09_30 = new TimeSlot(null, "friday_from_09_00_to_09_30", Time.valueOf("09:00:00"), Time.valueOf("09:30:00"));
+        TimeSlot friday_from_09_30_to_10_00 = new TimeSlot(null, "friday_from_09_30_to_10_00", Time.valueOf("09:30:00"), Time.valueOf("10:00:00"));
         TimeSlot friday_from_10_00_to_10_30 = new TimeSlot(null, "friday_from_10_00_to_10_30", Time.valueOf("10:00:00"), Time.valueOf("10:30:00"));
         TimeSlot friday_from_10_30_to_11_00 = new TimeSlot(null, "friday_from_10_30_to_11_00", Time.valueOf("10:30:00"), Time.valueOf("11:00:00"));
         TimeSlot friday_from_11_00_to_11_30 = new TimeSlot(null, "friday_from_11_00_to_11_30", Time.valueOf("11:00:00"), Time.valueOf("11:30:00"));
@@ -429,10 +429,10 @@ public class Application {
 
         if (timeSlotRepository.findTimeSlotByTimeSlotName("friday_from_08_30_to_09_00") == null)
             timeSlotRepository.save(friday_from_08_30_to_09_00);
-        if (timeSlotRepository.findTimeSlotByTimeSlotName("friday_from_90_00_to_09_30") == null)
-            timeSlotRepository.save(friday_from_90_00_to_09_30);
-        if (timeSlotRepository.findTimeSlotByTimeSlotName("friday_from_90_30_to_10_00") == null)
-            timeSlotRepository.save(friday_from_90_30_to_10_00);
+        if (timeSlotRepository.findTimeSlotByTimeSlotName("friday_from_09_00_to_09_30") == null)
+            timeSlotRepository.save(friday_from_09_00_to_09_30);
+        if (timeSlotRepository.findTimeSlotByTimeSlotName("friday_from_09_30_to_10_00") == null)
+            timeSlotRepository.save(friday_from_09_30_to_10_00);
         if (timeSlotRepository.findTimeSlotByTimeSlotName("friday_from_10_00_to_10_30") == null)
             timeSlotRepository.save(friday_from_10_00_to_10_30);
         if (timeSlotRepository.findTimeSlotByTimeSlotName("friday_from_10_30_to_11_00") == null)
@@ -459,8 +459,8 @@ public class Application {
             timeSlotRepository.save(friday_from_15_30_to_16_00);
 
         fridayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("friday_from_08_30_to_09_00"));
-        fridayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("friday_from_90_00_to_09_30"));
-        fridayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("friday_from_90_30_to_10_00"));
+        fridayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("friday_from_09_00_to_09_30"));
+        fridayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("friday_from_09_30_to_10_00"));
         fridayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("friday_from_10_00_to_10_30"));
         fridayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("friday_from_10_30_to_11_00"));
         fridayTimeSlots.add(timeSlotRepository.findTimeSlotByTimeSlotName("friday_from_11_00_to_11_30"));
@@ -486,7 +486,6 @@ public class Application {
         String surname = "Studente";
         String fiscalCode = "PRVSRD97P28H612L";
         String emailAddress = "prova.studente@gmail.com";
-        int currentYear = 1;
         boolean isPresent = true;
         List<Day> daysOfPresenceOfTheStudent = new ArrayList<>();
         List<Subject> subjectsFollowed = new ArrayList<>();
@@ -499,7 +498,7 @@ public class Application {
         subjectsFollowed.add(subjectRepository.findSubjectByNameOfTheSubject("Italiano"));
         subjectsFollowed.add(subjectRepository.findSubjectByNameOfTheSubject("Storia"));
 
-        Student provaStudente = new Student(null, name, surname, fiscalCode, emailAddress, 1, isPresent,
+        Student provaStudente = new Student(null, name, surname, fiscalCode, emailAddress,  isPresent,
                 daysOfPresenceOfTheStudent, subjectsFollowed);
 
         if(studentRepository.findStudentByNameAndSurname(name, surname) == null)
@@ -511,14 +510,9 @@ public class Application {
     private static Teacher createProvaDocenteExample(SubjectRepository subjectRepository, TeacherRepository teacherRepository, TimeSlotRepository timeSlotRepository, Day monday, Day tuesday, Day wednesday, Day thursday) {
         String name = "Prova";
         String surname = "Docente";
-        String fiscalCode = "PRVDCN97P28H612L";
         String emailAddress = "prova.docente@gmail.com";
         List<Day> daysOfPresenceOfTheTeacher = new ArrayList<>();
-        List<TimeSlot> timeSlotsOfPresenceOnMonday = new ArrayList<>();
-        List<TimeSlot> timeSlotsOfPresenceOnTuesday = new ArrayList<>();
-        List<TimeSlot> timeSlotsOfPresenceOnWednesday = new ArrayList<>();
-        List<TimeSlot> timeSlotsOfPresenceOnThursday = new ArrayList<>();
-        List<TimeSlot> timeSlotsOfPresenceOnFriday = new ArrayList<>();
+        List<TimeSlot> timeSlotsOfPresence = new ArrayList<>();
         List<Subject> subjectsTeached = new ArrayList<>();
 
         daysOfPresenceOfTheTeacher.add(monday);
@@ -526,18 +520,13 @@ public class Application {
         daysOfPresenceOfTheTeacher.add(wednesday);
         daysOfPresenceOfTheTeacher.add(thursday);
 
-        timeSlotsOfPresenceOnMonday.add(timeSlotRepository.findTimeSlotByTimeSlotName("monday_from_08_30_to_09_00"));
-        timeSlotsOfPresenceOnTuesday.add(timeSlotRepository.findTimeSlotByTimeSlotName("monday_from_08_30_to_09_00"));
-        timeSlotsOfPresenceOnWednesday.add(timeSlotRepository.findTimeSlotByTimeSlotName("monday_from_08_30_to_09_00"));
-        timeSlotsOfPresenceOnThursday.add(timeSlotRepository.findTimeSlotByTimeSlotName("monday_from_08_30_to_09_00"));
-        timeSlotsOfPresenceOnFriday.add(timeSlotRepository.findTimeSlotByTimeSlotName("monday_from_08_30_to_09_00"));
+        timeSlotsOfPresence.add(timeSlotRepository.findTimeSlotByTimeSlotName("monday_from_08_30_to_09_00"));
 
         subjectsTeached.add(subjectRepository.findSubjectByNameOfTheSubject("Italiano"));
         subjectsTeached.add(subjectRepository.findSubjectByNameOfTheSubject("Storia"));
 
-        Teacher provaDocente = new Teacher(null, name, surname, fiscalCode, emailAddress, daysOfPresenceOfTheTeacher,
-                timeSlotsOfPresenceOnMonday, timeSlotsOfPresenceOnTuesday, timeSlotsOfPresenceOnWednesday,
-                timeSlotsOfPresenceOnThursday, timeSlotsOfPresenceOnFriday, subjectsTeached);
+        Teacher provaDocente = new Teacher(null, name, surname, emailAddress, true, daysOfPresenceOfTheTeacher,
+                timeSlotsOfPresence, subjectsTeached);
 
         if(teacherRepository.findTeacherByNameAndSurname(name, surname) == null)
             teacherRepository.save(provaDocente);

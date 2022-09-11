@@ -1,6 +1,6 @@
 import {Table, Switch, Card, Row, Col} from "antd";
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
-import {setTimeSlotToTeacherId} from "../client";
+import {setTimeSlotToTeacherId} from "../../client";
 
 
 function TimeSlotManagementTable({teacher}) {

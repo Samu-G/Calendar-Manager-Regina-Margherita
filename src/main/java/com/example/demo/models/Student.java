@@ -22,7 +22,6 @@ public class Student implements Comparable<Student> {
     private String surname;
     private String fiscalCode;
     private String emailAddress;
-    private int currentYear;
     private boolean isPresent;
 
     //attendance

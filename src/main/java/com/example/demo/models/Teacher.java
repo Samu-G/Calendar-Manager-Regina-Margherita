@@ -25,22 +25,13 @@ public class Teacher implements Comparable<Teacher> {
     //generic data
     private String name;
     private String surname;
-    private String fiscalCode;
     private String emailAddress;
-
+    private boolean isActive;
     //attendance
     @ManyToMany
     private List<Day> daysOfPresence;
     @ManyToMany
-    private List<TimeSlot> timeSlotsOfPresenceOnMonday;
-    @ManyToMany
-    private List<TimeSlot> timeSlotsOfPresenceOnTuesday;
-    @ManyToMany
-    private List<TimeSlot> timeSlotsOfPresenceOnWednesday;
-    @ManyToMany
-    private List<TimeSlot> timeSlotsOfPresenceOnThursday;
-    @ManyToMany
-    private List<TimeSlot> timeSlotsOfPresenceOnFriday;
+    private List<TimeSlot> timeSlotsOfPresence;
 
     //subjects teached
     @ManyToMany

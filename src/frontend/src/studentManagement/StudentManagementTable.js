@@ -2,13 +2,13 @@ import {Button, Col, Divider, Row, Space, Table, Typography} from "antd";
 import React, {useEffect} from "react";
 import {PlusOutlined} from "@ant-design/icons";
 import AddNewStudentDrawerForm from "./studentManagementTable/AddNewStudentDrawerForm";
-import SetFiscalCodeForm from "./studentManagementTable/studentManagementTableRow/SetFiscalCodeForm";
-import SetEmailAddressForm from "./studentManagementTable/studentManagementTableRow/SetEmailAddressForm";
+import SetStudentFiscalCodeForm from "./studentManagementTable/studentManagementTableRow/SetStudentFiscalCodeForm";
+import SetStudentEmailAddressForm from "./studentManagementTable/studentManagementTableRow/SetStudentEmailAddressForm";
 import SetStudentIsPresentButton from "./studentManagementTable/studentManagementTableRow/SetStudentIsPresentButton";
 import SetStudentAttendanceDaysCheckBox
     from "./studentManagementTable/studentManagementTableRow/SetStudentAttendanceDaysCheckBox";
 import DeleteStudentButton from "./studentManagementTable/studentManagementTableRow/DeleteStudentButton";
-import SetSubjectFollowedTag from "./studentManagementTable/studentManagementTableRow/SetSubjectFollowedTag";
+import SetStudentSubjectFollowedTag from "./studentManagementTable/studentManagementTableRow/SetStudentSubjectFollowedTag";
 
 const {Text, Title} = Typography;
 
@@ -62,7 +62,7 @@ const StudentManagementTable = ({studentList, showDrawer, setShowDrawer, fetchSt
                                     </Space>
                                     <Title level={5} style={{paddingTop: 16}}>Materie seguite</Title>
                                     <Space direction="vertical" style={{paddingLeft: 10}}>
-                                        <SetSubjectFollowedTag student={student} fetchStudents={fetchStudents}/>
+                                        <SetStudentSubjectFollowedTag student={student} fetchStudents={fetchStudents}/>
                                     </Space>
                                 </Col>
 
@@ -71,8 +71,8 @@ const StudentManagementTable = ({studentList, showDrawer, setShowDrawer, fetchSt
                                     <Space direction="vertical" style={{paddingLeft: 10}}>
                                         <Text>Nome: {student["name"]} </Text>
                                         <Text>Cognome: {student["surname"]} </Text>
-                                        <SetFiscalCodeForm student={student} fetchStudents={fetchStudents}/>
-                                        <SetEmailAddressForm student={student} fetchStudents={fetchStudents}/>
+                                        <SetStudentFiscalCodeForm student={student} fetchStudents={fetchStudents}/>
+                                        <SetStudentEmailAddressForm student={student} fetchStudents={fetchStudents}/>
                                     </Space>
                                 </Col>
                             </Row>
@@ -88,7 +88,8 @@ const StudentManagementTable = ({studentList, showDrawer, setShowDrawer, fetchSt
                 dataSource={studentList}
                 rowKey={student => student.id}
                 bordered
-                pagination={false}/>
+                pagination={false}
+            />
         </>
     );
 }

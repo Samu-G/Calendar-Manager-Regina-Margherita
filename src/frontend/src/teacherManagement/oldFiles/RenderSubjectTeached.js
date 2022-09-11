@@ -1,6 +1,6 @@
 import {AutoComplete, Button, Col, Divider, List, message, Row} from "antd";
 import React from "react";
-import {addSubjectToTeacher, deleteSubjectFromTheTeacher, getAllSubjects} from "../client";
+import {addSubjectToTeacher, deleteSubjectFromTheTeacher, getAllSubjects} from "../../client";
 
 function RenderSubjectTeached({teacher, fetchTeachers}) {
 

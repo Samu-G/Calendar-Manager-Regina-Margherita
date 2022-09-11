@@ -4,11 +4,11 @@ import {setEmailAddressToStudent, setFiscalCodeToStudent} from "../../../client"
 
 const {Text} = Typography;
 
-const SetEmailAddressForm = ({student, fetchStudents}) => {
+const SetStudentEmailAddressForm = ({student, fetchStudents}) => {
     const[emailAddress, setEmailAddress] = useState(student["emailAddress"]);
 
     useEffect(() => {
-        console.log("SetEmailAddressForm mounted")
+        console.log("SetStudentEmailAddressForm mounted")
     }, [student]);
 
     const handleChange = event => {
@@ -40,4 +40,4 @@ const SetEmailAddressForm = ({student, fetchStudents}) => {
     );
 }
 
-export default SetEmailAddressForm;
+export default SetStudentEmailAddressForm;
