@@ -1,6 +1,6 @@
 import TeacherManagementPageHeader from "./TeacherManagementPageHeader";
 import {useEffect, useState} from "react";
-import {getAllStudents, getAllTeachers} from "../client";
+import {getAllTeachers} from "../client";
 import {message} from "antd";
 import {Content} from "antd/es/layout/layout";
 import TeacherManagementTable from "./TeacherManagementTable";

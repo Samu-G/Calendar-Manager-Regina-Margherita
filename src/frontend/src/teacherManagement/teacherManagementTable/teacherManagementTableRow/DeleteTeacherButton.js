@@ -33,13 +33,10 @@ const DeleteTeacherButton = ({teacher, fetchTeachers}) => {
 
     function titleSetup() {
         return (<>
-            <p>Sei sicuro di voler elliminare {teacher["name"]} {teacher["surname"]}?</p>
-            <Text type="secondary">Verrà cancellato il docente, i dati sulla presenza e i dati generici. </Text>
+            <p>Sei sicuro di voler eliminare {teacher["name"]} {teacher["surname"]}?</p>
+            <Text type="secondary">Verrà cancellato il docente dalla lista. Le statistiche degli studenti </Text>
             <br/>
-            <Text type="secondary">Non potrà più essere selezionato durante la creazione del calendario. </Text>
-            <br/>
-            <Text type="secondary">Le statistiche degli studenti riguardo a questo docente verranno
-                elliminate.</Text> </>);
+            <Text type="secondary">riguardo a questo docente <Text strong> non </Text> verranno eliminate </Text> </>);
     }
 
     return (

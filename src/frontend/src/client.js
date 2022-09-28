@@ -57,16 +57,6 @@ export const getAllTeachersPresentOnFriday = () =>
     fetch("api/admin/getAllTeachersPresentOnFriday")
         .then(checkStatus)
 
-export const saveSubjectByName = subjectName =>
-    fetch("api/admin/saveSubjectByName", {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify(subjectName)
-        }
-    );
-
 export const deleteSubjectById = subjectId =>
     fetch("api/admin/deleteSubjectById", {
             headers: {
@@ -367,6 +357,17 @@ export const setTimeSlotForTeacherByDayName = (teacherId, dayName, timeSlotsList
 
 /************/
 
+/*New Function FOR TEACHER MANAGEMENT*/
+export const addSubject = aNewSubject =>
+    fetch("api/admin/addSubject", {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({subjectName: aNewSubject})
+    }).then(checkStatus);
+
+/************/
 
 export const addNewStudentAccount = account =>
     fetch("api/account/save", {

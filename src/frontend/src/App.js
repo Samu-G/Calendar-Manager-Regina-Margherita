@@ -5,6 +5,7 @@ import './App.css';
 import CalendarCreatorMain from "./calendarCreator/CalendarCreatorMain";
 import StudentManagementMain from "./studentManagement/StudentManagementMain";
 import TeacherManagementMain from "./teacherManagement/TeacherManagementMain";
+import SubjectManagementMain from "./subjectManagement/SubjectManagementMain";
 
 const {Content} = Layout;
 
@@ -16,7 +17,7 @@ export default function App() {
         3: <div>Option 3</div>,
         4: <StudentManagementMain/>,
         5: <TeacherManagementMain/>,
-        6: <div>Opzione Lista materie</div>,
+        6: <SubjectManagementMain/>,
         7: <div>Option 7</div>,
     };
 

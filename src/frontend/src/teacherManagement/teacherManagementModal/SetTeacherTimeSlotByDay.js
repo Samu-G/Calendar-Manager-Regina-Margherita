@@ -11,6 +11,26 @@ const CheckboxGroup = Checkbox.Group;
 
 const SetTeacherTimeSlotByDay = ({dayName, currentTeacher}) => {
     const [changed, setChanged] = useState(false);
+    const [checkedList, setCheckedList] = useState([]);
+    const [newCheckedList, setNewCheckedList] = useState([]);
+
+    useEffect(() => {
+        setupCheckedList();
+        console.log("SetTeacherTimeSlotByDay mounted");
+    }, []);
+
+    useEffect(() => {
+        if (changed) {
+            setTimeSlotForTeacherByDayName(currentTeacher["id"], dayName, newCheckedList)
+                .then(() => {
+                    setupCheckedList();
+                    message.success("Fasce orarie di disponibilità modificate con successo");
+                }).catch(() => {
+                message.error("Errore nella comunicazione con il server");
+            });
+            setChanged(false);
+        }
+    }, [changed]);
 
     const setupCheckedList = () => {
         getTimeSlotFromTeacherByDayName(currentTeacher["id"], dayName)
@@ -23,33 +43,14 @@ const SetTeacherTimeSlotByDay = ({dayName, currentTeacher}) => {
         });
     }
 
-    useEffect(() => {
-        setupCheckedList();
-        console.log("SetTeacherTimeSlotByDay mounted");
-    }, []);
-
-    useEffect(() => {
-        if (changed) {
-            setTimeSlotForTeacherByDayName(currentTeacher["id"], dayName, checkedList)
-                .then(() => {
-                    message.success("Fasce orarie di disponibilità modificate con successo");
-                }).catch(() => {
-                message.error("Errore nella comunicazione con il server");
-            });
-            setChanged(false);
-        }
-    }, [changed]);
-
-    const [checkedList, setCheckedList] = useState([]);
-
     const onChange = (list) => {
-        setCheckedList(list);
+        setNewCheckedList(list);
         setChanged(true);
     }
 
     return (
         <>
-            <Divider orientation="left" orientationMargin="0">
+            <Divider orientation="left" orientationMargin="0" style={{marginTop: 7, marginBottom: 7}}>
                 {dayName}
             </Divider>
             <CheckboxGroup options={plainOptions} value={checkedList} onChange={onChange} style={{marginLeft: 10}}/>

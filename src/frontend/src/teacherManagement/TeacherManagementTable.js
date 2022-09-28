@@ -14,6 +14,34 @@ const {Text, Title} = Typography;
 
 const columns = [
     {
+        title: 'Nome',
+        dataIndex: 'name',
+        key: 'name',
+        render: (name) => {
+            return <Text> {name} </Text>
+        },
+        width: "20%",
+    },
+    {
+        title: 'Cognome',
+        dataIndex: 'surname',
+        key: 'surname',
+        render: (surname) => {
+            return <Text> {surname} </Text>
+        },
+        width: "20%",
+    },
+    {
+        title: 'Attivo in calendario',
+        dataIndex: 'active',
+        key: 'active',
+        render: (boolean) => {
+            if (boolean) return <Text strong type="success"> Sì </Text>;
+            else return  <Text strong type="danger"> No </Text>;
+        },
+        width: "9%",
+    },
+    {
         title: 'Materie insegnate',
         dataIndex: 'subjectsTeached',
         key: 'subjectsTeached',
@@ -25,29 +53,12 @@ const columns = [
             })
             return subjectName;
         },
-        width: "25%",
     },
     {
-        title: 'Attivo in calendario',
-        dataIndex: 'active',
-        key: 'active',
-        render: (boolean) => {
-            if (boolean) return "Sì";
-            else return "No";
-        },
-        width: "9%",
-    },
-    {
-        title: 'Nome',
-        dataIndex: 'name',
-        key: 'name',
-        width: "33%",
-    },
-    {
-        title: 'Cognome',
-        dataIndex: 'surname',
-        key: 'surname',
-        width: "33%",
+        title: "Indirizzo email",
+        dataIndex: "emailAddress",
+        key: "emailAddress",
+        width: "20%",
     }
 ];
 
@@ -120,7 +131,8 @@ const TeacherManagementTable = ({teacherList, fetchTeachers}) => {
                 dataSource={teacherList}
                 rowKey={teacher => teacher.id}
                 bordered
-                pagination={false}
+                size={"small"}
+                pagination={{pageSize: 30}}
             />
         </>
     );

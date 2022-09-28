@@ -67,14 +67,7 @@ public class SubjectService {
     }
 
     @PostMapping
-    public void saveSubjectByName(ObjectNode json) {
-        String subjectName = json.get("name").toString();
-        StringBuilder sb = new StringBuilder(subjectName);
-        sb.deleteCharAt(subjectName.length() - 1);
-        sb.deleteCharAt(0);
-        subjectName = sb.toString();
-        subjectName= subjectName.toUpperCase();
-        System.out.println(subjectName);
+    public void saveSubjectByName(String subjectName) {
         Subject alreadyExsist = subjectRepository.findSubjectByNameOfTheSubject(subjectName);
         if(alreadyExsist == null) {
             Subject newSubject = new Subject(null, subjectName);

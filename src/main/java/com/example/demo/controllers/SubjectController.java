@@ -4,6 +4,7 @@ import com.example.demo.models.Subject;
 import com.example.demo.services.SubjectService;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,14 +26,15 @@ public class SubjectController {
         return subjectList;
     }
 
+    @PostMapping("/admin/addSubject")
+    public void addSubject(@RequestBody ObjectNode json) {
+        String subjectName = json.get("subjectName").textValue();
+        subjectService.saveSubjectByName(subjectName);
+    }
+
     @RequestMapping("/admin/deleteSubjectById")
     public void deleteSubjectById(@RequestBody Long id) {
         subjectService.deleteSubjectById(id);
-    }
-
-    @RequestMapping("/admin/saveSubjectByName")
-    public void saveSubjectByName(@RequestBody ObjectNode json) {
-        subjectService.saveSubjectByName(json);
     }
 
     @RequestMapping("/admin/addSubjectToStudent")

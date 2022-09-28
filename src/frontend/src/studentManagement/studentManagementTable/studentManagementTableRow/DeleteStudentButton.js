@@ -33,9 +33,10 @@ const DeleteStudentButton = ({student, fetchStudents}) => {
 
     function titleSetup() {
         return (<>
-            <p>Sei sicuro di voler elliminare {student["name"]} {student["surname"]}?</p>
-            <Text type="secondary">Verrà cancellato lo studente dalla lista e tutte le statistiche correlate ad
-                esso</Text> </>);
+            <p>Sei sicuro di voler eliminare {student["name"]} {student["surname"]}?</p>
+            <Text type="secondary"> Verrà cancellato lo studente dalla lista. Le statistiche riguardo <Text>
+                <br/>
+            </Text> questo studente <Text strong> non </Text> verranno eliminate </Text> </>);
     }
 
     return (
