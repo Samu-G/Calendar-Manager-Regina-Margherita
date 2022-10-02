@@ -1,9 +1,8 @@
-import {Button, Divider, Modal, Typography} from 'antd';
-import SetTeacherTimeSlotByDay from "./teacherManagementModal/SetTeacherTimeSlotByDay";
+import {Button, Modal, Typography} from 'antd';
 import {useEffect} from "react";
+import TeacherTimeSlotListByDay from "./teacherManagementModal/TeacherTimeSlotListByDay";
 
 const {Text} = Typography;
-
 
 const SetTeacherTimeSlotsModal = ({isModalVisible, setIsModalVisible, currentTeacher}) => {
     useEffect(() => {
@@ -22,16 +21,16 @@ const SetTeacherTimeSlotsModal = ({isModalVisible, setIsModalVisible, currentTea
         <>
             <Modal title={generateTitle()} visible={isModalVisible} closable={false}
                    footer={<Button type="primary" onClick={handleClose} block> Salva e chiudi </Button>}
-                   width={740} bodyStyle={{paddingTop: 7}}>
+                   width={650} bodyStyle={{paddingTop: 7}}>
                 <Text type="secondary">Da questa finestra puoi specificare le fasce orarie di disponibilità del
                     docente {currentTeacher["name"]} {currentTeacher["surname"]}. Le fasce orarie spuntate verranno poi
                     mostrate durante la creazione del calendario, mentre quelle non spuntate renderanno il docente non
                     disponibile. </Text>
-                <SetTeacherTimeSlotByDay dayName={"Lunedì"} currentTeacher={currentTeacher}/>
-                <SetTeacherTimeSlotByDay dayName={"Martedì"} currentTeacher={currentTeacher}/>
-                <SetTeacherTimeSlotByDay dayName={"Mercoledì"} currentTeacher={currentTeacher}/>
-                <SetTeacherTimeSlotByDay dayName={"Giovedì"} currentTeacher={currentTeacher}/>
-                <SetTeacherTimeSlotByDay dayName={"Venerdì"} currentTeacher={currentTeacher}/>
+                <TeacherTimeSlotListByDay dayName={"Lunedì"} currentTeacher={currentTeacher}/>
+                <TeacherTimeSlotListByDay dayName={"Martedì"} currentTeacher={currentTeacher}/>
+                <TeacherTimeSlotListByDay dayName={"Mercoledì"} currentTeacher={currentTeacher}/>
+                <TeacherTimeSlotListByDay dayName={"Giovedì"} currentTeacher={currentTeacher}/>
+                <TeacherTimeSlotListByDay dayName={"Venerdì"} currentTeacher={currentTeacher}/>
             </Modal>
         </>
     );

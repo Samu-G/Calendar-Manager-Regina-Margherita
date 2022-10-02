@@ -17,11 +17,13 @@ const StudentManagementPageHeader = ({studentsList}) => {
         setNumOfPresentStudent(numOfPresentStudent);
     }
 
+    const DescriptionsStyle = {paddingBottom: 0};
+
     return (
         <PageHeader ghost={false} title="Gestisci gli studenti">
             <Descriptions size="small" column={1}>
-                <Descriptions.Item label="Studenti totali"> {studentsList.length}</Descriptions.Item>
-                <Descriptions.Item label="Studenti presenti in struttura"> {numOfPresentStudent} </Descriptions.Item>
+                <Descriptions.Item label="Studenti totali" style={DescriptionsStyle}> {studentsList.length}</Descriptions.Item>
+                <Descriptions.Item label="Studenti presenti in struttura" style={DescriptionsStyle}> {numOfPresentStudent} </Descriptions.Item>
             </Descriptions>
         </PageHeader>
     );

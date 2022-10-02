@@ -1,8 +1,7 @@
 import React, {useEffect} from "react";
-import {Button, Space, Table} from "antd";
-import {deleteSubjectById} from "../client";
-import {PlusOutlined} from "@ant-design/icons";
+import {Table} from "antd";
 import AddSubjectButton from "./AddSubjectButton";
+import DeleteSubjectButton from "./DeleteSubjectButton";
 
 const SubjectManagementTable = ({subjectsList, fetchSubjects}) => {
 
@@ -17,19 +16,7 @@ const SubjectManagementTable = ({subjectsList, fetchSubjects}) => {
             title: 'Azioni',
             key: 'action',
             render: (_, record) => (
-                <Space size="middle">
-                    <Button type="primary" danger onClick={() => {
-                        deleteSubjectById(record.id)
-                            .then(() => {
-                                    fetchSubjects();
-                                }
-                            ).catch(() => {
-
-                        })
-                    }}>
-                        Cancella la materia
-                    </Button>
-                </Space>
+                <DeleteSubjectButton subject={record} fetchSubjects={fetchSubjects}/>
             ),
             width: "20%",
         },

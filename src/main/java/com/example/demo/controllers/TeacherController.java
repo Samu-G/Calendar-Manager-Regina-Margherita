@@ -1,15 +1,19 @@
 package com.example.demo.controllers;
 
 import com.example.demo.models.Teacher;
+import com.example.demo.models.TimeSlotAttendanceRules;
 import com.example.demo.services.TeacherService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -108,23 +112,32 @@ public class TeacherController {
 
     /********************/
 
-    /*Time slot management*/
-    @PostMapping("/admin/getTimeSlotFromTeacherByDayName")
-    public List<String> getTimeSlotFromTeacherByDayName(@RequestBody ObjectNode json) {
+    /*Attendance rules management*/
+    @PostMapping("/admin/addAttendanceRules")
+    public ResponseEntity<?> addAttendanceRules(@RequestBody ObjectNode json) {
         Long teacherId = json.get("teacherId").asLong();
         String dayName = json.get("dayName").textValue();
-        return teacherService.getTimeSlotFromTeacherByDayName(teacherId, dayName);
+        String beginTime = json.get("beginTime").textValue();
+        String endTime = json.get("endTime").textValue();
+        teacherService.addAttendanceRules(teacherId, dayName, beginTime, endTime);
+        return new ResponseEntity<>("attendance rules added" + json, HttpStatus.OK);
     }
 
-    @PostMapping("/admin/setTimeSlotForTeacherByDayName")
-    public void setTimeSlotForTeacherByDayName(@RequestBody ObjectNode json) {
+    @PostMapping("/admin/fetchAttendanceRules")
+    public List<TimeSlotAttendanceRules> fetchAttendanceRules(@RequestBody ObjectNode json) {
         Long teacherId = json.get("teacherId").asLong();
         String dayName = json.get("dayName").textValue();
-        JsonNode timeSlotsList = json.get("timeSlotsList");
-        teacherService.setTimeSlotForTeacherByDayName(teacherId, dayName, timeSlotsList);
+        return teacherService.fetchAttendanceRules(teacherId, dayName);
     }
+
+    @PostMapping("/admin/removeAttendanceRule")
+    public void removeAttendanceRule(@RequestBody ObjectNode json) {
+        Long teacherId = json.get("teacherId").asLong();
+        Long attendanceId = json.get("attendanceId").asLong();
+        teacherService.removeAttendanceRule(teacherId, attendanceId);
+    }
+
     /********************/
-
 
     @RequestMapping("/admin/getAllTeachersPresentOnMonday")
     public List<Teacher> getAllTeachersPresentOnMonday() {
@@ -168,11 +181,13 @@ public class TeacherController {
 
 
     public static List<String> adaptDaysNameInItalian(List<String> dayNameList) {
-        Collections.replaceAll(dayNameList, "Monday", "Lunedì");
-        Collections.replaceAll(dayNameList, "Tuesday", "Martedì");
-        Collections.replaceAll(dayNameList, "Wednesday", "Mercoledì");
-        Collections.replaceAll(dayNameList, "Thursday", "Giovedì");
-        Collections.replaceAll(dayNameList, "Friday", "Venerdì");
+        List<Boolean> doneReplacement = new ArrayList<>();
+        doneReplacement.set(0, Collections.replaceAll(dayNameList, "Monday", "Lunedì"));
+        doneReplacement.set(1, Collections.replaceAll(dayNameList, "Tuesday", "Martedì"));
+        doneReplacement.set(2, Collections.replaceAll(dayNameList, "Wednesday", "Mercoledì"));
+        doneReplacement.set(3, Collections.replaceAll(dayNameList, "Thursday", "Giovedì"));
+        doneReplacement.set(4, Collections.replaceAll(dayNameList, "Friday", "Venerdì"));
+        for(boolean b : doneReplacement) if(!b) return new ArrayList<>();
         return dayNameList;
     }
 }

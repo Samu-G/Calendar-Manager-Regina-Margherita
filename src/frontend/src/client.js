@@ -57,6 +57,16 @@ export const getAllTeachersPresentOnFriday = () =>
     fetch("api/admin/getAllTeachersPresentOnFriday")
         .then(checkStatus)
 
+export const isSubjectDeletable = subjectId =>
+    fetch("api/admin/isDeletableSubjectById", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({id: subjectId})
+        }
+    );
+
 export const deleteSubjectById = subjectId =>
     fetch("api/admin/deleteSubjectById", {
             headers: {
@@ -368,6 +378,43 @@ export const addSubject = aNewSubject =>
     }).then(checkStatus);
 
 /************/
+
+export const addAttendanceRules = (teacherId, dayName, beginTime, endTime) =>
+    fetch("api/admin/addAttendanceRules", {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({teacherId: teacherId, dayName: dayName, beginTime: beginTime, endTime: endTime})
+    }).then(checkStatus);
+
+export const fetchAttendanceRules = (teacherId, dayName) =>
+    fetch("api/admin/fetchAttendanceRules", {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({teacherId: teacherId, dayName: dayName})
+    }).then(checkStatus);
+
+export const removeAttendanceRule = (teacherId, attendanceId) =>
+    fetch("api/admin/removeAttendanceRule", {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({teacherId: teacherId, attendanceId: attendanceId})
+    }).then(checkStatus);
+
+
+export const getAttendanceByDayIdFromTeacher = (dayName, teacherId) =>
+    fetch("api/admin/getAttendanceByDayIdFromTeacher", {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'GET',
+        body: JSON.stringify({dayName: dayName, teacherId: teacherId})
+    }).then(checkStatus);
 
 export const addNewStudentAccount = account =>
     fetch("api/account/save", {

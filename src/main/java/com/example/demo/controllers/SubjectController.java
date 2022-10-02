@@ -1,9 +1,15 @@
 package com.example.demo.controllers;
 
+import com.example.demo.models.Student;
 import com.example.demo.models.Subject;
+import com.example.demo.models.Teacher;
+import com.example.demo.services.StudentService;
 import com.example.demo.services.SubjectService;
+import com.example.demo.services.TeacherService;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +24,9 @@ import java.util.List;
 public class SubjectController {
 
     private final SubjectService subjectService;
+    private final StudentService studentService;
+
+    private final TeacherService teacherService;
 
     @RequestMapping("/admin/getAllSubjects")
     public List<Subject> getAllSubjects() {
@@ -30,6 +39,29 @@ public class SubjectController {
     public void addSubject(@RequestBody ObjectNode json) {
         String subjectName = json.get("subjectName").textValue();
         subjectService.saveSubjectByName(subjectName);
+    }
+
+    @RequestMapping("/admin/isDeletableSubjectById")
+    public ResponseEntity<?> isDeletableSubjectById(@RequestBody ObjectNode json) {
+        Long id = json.get("id").longValue();
+        boolean notDeletable = true;
+        Subject subject = subjectService.getSubjectById(id);
+        List<Student> studentList = studentService.getAllStudents();
+        List<Teacher> teacherList = teacherService.getAllTeachers();
+        for (Student s: studentList) {
+            if(s.getSubjectsFollowed().contains(subject)) {
+                notDeletable = false;
+                break;
+            }
+        }
+        for (Teacher t: teacherList) {
+            if(t.getSubjectsTeached().contains(subject)) {
+                notDeletable = false;
+                break;
+            }
+        }
+
+        return new ResponseEntity<>(notDeletable, HttpStatus.OK);
     }
 
     @RequestMapping("/admin/deleteSubjectById")

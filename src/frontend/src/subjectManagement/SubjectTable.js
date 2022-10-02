@@ -1,16 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Descriptions, PageHeader, Space, Spin, Table} from "antd";
+import {Button, Descriptions, PageHeader, Spin, Table} from "antd";
 import {Content, Header} from "antd/es/layout/layout";
-import {deleteSubjectById, getAllSubjects} from "../client";
+import {getAllSubjects} from "../client";
 import {LoadingOutlined, PlusOutlined} from "@ant-design/icons";
-import * as PropTypes from "prop-types";
 import SubjectDrawerForm from "./SubjectDrawerForm";
-
+import DeleteSubjectButton from "./DeleteSubjectButton";
 
 
 const antIcon = <LoadingOutlined style={{fontSize: 24}} spin/>;
 
-function SubjectTable() {
+export default function SubjectTable() {
     const [fetching, setFetching] = useState(true);
     const [subjects, setSubjects] = useState([]);
     const [showDrawer, setShowDrawer] = useState(false);
@@ -36,18 +35,7 @@ function SubjectTable() {
             title: 'Azioni',
             key: 'action',
             render: (_, record) => (
-                <Space size="middle">
-                    <Button type="primary" danger onClick={() => {
-                        console.log(record.id)
-                        deleteSubjectById(record.id)
-                            .then(() => {
-                                fetchSubjects();
-                                }
-                            )
-                    }}>
-                        Cancella la materia
-                    </Button>
-                </Space>
+                <DeleteSubjectButton subject={record} fetchSubjects={fetchSubjects}/>
             ),
         },
     ];
@@ -111,5 +99,3 @@ function SubjectTable() {
         </>
     );
 }
-
-export default SubjectTable

@@ -1,8 +1,6 @@
 package com.example.demo.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,9 +12,10 @@ import java.util.List;
 import static javax.persistence.GenerationType.AUTO;
 
 @Entity
-@Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class Teacher implements Comparable<Teacher> {
     @Id
     @GeneratedValue(strategy = AUTO)
@@ -27,11 +26,12 @@ public class Teacher implements Comparable<Teacher> {
     private String surname;
     private String emailAddress;
     private boolean isActive;
+
     //attendance
     @ManyToMany
     private List<Day> daysOfPresence;
     @ManyToMany
-    private List<TimeSlot> timeSlotsOfPresence;
+    private List<TimeSlotAttendanceRules> timeSlotsOfPresence;
 
     //subjects teached
     @ManyToMany

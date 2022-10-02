@@ -1,10 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.models.*;
-import com.example.demo.repository.DayRepository;
-import com.example.demo.repository.SubjectRepository;
-import com.example.demo.repository.TeacherRepository;
-import com.example.demo.repository.TimeSlotRepository;
+import com.example.demo.repository.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.AllArgsConstructor;
@@ -12,28 +9,28 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.sql.Time;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @AllArgsConstructor
 @Service
 public class TeacherService {
-
-    private final TimeSlotRepository timeSlotRepository;
-
     private final SubjectRepository subjectRepository;
 
     private final TeacherRepository teacherRepository;
 
     private final DayRepository dayRepository;
 
+    private final TimeSlotAttendanceRulesRepository timeSlotAttendanceRulesRepository;
 
     /*Get, Post, Delete teacher management*/
     @PostMapping
     public void addTeacher(String name, String surname, String emailAddress) {
         List<Day> daysOfPresenceOfTheTeacher = new ArrayList<>();
         List<Subject> subjectsTeached = new ArrayList<>();
-        List<TimeSlot> timeSlotsOfPresenceOfTheTeacher = new ArrayList<>();
+        List<TimeSlotAttendanceRules> timeSlotsOfPresenceOfTheTeacher = new ArrayList<>();
+
         Teacher aNewTeacher = new Teacher(null, name, surname, emailAddress, true, daysOfPresenceOfTheTeacher,
                 timeSlotsOfPresenceOfTheTeacher, subjectsTeached);
         teacherRepository.save(aNewTeacher);
@@ -50,6 +47,11 @@ public class TeacherService {
         List<Teacher> teacherList = teacherRepository.findAll();
         Collections.sort(teacherList);
         return teacherList;
+    }
+
+    @GetMapping
+    public Teacher getTeacherById(Long teacherId) {
+        return teacherRepository.findTeacherById(teacherId);
     }
 
     /********************/
@@ -144,73 +146,6 @@ public class TeacherService {
 
     /********************/
 
-    /*Time slot management*/
-    @GetMapping
-    public List<String> getTimeSlotFromTeacherByDayName(Long id, String dayName) {
-        Teacher teacher = teacherRepository.findTeacherById(id);
-        String dayNameTranslatedInEng = translateDayName(dayName);
-        List<String> timeSlotsName = new ArrayList<>();
-        for (TimeSlot ts : teacher.getTimeSlotsOfPresence()) {
-            String[] tsNameSplit = ts.getTimeSlotName().split("_");
-            if (tsNameSplit[0].equals(dayNameTranslatedInEng)) {
-                timeSlotsName.add(tsNameSplit[2] + ":" + tsNameSplit[3] + "-" + tsNameSplit[5] + ":" + tsNameSplit[6]);
-            }
-        }
-        System.out.println(timeSlotsName);
-        return timeSlotsName;
-    }
-
-    @PostMapping
-    public void setTimeSlotForTeacherByDayName(Long id, String dayName, JsonNode timeSlotsList) {
-        Teacher teacher = teacherRepository.findTeacherById(id);
-        String dayNameTranslatedInEng = translateDayName(dayName);
-        System.out.println(teacher);
-        System.out.println(dayNameTranslatedInEng);
-        System.out.println(timeSlotsList);
-        System.out.println(teacher.getTimeSlotsOfPresence());
-
-        List<TimeSlot> timeSlotsToRemove = new ArrayList<>();
-        for (TimeSlot t : teacher.getTimeSlotsOfPresence()) {
-            String[] tsNameSplit = t.getTimeSlotName().split("_");
-            if (tsNameSplit[0].equals(dayNameTranslatedInEng)) {
-                timeSlotsToRemove.add(t);
-            }
-        }
-        teacher.getTimeSlotsOfPresence().removeAll(timeSlotsToRemove);
-
-
-        for (JsonNode node : timeSlotsList) {
-            String timeSlotName = node.textValue();
-            String[] tsNameSplit = timeSlotName.split("-");
-            String tsBeginTime = tsNameSplit[0];
-            String tsEndTime = tsNameSplit[1];
-            String[] tsBeginTimeSplit = tsBeginTime.split(":");
-            String[] tsEndTimeSplit = tsEndTime.split(":");
-            String backEndTimeSlotName = dayNameTranslatedInEng + "_from_" +
-                    tsBeginTimeSplit[0] + "_" + tsBeginTimeSplit[1] + "_to_" +
-                    tsEndTimeSplit[0] + "_" + tsEndTimeSplit[1];
-            System.out.println(backEndTimeSlotName);
-            teacher.getTimeSlotsOfPresence().add(timeSlotRepository.findTimeSlotByTimeSlotName(backEndTimeSlotName));
-        }
-
-        teacherRepository.save(teacher);
-    }
-
-    /********************/
-
-    private String translateDayName(String dayName) {
-        String translatedDayName;
-        switch (dayName) {
-            case "Lunedì" -> translatedDayName = "monday";
-            case "Martedì" -> translatedDayName = "tuesday";
-            case "Mercoledì" -> translatedDayName = "wednesday";
-            case "Giovedì" -> translatedDayName = "thursday";
-            case "Venerdì" -> translatedDayName = "friday";
-            default -> translatedDayName = "error";
-        }
-        return translatedDayName;
-    }
-
     @GetMapping
     public List<Teacher> getAllTeachersPresentOnMonday() {
         List<Teacher> teachersList = getAllTeachers();
@@ -272,11 +207,6 @@ public class TeacherService {
     }
 
 
-    @PostMapping
-    public void addTimeSlot(TimeSlot timeSlot) {
-        timeSlotRepository.save(timeSlot);
-    }
-
 //    @GetMapping
 //    public TimeSlot getTimeSlotByBeginTimeAndEndTime(Time begin, Time end) {
 //        return timeSlotRepository.findTimeSlotByBeginTimeAndEndTime(begin, end);
@@ -296,6 +226,32 @@ public class TeacherService {
         Teacher teacher = teacherRepository.findTeacherById(teacherId);
         Subject toRemove = subjectRepository.findSubjectByNameOfTheSubject(subjectName);
         teacher.getSubjectsTeached().remove(toRemove);
+        teacherRepository.save(teacher);
+    }
+
+    @PostMapping
+    public void addAttendanceRules(Long teacherId, String dayName, String beginTime, String endTime) {
+        Teacher teacher = teacherRepository.findTeacherById(teacherId);
+        TimeSlotAttendanceRules t = timeSlotAttendanceRulesRepository.save(new TimeSlotAttendanceRules(null, dayName, beginTime, endTime));
+        teacher.getTimeSlotsOfPresence().add(t);
+        teacherRepository.save(teacher);
+    }
+
+    public List<TimeSlotAttendanceRules> fetchAttendanceRules(Long teacherId, String dayName) {
+        Teacher teacher = teacherRepository.findTeacherById(teacherId);
+        List<TimeSlotAttendanceRules> result = new ArrayList<>();
+        for (TimeSlotAttendanceRules t : teacher.getTimeSlotsOfPresence()) {
+            if (t.getTimeSlotDay().equals(dayName)) {
+                result.add(t);
+            }
+        }
+        return result;
+    }
+
+    public void removeAttendanceRule(Long teacherId, Long attendanceId) {
+        Teacher teacher = teacherRepository.findTeacherById(teacherId);
+        TimeSlotAttendanceRules r = timeSlotAttendanceRulesRepository.findTimeSlotAttendanceRulesById(attendanceId);
+        teacher.getTimeSlotsOfPresence().remove(r);
         teacherRepository.save(teacher);
     }
 

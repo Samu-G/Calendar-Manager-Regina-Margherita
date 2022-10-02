@@ -32,6 +32,11 @@ public class SubjectService {
         return subjectRepository.findAll();
     }
 
+    @GetMapping
+    public Subject getSubjectById(Long id) {
+        return subjectRepository.findSubjectById(id);
+    }
+
     @PostMapping
     public void addSubjectToStudent(ObjectNode json) {
         Long studentId = json.get("id").asLong();
@@ -69,7 +74,7 @@ public class SubjectService {
     @PostMapping
     public void saveSubjectByName(String subjectName) {
         Subject alreadyExsist = subjectRepository.findSubjectByNameOfTheSubject(subjectName);
-        if(alreadyExsist == null) {
+        if (alreadyExsist == null) {
             Subject newSubject = new Subject(null, subjectName);
             subjectRepository.save(newSubject);
         }

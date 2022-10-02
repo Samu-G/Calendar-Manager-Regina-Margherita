@@ -1,0 +1,22 @@
+{
+  "name": "applicazione",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Samu-G/Calendar-Manager-Regina-Margherita.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Samu-G/Calendar-Manager-Regina-Margherita/issues"
+  },
+  "homepage": "https://github.com/Samu-G/Calendar-Manager-Regina-Margherita#readme",
+  "dependencies": {
+    "socket.io": "^4.5.2"
+  }
+}
