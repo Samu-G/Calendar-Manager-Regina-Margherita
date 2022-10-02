@@ -1,14 +1,14 @@
 import {Button, Col, Divider, Row, Space, Table, Tag, Typography} from "antd";
 import React, {useEffect} from "react";
 import {PlusOutlined} from "@ant-design/icons";
-import AddNewStudentDrawerForm from "./studentManagementTable/AddNewStudentDrawerForm";
-import SetStudentFiscalCodeForm from "./studentManagementTable/studentManagementTableRow/SetStudentFiscalCodeForm";
-import SetStudentEmailAddressForm from "./studentManagementTable/studentManagementTableRow/SetStudentEmailAddressForm";
-import SetStudentIsPresentButton from "./studentManagementTable/studentManagementTableRow/SetStudentIsPresentButton";
+import AddNewStudentDrawerForm from "./AddNewStudentDrawerForm";
+import SetStudentFiscalCodeForm from "./SetStudentFiscalCodeForm";
+import SetStudentEmailAddressForm from "./SetStudentEmailAddressForm";
+import SetStudentIsPresentButton from "./SetStudentIsPresentButton";
 import SetStudentAttendanceDaysCheckBox
-    from "./studentManagementTable/studentManagementTableRow/SetStudentAttendanceDaysCheckBox";
-import DeleteStudentButton from "./studentManagementTable/studentManagementTableRow/DeleteStudentButton";
-import SetStudentSubjectFollowedTag from "./studentManagementTable/studentManagementTableRow/SetStudentSubjectFollowedTag";
+    from "./SetStudentAttendanceDaysCheckBox";
+import DeleteStudentButton from "./DeleteStudentButton";
+import SetStudentSubjectFollowedTag from "./SetStudentSubjectFollowedTag";
 
 const {Text, Title} = Typography;
 
@@ -111,7 +111,7 @@ const StudentManagementTable = ({studentList, showDrawer, setShowDrawer, fetchSt
                             </Row>
 
                             <Row>
-                                <Divider/>
+                                <Divider style={{marginBottom: 8}}/>
                                 <DeleteStudentButton student={student} fetchStudents={fetchStudents}/>
                             </Row>
                         </>

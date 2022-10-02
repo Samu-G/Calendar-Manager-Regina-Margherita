@@ -1,6 +1,6 @@
 import {Button, Modal, Typography} from 'antd';
 import {useEffect} from "react";
-import TeacherTimeSlotListByDay from "./teacherManagementModal/TeacherTimeSlotListByDay";
+import TeacherTimeSlotListByDay from "./TeacherTimeSlotListByDay";
 
 const {Text} = Typography;
 

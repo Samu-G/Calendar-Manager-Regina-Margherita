@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {Button, Col, Divider, Row, Space, Table, Tag, Typography} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
-import AddNewTeacherDrawerForm from "./teacherManagementTable/AddNewTeacherDrawerForm";
-import SetTeacherEmailAddressForm from "./teacherManagementTable/teacherManagementTableRow/SetTeacherEmailAddressForm";
-import SetTeacherIsActiveButton from "./teacherManagementTable/teacherManagementTableRow/SetTeacherIsActiveButton";
+import AddNewTeacherDrawerForm from "./AddNewTeacherDrawerForm";
+import SetTeacherEmailAddressForm from "./SetTeacherEmailAddressForm";
+import SetTeacherIsActiveButton from "./SetTeacherIsActiveButton";
 import SetTeacherAttendanceDaysCheckBox
-    from "./teacherManagementTable/teacherManagementTableRow/SetTeacherAttendanceDaysCheckBox";
-import SetTeacherSubjectTag from "./teacherManagementTable/teacherManagementTableRow/SetTeacherSubjectTag";
-import DeleteTeacherButton from "./teacherManagementTable/teacherManagementTableRow/DeleteTeacherButton";
+    from "./SetTeacherAttendanceDaysCheckBox";
+import SetTeacherSubjectTag from "./SetTeacherSubjectTag";
+import DeleteTeacherButton from "./DeleteTeacherButton";
 import SetTeacherTimeSlotsModal from "./SetTeacherTimeSlotsModal";
 
 const {Text, Title} = Typography;
@@ -121,7 +121,7 @@ const TeacherManagementTable = ({teacherList, fetchTeachers}) => {
                             </Row>
 
                             <Row>
-                                <Divider/>
+                                <Divider style={{marginBottom: 8}}/>
                                 <DeleteTeacherButton teacher={teacher} fetchTeachers={fetchTeachers}/>
                             </Row>
                         </>

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Button, Popover, Space} from "antd";
 import {deleteSubjectById, isSubjectDeletable} from "../client";
+import {MinusOutlined} from "@ant-design/icons";
 
 const DeleteSubjectButton = ({subject, fetchSubjects}) => {
 
@@ -23,7 +24,7 @@ const DeleteSubjectButton = ({subject, fetchSubjects}) => {
 
     const deletableSubjectButton = (
         <Space size="middle">
-            <Button type="primary" danger onClick={onDeleteClick}> Cancella la materia </Button>
+            <Button type="primary" danger onClick={onDeleteClick} shape={"round"} icon={<MinusOutlined/>}> Cancella la materia </Button>
         </Space>
     );
 
@@ -32,7 +33,7 @@ const DeleteSubjectButton = ({subject, fetchSubjects}) => {
             <Popover placement="left"
                      content="Non puoi eliminare la materia perché è insegnata o seguita da qualche utente. Rimuovi prima la materia dai docenti e studenti"
                      trigger="hover">
-                <Button danger disabled> Cancella la materia </Button>
+                <Button danger disabled shape={"round"} icon={<MinusOutlined/>}> Cancella la materia </Button>
             </Popover>
         </Space>
     );
