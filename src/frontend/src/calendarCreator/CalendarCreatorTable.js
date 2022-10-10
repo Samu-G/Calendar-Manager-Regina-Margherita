@@ -2,7 +2,7 @@ import {Button, Descriptions, Divider, Table, Typography} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
 import React, {useEffect, useState} from "react";
 import * as PropTypes from "prop-types";
-import {Content, Header} from "antd/es/layout/layout";
+import {Content} from "antd/es/layout/layout";
 import moment from "moment/moment";
 import CalendarCreatorAddRowModal from "./CalendarCreatorAddRowModal";
 
@@ -20,11 +20,11 @@ const CalendarCreatorTable = ({date, teachers, students}) => {
     const [studentsToBeScheduled, setStudentsToBeScheduled] = useState([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
 
-    const [calendarDate, setCalendarDate] = useState([]);
+    // const [calendarDate, setCalendarDate] = useState([]);
+
     let dayOfTheWeekName = "";
 
     const columns = [
-
         {
             title: 'Docente',
             dataIndex: 'docente',
@@ -163,17 +163,17 @@ const CalendarCreatorTable = ({date, teachers, students}) => {
         dayOfTheWeekName = moment(date, 'YYYY-MM-DD').format('dddd');
     }, []);
 
-    function normalizeDateForItaly() {
-        let data = moment(date, 'YYYY-MM-DD');
-        return data.format('dddd') + " " + data.format('LL');
-    }
+    // function normalizeDateForItaly() {
+    //     let data = moment(date, 'YYYY-MM-DD');
+    //     return data.format('dddd') + " " + data.format('LL');
+    // }
 
-    function returnTitleOfTheCalendar() {
-        titleOfTheCalendar = "Piano di lavoro giornaliero per " + normalizeDateForItaly();
-        calendar.push({title: titleOfTheCalendar});
-        console.log(calendar);
-        return titleOfTheCalendar;
-    }
+    // function returnTitleOfTheCalendar() {
+    //     titleOfTheCalendar = "Piano di lavoro giornaliero per " + normalizeDateForItaly();
+    //     calendar.push({title: titleOfTheCalendar});
+    //     console.log(calendar);
+    //     return titleOfTheCalendar;
+    // }
 
 
     return <>
@@ -186,15 +186,12 @@ const CalendarCreatorTable = ({date, teachers, students}) => {
             studentsToBeScheduled={studentsToBeScheduled}
             setStudentsToBeScheduled={setStudentsToBeScheduled}
         />
-        <Header className="site-layout-background" style={{minHeight: 110, padding: 7, paddingTop: 0}}>
-            <Title level={5}> {returnTitleOfTheCalendar()} </Title>
             <Descriptions size="medium" column={2}>
                 <p>Docenti presenti oggi: {listOfTeachers.length}</p>
                 <p>Studenti presenti oggi: {listOfStudents.length}</p>
                 <p>Docenti da calendarizzare rimanenti: {teachersToBeScheduled.length}</p>
                 <p>Studenti da calendarizzare rimanenti: {studentsToBeScheduled.length}</p>
             </Descriptions>
-        </Header>
         <Content>
             <Divider orientation="left" orientationMargin="0">Anteprima del calendario</Divider>
             <Table columns={columns} dataSource={data} scroll={{x: 1300}} bordered

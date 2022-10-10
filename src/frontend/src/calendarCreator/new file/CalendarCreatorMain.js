@@ -1,9 +1,7 @@
-import {Content, Header} from "antd/es/layout/layout";
+import {Header} from "antd/es/layout/layout";
 import {Button, Col, DatePicker, Divider, PageHeader, Row, Space, Typography} from "antd";
 import moment from 'moment';
 import React, {useEffect, useState} from "react";
-import CalendarCreatorHeader from "./CalendarCreatorHeader";
-import CalendarCreatorTable from "./CalendarCreatorTable";
 import localization from 'moment/locale/it';
 import locale from 'antd/es/date-picker/locale/it_IT';
 import {
@@ -18,8 +16,9 @@ import {
     getAllTeachersPresentOnThursday,
     getAllTeachersPresentOnTuesday,
     getAllTeachersPresentOnWednesday
-} from "../client";
-
+} from "../../client";
+import {CalendarCreatorConfigurator} from "./CalendarCreatorConfigurator";
+import {useDispatch} from "react-redux";
 
 const {Title, Text} = Typography;
 
@@ -27,6 +26,7 @@ const CalendarCreatorMain = () => {
     const [date, setDate] = useState([]);
     const [dateSelected, setDateSelected] = useState(false);
     const [createClicked, setCreateClicked] = useState(false);
+    // const dispatch = useDispatch();
 
     const [teachers, setTeachers] = useState([]);
     const [teachersPresentOnMonday, setTeachersPresentOnMonday] = useState([]);
@@ -115,53 +115,80 @@ const CalendarCreatorMain = () => {
         console.log("Calendar creator main mounted.");
     }, []);
 
-    function renderCreateCalendarButton() {
-        if (dateSelected) {
-            return <> <Button type="primary" size="middle" onClick={() => {
-                setCreateClicked(true);
-            }}> Crea > </Button> </>
-        } else {
-            return <> <Button type="primary" size="middle" disabled> Crea > </Button> </>
-        }
-    }
-
     function getCurrentDate() {
         moment.updateLocale('it', localization);
         return moment().format('dddd') + " " + moment().format('LL');
     }
 
+    function normalizeDateForItaly(date) {
+        let data = moment(date, 'YYYY-MM-DD');
+        return data.format('dddd') + " " + data.format('LL');
+    }
+
+    function returnTitleOfTheCalendar() {
+        return "Piano di lavoro giornaliero per " + normalizeDateForItaly(date);
+    }
+
+    function renderCreateCalendarButton() {
+        if (dateSelected) {
+            return <>
+                <Button type="primary" size="middle" onClick={() => {
+                    setCreateClicked(true);
+                }}> Crea calendario >
+                </Button>
+            </>
+        } else {
+            return <>
+                <Button type="primary" size="middle" disabled>
+                    Crea >
+                </Button>
+            </>
+        }
+    }
+
     function renderHeader() {
         if (!createClicked) {
-            return <> <Row> <Space size="middle">
-                <b>Oggi è {getCurrentDate()}</b>
-                <Divider type="vertical"/>
-                <p>Seleziona la data per il calendario:</p>
-                <DatePicker locale={locale} style={{width: 200}} onChange={(date, dateString) => {
-                    setDate(dateString);
-                    setDateSelected(true)
-                }}/>
-                {renderCreateCalendarButton()}
-            </Space> </Row> </>
+            return <>
+                <Space size={"middle"}>
+                    <Text strong>Oggi è {getCurrentDate()}</Text>
+                    <Divider type="vertical"/>
+                    <Text>Seleziona la data per il calendario:</Text>
+                    <DatePicker locale={locale} style={{width: 200}} onChange={(date, dateString) => {
+                        setDate(dateString);
+                        setDateSelected(true);
+                    }}/>
+                    {renderCreateCalendarButton()}
+                </Space>
+            </>
         } else {
             let dayOfTheWeekName = moment(date, 'YYYY-MM-DD').format('dddd');
             switch (dayOfTheWeekName) {
                 case "lunedì":
-                    return <CalendarCreatorTable date={date} teachers={teachersPresentOnMonday}
-                                                 students={studentsPresentOnMonday}/>
                 case "martedì":
-                    return <CalendarCreatorTable date={date} teachers={teachersPresentOnTuesday}
-                                                 students={studentsPresentOnTuesday}/>
                 case "mercoledì":
-                    return <CalendarCreatorTable date={date} teachers={teachersPresentOnWednesday}
-                                                 students={studentsPresentOnWednesday}/>
                 case "giovedì":
-                    return <CalendarCreatorTable date={date} teachers={teachersPresentOnThursday}
-                                                 students={studentsPresentOnThursday}/>
                 case "venerdì":
-                    return <CalendarCreatorTable date={date} teachers={teachersPresentOnFriday}
-                                                 students={studentsPresentOnFriday}/>
-                default: return <Title level={5} type="danger">Non è possibile creare un calendario per un giorno festivo</Title>
+                    return <>
+                        <Header className="site-layout-background" style={{paddingLeft: 24, margin: 0, height: 24}}>
+                            <Title level={5}> {returnTitleOfTheCalendar()} </Title>
+                        </Header>
+                        <Divider/>
+                        <CalendarCreatorConfigurator dateSelected={date} dayNameSelected={dayOfTheWeekName}/>
+                    </>
+
+                default:
+                    return <>
+                        <Space size={"middle"}>
+                            <Text strong type="danger">Non è possibile creare un calendario per un giorno
+                                festivo</Text>
+                            <Button onClick={() => setCreateClicked(false)}>
+                                Torna indietro
+                            </Button>
+                        </Space>
+                    </>
             }
+
+
         }
     }
 
@@ -196,7 +223,6 @@ const CalendarCreatorMain = () => {
             <Divider/>
 
             {renderHeader()}
-
 
         </div>
     );

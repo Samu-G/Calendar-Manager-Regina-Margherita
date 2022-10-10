@@ -14,6 +14,7 @@ const StudentManagementMain = () => {
         getAllStudents()
             .then(res => res.json())
             .then(data => {
+                console.log(data);
                 setStudents(data);
             }).catch(() => {
             message.error("Errore nella comunicazione con il server");

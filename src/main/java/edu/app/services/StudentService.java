@@ -1,13 +1,13 @@
 package edu.app.services;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import edu.app.models.Day;
 import edu.app.models.Student;
 import edu.app.models.Subject;
 import edu.app.repository.DayRepository;
 import edu.app.repository.StudentRepository;
 import edu.app.repository.SubjectRepository;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -150,6 +150,9 @@ public class StudentService {
     }
 
     @GetMapping
+    public Student getStudentById(Long id) { return studentRepository.findStudentsById(id);}
+
+    @GetMapping
     public List<Student> getAllStudentsPresentOnMonday() {
         List<Student> studentsList = getAllStudents();
         List<Student> studentsPresentOnMonday = new ArrayList<>();
@@ -213,5 +216,32 @@ public class StudentService {
     @PostMapping
     public void flipPresentToStudent(Student student) {
         studentRepository.flipPresentToStudent(student);
+    }
+
+    public List<Student> fetchSchedulableStudentByDayName(String dayName) {
+        List<Student> allStudent = studentRepository.findAll();
+        List<Student> schedulableStudent = new ArrayList<>();
+        for (Student s : allStudent) {
+            if (s.getDaysOfPresence().contains(dayRepository.findDayByDayName(dayName))) {
+                if(s.isPresent()) {
+                    schedulableStudent.add(s);
+                }
+            }
+        }
+        System.out.println(dayName);
+        System.out.println(schedulableStudent);
+        return schedulableStudent;
+    }
+
+    public List<Student> getAllStudentsPresentByDayName(String dayNameCalendar) {
+        List<Student> allStudent = studentRepository.findAll();
+        List<Student> result = new ArrayList<>();
+        Day day = dayRepository.findDayByDayName(dayNameCalendar);
+        for(Student s : allStudent) {
+            if(s.getDaysOfPresence().contains(day) && s.isPresent()) {
+                result.add(s);
+            }
+        }
+        return result;
     }
 }

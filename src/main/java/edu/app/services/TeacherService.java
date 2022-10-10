@@ -249,9 +249,23 @@ public class TeacherService {
         for (AttendanceRules t : teacher.getAttendanceRules()) {
             if (t.getDayName().equals(dayName)) {
                 result.add(t);
+                t.setDayName(adaptDayNameToItalian(t.getDayName()));
             }
         }
         return result;
+    }
+
+    public static String adaptDayNameToItalian(String toAdapt) {
+        String adapted;
+        switch (toAdapt) {
+            case "Monday" -> adapted = "Lunedì";
+            case "Tuesday" -> adapted = "Martedì";
+            case "Wednesday" -> adapted = "Mercoledì";
+            case "Thursday" -> adapted = "Giovedì";
+            case "Friday" -> adapted = "Venerdì";
+            default -> adapted = "toAdapt";
+        }
+        return adapted;
     }
 
     public void removeAttendanceRule(Long teacherId, Long attendanceId) {
@@ -259,6 +273,21 @@ public class TeacherService {
         AttendanceRules r = attendanceRulesRepository.findTimeSlotAttendanceRulesById(attendanceId);
         teacher.getAttendanceRules().remove(r);
         teacherRepository.save(teacher);
+    }
+
+    public List<Teacher> fetchSchedulableTeacherByDayName(String dayName) {
+        List<Teacher> allTeacher = teacherRepository.findAll();
+        List<Teacher> schedulableTeacher = new ArrayList<>();
+        for (Teacher t : allTeacher) {
+            if (t.getDaysOfPresence().contains(dayRepository.findDayByDayName(dayName))) {
+                if(t.isActive()) {
+                    schedulableTeacher.add(t);
+                }
+            }
+        }
+        System.out.println(dayName);
+        System.out.println(schedulableTeacher);
+        return schedulableTeacher;
     }
 
 

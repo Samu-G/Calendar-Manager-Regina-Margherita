@@ -10,6 +10,23 @@ const checkStatus = response => {
     return Promise.reject(error);
 }
 
+export const getAvailableStudentByTeacherAndTimeSlot = (teacherId, timeSlotName) =>
+    fetch("api/admin/getAvailableStudentByTeacherAndTimeSlot", {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({teacherId: teacherId, timeSlotName: timeSlotName})
+    }).then(checkStatus);
+
+export const generateRowForTable = (teacher, pendingRow) =>
+    fetch("api/admin/generateRowForTableInJson", {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({teacher: teacher, pendingRow: pendingRow})
+    }).then(checkStatus);
 
 export const getAllStudentsPresentOnMonday = () =>
     fetch("api/admin/getAllStudentsPresentOnMonday")
@@ -243,6 +260,15 @@ export const getAllTeachers = () =>
     fetch("/api/admin/getAllTeachers")
         .then(checkStatus);
 
+export const getTeacherById = teacherId =>
+    fetch("api/admin/getTeacherById", {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(teacherId)
+    }).then(checkStatus);
+
 export const addNewTeacher = teacher =>
     fetch("api/admin/addTeacher", {
             headers: {
@@ -333,7 +359,7 @@ export const addSubjectTeachByTeacher = (teacherId, subjectName) =>
         }
     ).then(checkStatus);
 
-export const removeTeacher = (teacherId) =>
+export const removeTeacher = teacherId =>
     fetch("api/admin/removeTeacher", {
             headers: {
                 'Content-Type': 'application/json'
@@ -343,14 +369,13 @@ export const removeTeacher = (teacherId) =>
         }
     ).then(checkStatus);
 
-export const getTimeSlotFromTeacherByDayName = (teacherId, dayName) =>
-    fetch("api/admin/getTimeSlotFromTeacherByDayName", {
+export const getTimeSlotFromTeacherById = teacherId =>
+    fetch("api/admin/getTimeSlotFromTeacherById", {
             headers: {
                 'Content-Type': 'application/json'
             },
             method: 'POST',
-            body: JSON.stringify
-            ({teacherId: teacherId, dayName: dayName})
+            body: JSON.stringify(teacherId)
         }
     ).then(checkStatus);
 

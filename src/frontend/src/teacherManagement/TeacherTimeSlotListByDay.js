@@ -18,7 +18,8 @@ document.head.appendChild(styleSheet)
 const TeacherTimeSlotListByDay = ({dayName, currentTeacher}) => {
     const [showAttendancePicker, setShowAttendancePicker] = useState(false);
     const [beginTimePicker, setBeginTimePicker] = useState("08:00");
-    const [endTimePicker, setEndTimePicker] = useState("08:00");
+    const [endTimePicker, setEndTimePicker] = useState("17:45");
+    const [data, setData] = useState([]);
 
     const onClickAddRules = () => {
         console.log(beginTimePicker);
@@ -75,13 +76,11 @@ const TeacherTimeSlotListByDay = ({dayName, currentTeacher}) => {
         onLoadFetchAttendance();
     }, []);
 
-
-    const [data, setData] = useState([]);
-
     const onLoadFetchAttendance = () => {
         fetchAttendanceRules(currentTeacher["id"], dayName)
             .then(res => res.json())
             .then(data => {
+                console.log(data);
                 setData(data);
             });
     }
@@ -106,8 +105,8 @@ const TeacherTimeSlotListByDay = ({dayName, currentTeacher}) => {
                     dataSource={data}
                     renderItem={(item) => (
                         <List.Item key={item.text}>
-                            {item["timeSlotDay"] + " presente dalle " + item["beginTime"] + " alle " + item["endTime"]}
-                            <Button type="link" danger size={"small"} style={{marginLeft: 240, marginRight: 0}} icon={<MinusOutlined/>}
+                            {item["dayName"] + " presente dalle " + item["beginTime"] + " alle " + item["endTime"]}
+                            <Button type="link" danger size={"small"} style={{marginLeft: 20}} icon={<MinusOutlined/>}
                                     onClick={() => {
                                         removeAttendanceRule(currentTeacher["id"], item["id"])
                                             .then(() => {

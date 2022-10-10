@@ -6,8 +6,6 @@ import edu.app.models.AttendanceRules;
 import edu.app.models.Teacher;
 import edu.app.services.TeacherService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +41,11 @@ public class TeacherController {
     @RequestMapping("/admin/getAllTeachers")
     public List<Teacher> getAllTeachers() {
         return teacherService.getAllTeachers();
+    }
+
+    @RequestMapping("admin/getTeacherById")
+    public Teacher getTeacherById(@RequestBody Long teacherId) {
+        return teacherService.getTeacherById(teacherId);
     }
 
     /********************/
@@ -113,19 +116,18 @@ public class TeacherController {
 
     /*Attendance rules management*/
     @PostMapping("/admin/addAttendanceRules")
-    public ResponseEntity<?> addAttendanceRules(@RequestBody ObjectNode json) {
+    public void addAttendanceRules(@RequestBody ObjectNode json) {
         Long teacherId = json.get("teacherId").asLong();
-        String dayName = json.get("dayName").textValue();
+        String dayName = adaptDayNameToEnglish(json.get("dayName").textValue());
         String beginTime = json.get("beginTime").textValue();
         String endTime = json.get("endTime").textValue();
         teacherService.addAttendanceRules(teacherId, dayName, beginTime, endTime);
-        return new ResponseEntity<>("attendance rules added" + json, HttpStatus.OK);
     }
 
     @PostMapping("/admin/fetchAttendanceRules")
     public List<AttendanceRules> fetchAttendanceRules(@RequestBody ObjectNode json) {
         Long teacherId = json.get("teacherId").asLong();
-        String dayName = json.get("dayName").textValue();
+        String dayName = adaptDayNameToEnglish(json.get("dayName").textValue());
         return teacherService.fetchAttendanceRules(teacherId, dayName);
     }
 
@@ -178,7 +180,6 @@ public class TeacherController {
         teacherService.deleteSubjectFromTheTeacher(json);
     }
 
-
     public static List<String> adaptDaysNameInItalian(List<String> dayNameList) {
         Collections.replaceAll(dayNameList, "Monday", "Lunedì");
         Collections.replaceAll(dayNameList, "Tuesday", "Martedì");
@@ -186,6 +187,19 @@ public class TeacherController {
         Collections.replaceAll(dayNameList, "Thursday", "Giovedì");
         Collections.replaceAll(dayNameList, "Friday", "Venerdì");
         return dayNameList;
+    }
+
+    public static String adaptDayNameToEnglish(String toAdapt) {
+        String adapted;
+        switch (toAdapt) {
+            case "Lunedì" -> adapted = "Monday";
+            case "Martedì" -> adapted = "Tuesday";
+            case "Mercoledì" -> adapted = "Wednesday";
+            case "Giovedì" -> adapted = "Thursday";
+            case "Venerdì" -> adapted = "Friday";
+            default -> adapted = "toAdapt";
+        }
+        return adapted;
     }
 }
 
