@@ -32,6 +32,9 @@ export const calendarCreator = createSlice({
         },
         freshPendingRow: (state, action) => {
             state.pendingRow = [];
+        },
+        setRowsDataArray: (state, action) => {
+            state.rowsDataArray = action.payload;
         }
     }
 });
@@ -43,7 +46,8 @@ export const {
     addRowsData,
     addPendingRow,
     removePendingRow,
-    freshPendingRow
+    freshPendingRow,
+    setRowsDataArray
 } = calendarCreator.actions;
 
 export default calendarCreator.reducer;

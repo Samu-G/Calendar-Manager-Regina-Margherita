@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {Layout} from 'antd';
 import Sider from "./Sider";
 import './App.css';
-import CalendarCreatorMain from "./calendarCreator/new file/CalendarCreatorMain";
+import CalendarCreatorMain from "./calendarCreator/CalendarCreatorMain";
 import StudentManagementMain from "./studentManagement/StudentManagementMain";
 import TeacherManagementMain from "./teacherManagement/TeacherManagementMain";
 import SubjectManagementMain from "./subjectManagement/SubjectManagementMain";

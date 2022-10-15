@@ -19,6 +19,14 @@ export const getAvailableStudentByTeacherAndTimeSlot = (teacherId, timeSlotName)
         body: JSON.stringify({teacherId: teacherId, timeSlotName: timeSlotName})
     }).then(checkStatus);
 
+export const getTeacherYetToBeScheduled = () =>
+    fetch("api/admin/getTeacherYetToBeScheduled", {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+    }).then(checkStatus);
+
 export const generateRowForTable = (teacher, pendingRow) =>
     fetch("api/admin/generateRowForTableInJson", {
         headers: {
@@ -27,6 +35,16 @@ export const generateRowForTable = (teacher, pendingRow) =>
         method: 'POST',
         body: JSON.stringify({teacher: teacher, pendingRow: pendingRow})
     }).then(checkStatus);
+
+export const removeRowByIdAndRefreshRowsDataArray = (recordKey, dataRowsArray) =>
+    fetch("api/admin/removeRowByIdAndRefreshRowsDataArray", {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({recordKey: recordKey, dataRowsArray: dataRowsArray})
+    }).then(checkStatus);
+
 
 export const getAllStudentsPresentOnMonday = () =>
     fetch("api/admin/getAllStudentsPresentOnMonday")
@@ -369,8 +387,8 @@ export const removeTeacher = teacherId =>
         }
     ).then(checkStatus);
 
-export const getTimeSlotFromTeacherById = teacherId =>
-    fetch("api/admin/getTimeSlotFromTeacherById", {
+export const generateAndGetTimeSlotByTeacherId = teacherId =>
+    fetch("api/admin/generateAndGetTimeSlotByTeacherId", {
             headers: {
                 'Content-Type': 'application/json'
             },

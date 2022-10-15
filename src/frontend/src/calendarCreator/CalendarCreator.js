@@ -1,37 +1,44 @@
 import {useDispatch, useSelector} from "react-redux";
 import {
-    createColumnArrayByBeginTimeEndTimeDuration,
-    fetchSchedulableStudentByDayName, fetchSchedulableTeacherInCalendar
-} from "../../redux/redux";
-import React, {useState} from "react";
-import {freshPendingRow, setStudentList, setTeacherList} from "../../redux/slice/calendarCreator";
-import {Button, Space, Table} from "antd";
+    createCalendar,
+    createJsonArrayForColumn,
+    fetchSchedulableStudentByDayName, getRemainingTeacherToSchedule
+} from "../redux/redux";
+import React, {useEffect, useState} from "react";
+import {freshPendingRow, setStudentList, setTeacherList} from "../redux/slice/calendarCreator";
+import {Button, Table} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
 import {AddRowModal} from "./AddRowModal";
+import {RemoveButton} from "./RemoveButton";
 
 export function CalendarCreator() {
     // const teacherList = useSelector((state) => state.creation.teacherList);
     // const studentList = useSelector((state) => state.creation.studentList);
+
+    const date = useSelector((state) => state.configuration.date);
     const dayName = useSelector((state) => state.configuration.dayName);
     const beginTime = useSelector((state) => state.configuration.beginTime);
     const endTime = useSelector((state) => state.configuration.endTime);
     const timeSlotDimension = useSelector((state) => state.configuration.timeSlotDimension);
     const rowsDataArray = useSelector((state) => state.creation.rowsDataArray);
+
     const [showModal, setShowModal] = useState(false);
 
     const dispatch = useDispatch();
 
     const [columns, setColumns] = useState([]);
 
-    const fetchSchedulableTeacher = () => {
-        // fetchSchedulableTeacherByDayName(dayName)
-        //     .then(res => res.json())
-        //     .then(data => {
-        //         console.log(data);
-        //         dispatch(setTeacherList(data));
-        //     });
+    useEffect(() => {
+        createCalendar(date, dayName, beginTime, endTime, timeSlotDimension)
+            .then(() => {
+                createColumnArray();
+                fetchSchedulableTeacher();
+                fetchSchedulableStudent();
+            });
+    }, []);
 
-        fetchSchedulableTeacherInCalendar()
+    const fetchSchedulableTeacher = () => {
+        getRemainingTeacherToSchedule()
             .then(res => res.json())
             .then(data => {
                 console.log(data);
@@ -48,8 +55,10 @@ export function CalendarCreator() {
             });
     }
 
+
+    // Column creation
     const createColumnArray = () => {
-        createColumnArrayByBeginTimeEndTimeDuration(dayName, beginTime, endTime, timeSlotDimension)
+        createJsonArrayForColumn()
             .then(res => res.json())
             .then(data => {
                 console.log(data);
@@ -60,27 +69,34 @@ export function CalendarCreator() {
                     width: 120,
                     fixed: 'right',
                     render: (_, record) => {
-                        return <Button type="primary" danger> Rimuovi </Button>
-
+                        return <RemoveButton record={record}/>
                     }
                 });
                 setColumns(data);
             });
     }
 
+
     return (
         <>
-            <Space>
-                <Button onClick={() => {
-                    fetchSchedulableTeacher()
-                }}> fetchSchedulableTeacher </Button>
-                <Button onClick={() => {
-                    fetchSchedulableStudent()
-                }}> fetchSchedulableStudent </Button>
-                <Button onClick={() => {
-                    createColumnArray()
-                }}> createColumnArray </Button>
-            </Space>
+            {/*<Space>*/}
+            {/*    <Button onClick={() => {*/}
+            {/*        sendConfigurationToBackend();*/}
+            {/*    }}> send configuration to backEnd (fresh backend) </Button>*/}
+            {/*    <Button onClick={() => {*/}
+            {/*        fetchSchedulableTeacher();*/}
+            {/*    }}> fetchSchedulableTeacher (refresh backend) </Button>*/}
+            {/*    <Button disabled={true} onClick={() => {*/}
+            {/*        fetchSchedulableStudent();*/}
+            {/*    }}> fetchSchedulableStudent (refresh backend) </Button>*/}
+            {/*    <Button onClick={() => {*/}
+            {/*        createColumnArray();*/}
+            {/*    }}> createColumnArray (refresh backend) </Button>*/}
+            {/*    <Button onClick={() => {*/}
+            {/*        console.log(rowsDataArray);*/}
+            {/*    }}> log rowsDataArray </Button>*/}
+            {/*</Space>*/}
+
             <AddRowModal showModal={showModal} setShowModal={setShowModal}/>
             <Table columns={columns} dataSource={
                 rowsDataArray

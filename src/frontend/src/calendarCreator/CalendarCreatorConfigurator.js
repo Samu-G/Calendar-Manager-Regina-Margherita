@@ -4,7 +4,7 @@ import React, {useEffect, useState} from 'react';
 import {useSelector} from "react-redux";
 import moment from "moment";
 import {useDispatch} from "react-redux";
-import {setDate, setDayName, setBeginTime, setEndTime, setTimeSlotDimension} from "../../redux/slice/calendarConfigurator";
+import {setDate, setDayName, setBeginTime, setEndTime, setTimeSlotDimension} from "../redux/slice/calendarConfigurator";
 import {DownOutlined} from "@ant-design/icons";
 import {CalendarCreator} from "./CalendarCreator";
 
@@ -16,6 +16,7 @@ export function CalendarCreatorConfigurator({dateSelected, dayNameSelected}) {
     const beginTime = useSelector((state) => state.configuration.beginTime);
     const endTime = useSelector((state) => state.configuration.endTime);
     const timeSlotDimension = useSelector((state) => state.configuration.timeSlotDimension);
+
     const dispatch = useDispatch();
 
     const [buttonClicked, setButtonClicked] = useState(false);

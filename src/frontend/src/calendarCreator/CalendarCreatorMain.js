@@ -16,9 +16,8 @@ import {
     getAllTeachersPresentOnThursday,
     getAllTeachersPresentOnTuesday,
     getAllTeachersPresentOnWednesday
-} from "../../client";
+} from "../client";
 import {CalendarCreatorConfigurator} from "./CalendarCreatorConfigurator";
-import {useDispatch} from "react-redux";
 
 const {Title, Text} = Typography;
 

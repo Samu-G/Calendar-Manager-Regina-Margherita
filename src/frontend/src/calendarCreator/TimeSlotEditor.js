@@ -1,8 +1,8 @@
 import {AutoComplete, Button, Divider, List, Space, Typography} from "antd";
 import React, {useEffect, useState} from "react";
 import {CloseOutlined, MinusOutlined, PlusOutlined} from "@ant-design/icons";
-import {getAvailableStudentByTeacherAndTimeSlot} from "../../client";
-import {addPendingRow, removePendingRow} from "../../redux/slice/calendarCreator";
+import {getAvailableStudentByTeacherAndTimeSlot} from "../client";
+import {addPendingRow, removePendingRow} from "../redux/slice/calendarCreator";
 import {useDispatch} from "react-redux";
 
 const {Text} = Typography;
@@ -17,6 +17,7 @@ export function TimeSlotEditor({teacher, timeSlot}) {
 
     const [data, setData] = useState([]);
     const [indexOf, setIndexOf] = useState(0);
+
     const dispatch = useDispatch();
 
     useEffect(() => {

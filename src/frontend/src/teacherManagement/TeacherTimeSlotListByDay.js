@@ -21,6 +21,19 @@ const TeacherTimeSlotListByDay = ({dayName, currentTeacher}) => {
     const [endTimePicker, setEndTimePicker] = useState("17:45");
     const [data, setData] = useState([]);
 
+    const onLoadFetchAttendance = () => {
+        fetchAttendanceRules(currentTeacher["id"], dayName)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                setData(data);
+            });
+    }
+
+    useEffect(() => {
+        onLoadFetchAttendance();
+    }, [currentTeacher]);
+
     const onClickAddRules = () => {
         console.log(beginTimePicker);
         console.log(endTimePicker);
@@ -56,12 +69,12 @@ const TeacherTimeSlotListByDay = ({dayName, currentTeacher}) => {
                                 setEndTimePicker(timeString)
                             }}/>
             </Space>
-                <Button type="link" size={"small"} icon={<PlusOutlined/>} onClick={onClickAddRules}
-                style={{marginLeft: 60}}>
-                    Aggiungi regola</Button>
-                <Button type="link" danger size={"small"}
-                        onClick={() => setShowAttendancePicker(false)}
-                >Annulla</Button>
+            <Button type="link" size={"small"} icon={<PlusOutlined/>} onClick={onClickAddRules}
+                    style={{marginLeft: 60}}>
+                Aggiungi regola</Button>
+            <Button type="link" danger size={"small"}
+                    onClick={() => setShowAttendancePicker(false)}
+            >Annulla</Button>
 
         </>
     );
@@ -70,20 +83,6 @@ const TeacherTimeSlotListByDay = ({dayName, currentTeacher}) => {
             una
             nuova regola</Button>
     );
-
-
-    useEffect(() => {
-        onLoadFetchAttendance();
-    }, []);
-
-    const onLoadFetchAttendance = () => {
-        fetchAttendanceRules(currentTeacher["id"], dayName)
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                setData(data);
-            });
-    }
 
     function renderFooter() {
         if (showAttendancePicker) return attendancePicker;
@@ -99,7 +98,9 @@ const TeacherTimeSlotListByDay = ({dayName, currentTeacher}) => {
             <Space direction="vertical">
 
                 <List
-                    locale={{emptyText: (<Text type="secondary" italic>Nessuna presenza impostata per {dayName}</Text>)}}
+                    locale={{
+                        emptyText: (<Text type="secondary" italic>Nessuna presenza impostata per {dayName}</Text>)
+                    }}
                     size={"default"}
                     bordered={false}
                     dataSource={data}

@@ -1,19 +1,31 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Dropdown, Menu, Modal, Space, Typography} from "antd";
 import {DownOutlined} from "@ant-design/icons";
 import {useDispatch, useSelector} from "react-redux";
 import {AddRowModalContent} from "./AddRowModalContent";
-import {generateRowForTable, getTeacherById} from "../../client";
-import {addRowsData, freshPendingRow} from "../../redux/slice/calendarCreator";
+import {generateRowForTable, getTeacherById} from "../client";
+import {addRowsData, freshPendingRow} from "../redux/slice/calendarCreator";
+import {getRemainingTeacherToSchedule} from "../redux/redux";
 
 const {Text} = Typography;
 
 export function AddRowModal({showModal, setShowModal}) {
     const [selected, setSelected] = useState(false);
-    const teacherList = useSelector((state) => state.creation.teacherList);
+    // const teacherList = useSelector((state) => state.creation.teacherList);
+    const [teacherList, setTeacherList] = useState([]);
     const pendingRow = useSelector((state) => state.creation.pendingRow);
     const [teacher, setTeacher] = useState();
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        console.log("AddRowModal a");
+        getRemainingTeacherToSchedule()
+            .then(res => res.json())
+            .then(data => {
+                setTeacherList(data);
+            });
+    }, [showModal]);
+
 
     const fetchTeacherById = (teacherId) => {
         getTeacherById(teacherId)
@@ -59,6 +71,7 @@ export function AddRowModal({showModal, setShowModal}) {
         </Dropdown>
     );
 
+
     const handleOk = () => {
         generateRowForTable(teacher, pendingRow)
             .then(res => res.json())
@@ -83,14 +96,16 @@ export function AddRowModal({showModal, setShowModal}) {
 
     if (!selected) {
         return (<>
-            <Modal title={<Text strong>Aggiungi riga</Text>} visible={showModal} onOk={handleOk}>
+            <Modal title={<Text strong>Aggiungi riga</Text>} visible={showModal}
+                   footer={<Button danger onClick={handleCancel}> Annulla operazione </Button>}
+            >
                 {dropdownButton}
             </Modal>
         </>);
     } else {
         return (<>
             <Modal title={renderTitleWithTeacher()} visible={showModal}
-                   onOk={handleOk}
+                   footer={<Button type="primary" onClick={handleOk}> Aggiungi la riga al calendario </Button> }
                    onCancel={handleCancel}
                    bodyStyle={{paddingTop: 8}}>
                 <AddRowModalContent teacher={teacher}/>

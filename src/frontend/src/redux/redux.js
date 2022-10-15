@@ -11,21 +11,24 @@ const checkStatus = response => {
     return Promise.reject(error);
 }
 
-
-// Importare nello state la lista dei docenti calendarizzabili.
-// Cosa ci serve? Il nome del giorno.
-// Cosa deve ritornare? Una lista dei docenti presenti quel giorno.
-export const fetchSchedulableTeacherByDayName = dayName =>
-    fetch("api/admin/fetchSchedulableTeacher", {
+export const createCalendar = (date, dayName, beginTime, endTime, timeSlotDimension) =>
+    fetch("api/admin/createCalendar", {
         headers: {
             'Content-Type': 'application/json'
         },
         method: 'POST',
-        body: JSON.stringify({dayName: dayName})
+        body: JSON.stringify({
+            date: date,
+            dayName: dayName,
+            beginTime: beginTime,
+            endTime: endTime,
+            timeSlotDimension: timeSlotDimension
+        })
     }).then(checkStatus);
 
-export const fetchSchedulableTeacherInCalendar = () =>
-    fetch("api/admin/fetchSchedulableTeacherInCalendar", {
+
+export const getRemainingTeacherToSchedule = () =>
+    fetch("api/admin/getRemainingTeacherToSchedule", {
         headers: {
             'Content-Type': 'application/json'
         },
@@ -41,12 +44,11 @@ export const fetchSchedulableStudentByDayName = dayName =>
         body: JSON.stringify({dayName: dayName})
     }).then(checkStatus);
 
-export const createColumnArrayByBeginTimeEndTimeDuration = (dayName, beginTime, endTime, duration) =>
-    fetch("api/admin/createColumnArrayByBeginTimeEndTimeDuration", {
+export const createJsonArrayForColumn = () =>
+    fetch("api/admin/createJsonArrayForColumn", {
         headers: {
             'Content-Type': 'application/json'
         },
         method: 'POST',
-        body: JSON.stringify({dayName: dayName, beginTime: beginTime, endTime: endTime, duration: duration})
     }).then(checkStatus);
 

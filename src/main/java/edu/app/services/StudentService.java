@@ -26,6 +26,10 @@ public class StudentService {
 
     private final SubjectRepository subjectRepository;
 
+    public Student getStudentByNameAndSurname(String name, String surname) {
+        return studentRepository.findStudentByNameAndSurname(name, surname);
+    }
+
     @PostMapping
     public void addStudent(ObjectNode json) {
         String name = json.get("name").textValue();
