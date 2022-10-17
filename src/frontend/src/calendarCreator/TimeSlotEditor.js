@@ -58,7 +58,7 @@ export function TimeSlotEditor({teacher, timeSlot}) {
             <AutoComplete
                 options={options}
                 style={{width: 320}}
-                placeholder="input here"
+                placeholder="nome cognome"
                 onSelect={onSelect}
             />
             <Button icon={<PlusOutlined/>} onClick={() => {

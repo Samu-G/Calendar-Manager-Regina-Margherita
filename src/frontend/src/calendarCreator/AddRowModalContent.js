@@ -1,6 +1,6 @@
 import {Button, Row, Tag, Typography} from "antd";
 import {generateAndGetTimeSlotByTeacherId} from "../client";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {TimeSlotEditor} from "./TimeSlotEditor";
 
 const {Text} = Typography;
@@ -8,6 +8,10 @@ const {Text} = Typography;
 export function AddRowModalContent({teacher}) {
     const [timeSlot, setTimeSlot] = useState([]);
     const [fetched, setFetched] = useState(false);
+
+    useEffect(() => {
+        renderTimeSlotEditor();
+    }, [teacher]);
 
     function renderSubjectsTag() {
         let subjectsTag = [];
@@ -31,9 +35,9 @@ export function AddRowModalContent({teacher}) {
     if (!fetched) {
         return (
             <>
-                <Button onClick={() => {
-                    renderTimeSlotEditor();
-                }}>renderTimeSlotEditor()</Button>
+                {/*<Button onClick={() => {*/}
+                {/*    renderTimeSlotEditor();*/}
+                {/*}}>renderTimeSlotEditor()</Button>*/}
                 <Row>
                     <Text style={{marginRight: 5}}> Materie insegnate: </Text> {renderSubjectsTag()}
                 </Row>

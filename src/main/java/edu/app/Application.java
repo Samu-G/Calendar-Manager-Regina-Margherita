@@ -1,10 +1,7 @@
 package edu.app;
 
 import edu.app.models.*;
-import edu.app.repository.DayRepository;
-import edu.app.repository.StudentRepository;
-import edu.app.repository.SubjectRepository;
-import edu.app.repository.TeacherRepository;
+import edu.app.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,10 +21,11 @@ public class Application {
     CommandLineRunner run(StudentRepository studentRepository,
                           SubjectRepository subjectRepository,
                           TeacherRepository teacherRepository,
+                          AttendanceRulesRepository attendanceRulesRepository,
                           DayRepository dayRepository) {
 
         return args -> {
-            createSubjectExample(subjectRepository);
+//            createSubjectExample(subjectRepository);
 
             // Creazione dei giorni con le relative fasce orarie
             List<Day> dayList = new ArrayList<>();
@@ -37,8 +35,21 @@ public class Application {
             dayList.add(createThursday(dayRepository));
             dayList.add(createFriday(dayRepository));
 
-            createProvaDocente(subjectRepository, teacherRepository, dayList);
-            provaStudente(studentRepository, subjectRepository, dayList);
+//            studentExample_Activated_Lun_ItaStoLatino(studentRepository, subjectRepository, dayList);
+//            studentExample_Activated_LunMarMerGioVen_ItaStoLatino(studentRepository, subjectRepository, dayList);
+//            studentExample_Activated_LunMarMerGioVen_ItaStoLatino_WithFiscalCode(studentRepository, subjectRepository, dayList);
+//            studentExample_Activated_LunMarMer_EngFraDe(studentRepository, subjectRepository, dayList);
+//            studentExample_Activated_NoDay_EngFraDe(studentRepository, subjectRepository, dayList);
+//            studentExample_Deactivated_NoDay_EngFraDe(studentRepository, subjectRepository, dayList);
+//            studentExample_Activated_GioVen_NoSubject(studentRepository, subjectRepository, dayList);
+//            studentExample_Deactivated_LunMarMerGioVen_NoSubject(studentRepository, subjectRepository, dayList);
+//
+//            teacherExample_Activated_LunMarMer_ItaStoLatino(teacherRepository, subjectRepository, attendanceRulesRepository, dayList);
+//            teacherExample_Activated_GioVen_ItaStoLatino(teacherRepository, subjectRepository, attendanceRulesRepository, dayList);
+//            teacherExample_Deactivated_LunMarMerGioVen_EcoInfoMate(teacherRepository, subjectRepository, attendanceRulesRepository, dayList);
+//            teacherExample_Activated_LunMarMerGioVen_EcoInfoMate(teacherRepository, subjectRepository, attendanceRulesRepository, dayList);
+//            teacherExample_Activated_LunMarMerGioVen_EngFraDe(teacherRepository, subjectRepository, attendanceRulesRepository, dayList);
+//            teacherExample_Activated_LunMarMerGioVen_EngFraDe_fragmentedAttendanceRules(teacherRepository, subjectRepository, attendanceRulesRepository, dayList);
         };
     }
 
@@ -81,10 +92,12 @@ public class Application {
         if (subjectRepository.findSubjectByNameOfTheSubject("Spagnolo") == null) subjectRepository.save(spagnolo);
         if (subjectRepository.findSubjectByNameOfTheSubject("Tedesco") == null) subjectRepository.save(tedesco);
         if (subjectRepository.findSubjectByNameOfTheSubject("Filosofia") == null) subjectRepository.save(filosofia);
-        if (subjectRepository.findSubjectByNameOfTheSubject("Scienze umane") == null) subjectRepository.save(scienzeUmane);
+        if (subjectRepository.findSubjectByNameOfTheSubject("Scienze umane") == null)
+            subjectRepository.save(scienzeUmane);
         if (subjectRepository.findSubjectByNameOfTheSubject("Economia") == null) subjectRepository.save(economia);
         if (subjectRepository.findSubjectByNameOfTheSubject("Informatica") == null) subjectRepository.save(informatica);
-        if (subjectRepository.findSubjectByNameOfTheSubject("Storia dell'arte") == null) subjectRepository.save(storiaDellArte);
+        if (subjectRepository.findSubjectByNameOfTheSubject("Storia dell'arte") == null)
+            subjectRepository.save(storiaDellArte);
     }
 
     private static Day createMonday(DayRepository dayRepository) {
@@ -127,52 +140,262 @@ public class Application {
         return dayRepository.findDayByDayName("Friday");
     }
 
-    private static void provaStudente(StudentRepository studentRepository, SubjectRepository subjectRepository, List<Day> days) {
-        String name = "Prova";
-        String surname = "Studente";
-        String fiscalCode = "PRVSRD97P28H612L";
-        String emailAddress = "prova.studente@gmail.com";
-        boolean isPresent = true;
+    private static void studentExample_Activated_Lun_ItaStoLatino(StudentRepository studentRepository, SubjectRepository subjectRepository, List<Day> days) {
+        boolean activated = true;
         List<Day> daysOfPresenceOfTheStudent = new ArrayList<>();
+        daysOfPresenceOfTheStudent.add(days.get(0));
         List<Subject> subjectsFollowed = new ArrayList<>();
+        subjectsFollowed.add(subjectRepository.findSubjectByNameOfTheSubject("Italiano"));
+        subjectsFollowed.add(subjectRepository.findSubjectByNameOfTheSubject("Storia"));
+        subjectsFollowed.add(subjectRepository.findSubjectByNameOfTheSubject("Latino"));
+        Student s = new Student(null, "Ita-storia-latino", "Lun-attivo", "", "", activated, daysOfPresenceOfTheStudent, subjectsFollowed);
+        if (studentRepository.findStudentByNameAndSurname("Ita-storia-latino", "Lun-attivo") == null)
+            studentRepository.save(s);
+    }
 
+    private static void studentExample_Activated_LunMarMerGioVen_ItaStoLatino(StudentRepository studentRepository, SubjectRepository subjectRepository, List<Day> days) {
+        boolean activated = true;
+        List<Day> daysOfPresenceOfTheStudent = new ArrayList<>();
         daysOfPresenceOfTheStudent.add(days.get(0));
         daysOfPresenceOfTheStudent.add(days.get(1));
         daysOfPresenceOfTheStudent.add(days.get(2));
         daysOfPresenceOfTheStudent.add(days.get(3));
         daysOfPresenceOfTheStudent.add(days.get(4));
-
+        List<Subject> subjectsFollowed = new ArrayList<>();
         subjectsFollowed.add(subjectRepository.findSubjectByNameOfTheSubject("Italiano"));
         subjectsFollowed.add(subjectRepository.findSubjectByNameOfTheSubject("Storia"));
-
-        Student provaStudente = new Student(null, name, surname, fiscalCode, emailAddress,  isPresent,
-                daysOfPresenceOfTheStudent, subjectsFollowed);
-
-        if(studentRepository.findStudentByNameAndSurname(name, surname) == null)
-            studentRepository.save(provaStudente);
+        subjectsFollowed.add(subjectRepository.findSubjectByNameOfTheSubject("Latino"));
+        Student s = new Student(null, "Ita-storia-latino", "Lun-mar-mer-gio-ven-attivo", "", "", activated, daysOfPresenceOfTheStudent, subjectsFollowed);
+        if (studentRepository.findStudentByNameAndSurname("Ita-storia-latino", "Lun-mar-mer-gio-ven-attivo") == null)
+            studentRepository.save(s);
     }
 
-    private static void createProvaDocente(SubjectRepository subjectRepository, TeacherRepository teacherRepository, List<Day> days) {
-        String name = "Prova";
-        String surname = "Docente";
-        String emailAddress = "prova.docente@gmail.com";
-        List<Day> daysOfPresenceOfTheTeacher = new ArrayList<>();
-        List<AttendanceRules> timeSlotsOfPresence = new ArrayList<>();
-        List<Subject> subjectsTeached = new ArrayList<>();
+    private static void studentExample_Activated_LunMarMerGioVen_ItaStoLatino_WithFiscalCode(StudentRepository studentRepository, SubjectRepository subjectRepository, List<Day> days) {
+        boolean activated = true;
+        List<Day> daysOfPresenceOfTheStudent = new ArrayList<>();
+        daysOfPresenceOfTheStudent.add(days.get(0));
+        daysOfPresenceOfTheStudent.add(days.get(1));
+        daysOfPresenceOfTheStudent.add(days.get(2));
+        daysOfPresenceOfTheStudent.add(days.get(3));
+        daysOfPresenceOfTheStudent.add(days.get(4));
+        List<Subject> subjectsFollowed = new ArrayList<>();
+        subjectsFollowed.add(subjectRepository.findSubjectByNameOfTheSubject("Italiano"));
+        subjectsFollowed.add(subjectRepository.findSubjectByNameOfTheSubject("Storia"));
+        subjectsFollowed.add(subjectRepository.findSubjectByNameOfTheSubject("Latino"));
+        Student s = new Student(null, "Ita-storia-latino", "Lun-mar-mer-gio-ven-attivo", "SSLKCC91H54D868V", "", activated, daysOfPresenceOfTheStudent, subjectsFollowed);
+        if (studentRepository.findStudentByNameAndSurname("Ita-storia-latino", "Lun-mar-mer-gio-ven-attivo") == null)
+            studentRepository.save(s);
+    }
 
+    private static void studentExample_Activated_LunMarMer_EngFraDe(StudentRepository studentRepository, SubjectRepository subjectRepository, List<Day> days) {
+        boolean activated = true;
+        List<Day> daysOfPresenceOfTheStudent = new ArrayList<>();
+        daysOfPresenceOfTheStudent.add(days.get(0));
+        daysOfPresenceOfTheStudent.add(days.get(1));
+        daysOfPresenceOfTheStudent.add(days.get(2));
+        List<Subject> subjectsFollowed = new ArrayList<>();
+        subjectsFollowed.add(subjectRepository.findSubjectByNameOfTheSubject("Inglese"));
+        subjectsFollowed.add(subjectRepository.findSubjectByNameOfTheSubject("Francese"));
+        subjectsFollowed.add(subjectRepository.findSubjectByNameOfTheSubject("Tedesco"));
+        Student s = new Student(null, "Inglese-francese-tedesco", "Lun-mar-mer-attivo", "", "", activated, daysOfPresenceOfTheStudent, subjectsFollowed);
+        if (studentRepository.findStudentByNameAndSurname("Inglese-francese-tedesco", "Lun-mar-mer-attivo") == null)
+            studentRepository.save(s);
+    }
+
+    private static void studentExample_Activated_NoDay_EngFraDe(StudentRepository studentRepository, SubjectRepository subjectRepository, List<Day> days) {
+        boolean activated = true;
+        List<Day> daysOfPresenceOfTheStudent = new ArrayList<>();
+        // no day of presence
+        List<Subject> subjectsFollowed = new ArrayList<>();
+        subjectsFollowed.add(subjectRepository.findSubjectByNameOfTheSubject("Inglese"));
+        subjectsFollowed.add(subjectRepository.findSubjectByNameOfTheSubject("Francese"));
+        subjectsFollowed.add(subjectRepository.findSubjectByNameOfTheSubject("Tedesco"));
+        Student s = new Student(null, "Inglese-francese-tedesco", "No-giorni-attivo", "", "", activated, daysOfPresenceOfTheStudent, subjectsFollowed);
+        if (studentRepository.findStudentByNameAndSurname("Inglese-francese-tedesco", "No-giorni-attivo") == null)
+            studentRepository.save(s);
+    }
+
+    private static void studentExample_Deactivated_NoDay_EngFraDe(StudentRepository studentRepository, SubjectRepository subjectRepository, List<Day> days) {
+        boolean activated = false;
+        List<Day> daysOfPresenceOfTheStudent = new ArrayList<>();
+        // no day of presence
+        List<Subject> subjectsFollowed = new ArrayList<>();
+        subjectsFollowed.add(subjectRepository.findSubjectByNameOfTheSubject("Inglese"));
+        subjectsFollowed.add(subjectRepository.findSubjectByNameOfTheSubject("Francese"));
+        subjectsFollowed.add(subjectRepository.findSubjectByNameOfTheSubject("Tedesco"));
+        Student s = new Student(null, "Inglese-francese-tedesco", "No-giorni-disattivo", "", "", activated, daysOfPresenceOfTheStudent, subjectsFollowed);
+        if (studentRepository.findStudentByNameAndSurname("Inglese-francese-tedesco", "No-giorni-disattivo") == null)
+            studentRepository.save(s);
+    }
+
+    private static void studentExample_Activated_GioVen_NoSubject(StudentRepository studentRepository, SubjectRepository subjectRepository, List<Day> days) {
+        boolean activated = true;
+        List<Day> daysOfPresenceOfTheStudent = new ArrayList<>();
+        daysOfPresenceOfTheStudent.add(days.get(3));
+        daysOfPresenceOfTheStudent.add(days.get(4));
+        List<Subject> subjectsFollowed = new ArrayList<>();
+        // no subject followed
+        Student s = new Student(null, "Nessuna-materia-seguita", "Gio-ven-attivo", "", "", activated, daysOfPresenceOfTheStudent, subjectsFollowed);
+        if (studentRepository.findStudentByNameAndSurname("Nessuna-materia-seguita", "Gio-ven-attivo") == null)
+            studentRepository.save(s);
+    }
+
+    private static void studentExample_Deactivated_LunMarMerGioVen_NoSubject(StudentRepository studentRepository, SubjectRepository subjectRepository, List<Day> days) {
+        boolean activated = false;
+        List<Day> daysOfPresenceOfTheStudent = new ArrayList<>();
+        daysOfPresenceOfTheStudent.add(days.get(0));
+        daysOfPresenceOfTheStudent.add(days.get(1));
+        daysOfPresenceOfTheStudent.add(days.get(2));
+        daysOfPresenceOfTheStudent.add(days.get(3));
+        daysOfPresenceOfTheStudent.add(days.get(4));
+        List<Subject> subjectsFollowed = new ArrayList<>();
+        // no subject followed
+        Student s = new Student(null, "Nessuna-materia-seguita", "Lun-mar-mer-gio-ven-disattivo", "", "", activated, daysOfPresenceOfTheStudent, subjectsFollowed);
+        if (studentRepository.findStudentByNameAndSurname("Nessuna-materia-seguita", "Lun-mar-mer-gio-ven-disattivo") == null)
+            studentRepository.save(s);
+    }
+
+    private static void teacherExample_Activated_LunMarMer_ItaStoLatino(TeacherRepository teacherRepository, SubjectRepository subjectRepository, AttendanceRulesRepository attendanceRulesRepository, List<Day> days) {
+        boolean activated = true;
+        List<Day> daysOfPresenceOfTheTeacher = new ArrayList<>();
+        daysOfPresenceOfTheTeacher.add(days.get(0));
+        daysOfPresenceOfTheTeacher.add(days.get(1));
+        daysOfPresenceOfTheTeacher.add(days.get(2));
+        List<Subject> subjectsTeached = new ArrayList<>();
+        subjectsTeached.add(subjectRepository.findSubjectByNameOfTheSubject("Italiano"));
+        subjectsTeached.add(subjectRepository.findSubjectByNameOfTheSubject("Storia"));
+        subjectsTeached.add(subjectRepository.findSubjectByNameOfTheSubject("Latino"));
+        List<AttendanceRules> attendanceRules = new ArrayList<>();
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Monday", "08:00", "17:00")));
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Tuesday", "08:00", "17:00")));
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Wednesday", "08:00", "17:00")));
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Thursday", "08:00", "17:00")));
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Friday", "08:00", "17:00")));
+        Teacher t = new Teacher(null, "Ita-storia-latino", "Lun-mar-mer-attivo", "", activated, daysOfPresenceOfTheTeacher, attendanceRules, subjectsTeached);
+        if (teacherRepository.findTeacherByNameAndSurname("Ita-storia-latino", "Lun-mar-mer-attivo") == null) {
+            teacherRepository.save(t);
+        }
+    }
+
+    private static void teacherExample_Activated_GioVen_ItaStoLatino(TeacherRepository teacherRepository, SubjectRepository subjectRepository, AttendanceRulesRepository attendanceRulesRepository, List<Day> days) {
+        boolean activated = true;
+        List<Day> daysOfPresenceOfTheTeacher = new ArrayList<>();
+        daysOfPresenceOfTheTeacher.add(days.get(3));
+        daysOfPresenceOfTheTeacher.add(days.get(4));
+        List<Subject> subjectsTeached = new ArrayList<>();
+        subjectsTeached.add(subjectRepository.findSubjectByNameOfTheSubject("Italiano"));
+        subjectsTeached.add(subjectRepository.findSubjectByNameOfTheSubject("Storia"));
+        subjectsTeached.add(subjectRepository.findSubjectByNameOfTheSubject("Latino"));
+        List<AttendanceRules> attendanceRules = new ArrayList<>();
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Monday", "08:00", "17:00")));
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Tuesday", "08:00", "17:00")));
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Wednesday", "08:00", "17:00")));
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Thursday", "08:00", "17:00")));
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Friday", "08:00", "17:00")));
+        Teacher t = new Teacher(null, "Ita-storia-latino", "Gio-ven-attivo", "", activated, daysOfPresenceOfTheTeacher, attendanceRules, subjectsTeached);
+        if (teacherRepository.findTeacherByNameAndSurname("Ita-storia-latino", "Gio-ven-attivo") == null) {
+            teacherRepository.save(t);
+        }
+    }
+
+    private static void teacherExample_Deactivated_LunMarMerGioVen_EcoInfoMate(TeacherRepository teacherRepository, SubjectRepository subjectRepository, AttendanceRulesRepository attendanceRulesRepository, List<Day> days) {
+        boolean activated = false;
+        List<Day> daysOfPresenceOfTheTeacher = new ArrayList<>();
         daysOfPresenceOfTheTeacher.add(days.get(0));
         daysOfPresenceOfTheTeacher.add(days.get(1));
         daysOfPresenceOfTheTeacher.add(days.get(2));
         daysOfPresenceOfTheTeacher.add(days.get(3));
         daysOfPresenceOfTheTeacher.add(days.get(4));
+        List<Subject> subjectsTeached = new ArrayList<>();
+        subjectsTeached.add(subjectRepository.findSubjectByNameOfTheSubject("Economia"));
+        subjectsTeached.add(subjectRepository.findSubjectByNameOfTheSubject("Informatica"));
+        subjectsTeached.add(subjectRepository.findSubjectByNameOfTheSubject("Matematica"));
+        List<AttendanceRules> attendanceRules = new ArrayList<>();
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Monday", "08:00", "17:00")));
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Tuesday", "08:00", "17:00")));
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Wednesday", "08:00", "17:00")));
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Thursday", "08:00", "17:00")));
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Friday", "08:00", "17:00")));
+        Teacher t = new Teacher(null, "Economia-informatica-matematica", "Lun-mar-mer-gio-ven-disattivo", "", activated, daysOfPresenceOfTheTeacher, attendanceRules, subjectsTeached);
+        if (teacherRepository.findTeacherByNameAndSurname("Economia-informatica-matematica", "Lun-mar-mer-gio-ven-disattivo") == null) {
+            teacherRepository.save(t);
+        }
+    }
 
-        subjectsTeached.add(subjectRepository.findSubjectByNameOfTheSubject("Italiano"));
-        subjectsTeached.add(subjectRepository.findSubjectByNameOfTheSubject("Storia"));
+    private static void teacherExample_Activated_LunMarMerGioVen_EcoInfoMate(TeacherRepository teacherRepository, SubjectRepository subjectRepository, AttendanceRulesRepository attendanceRulesRepository, List<Day> days) {
+        boolean activated = true;
+        List<Day> daysOfPresenceOfTheTeacher = new ArrayList<>();
+        daysOfPresenceOfTheTeacher.add(days.get(0));
+        daysOfPresenceOfTheTeacher.add(days.get(1));
+        daysOfPresenceOfTheTeacher.add(days.get(2));
+        daysOfPresenceOfTheTeacher.add(days.get(3));
+        daysOfPresenceOfTheTeacher.add(days.get(4));
+        List<Subject> subjectsTeached = new ArrayList<>();
+        subjectsTeached.add(subjectRepository.findSubjectByNameOfTheSubject("Economia"));
+        subjectsTeached.add(subjectRepository.findSubjectByNameOfTheSubject("Informatica"));
+        subjectsTeached.add(subjectRepository.findSubjectByNameOfTheSubject("Matematica"));
+        List<AttendanceRules> attendanceRules = new ArrayList<>();
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Monday", "08:00", "17:00")));
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Tuesday", "08:00", "17:00")));
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Wednesday", "08:00", "17:00")));
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Thursday", "08:00", "17:00")));
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Friday", "08:00", "17:00")));
+        Teacher t = new Teacher(null, "Economia-informatica-matematica", "Lun-mar-mer-gio-ven-attivo", "", activated, daysOfPresenceOfTheTeacher, attendanceRules, subjectsTeached);
+        if (teacherRepository.findTeacherByNameAndSurname("Economia-informatica-matematica", "Lun-mar-mer-gio-ven-attivo") == null) {
+            teacherRepository.save(t);
+        }
+    }
 
-        Teacher provaDocente = new Teacher(null, name, surname, emailAddress, true, daysOfPresenceOfTheTeacher,
-                timeSlotsOfPresence, subjectsTeached);
+    private static void teacherExample_Activated_LunMarMerGioVen_EngFraDe(TeacherRepository teacherRepository, SubjectRepository subjectRepository, AttendanceRulesRepository attendanceRulesRepository, List<Day> days) {
+        boolean activated = true;
+        List<Day> daysOfPresenceOfTheTeacher = new ArrayList<>();
+        daysOfPresenceOfTheTeacher.add(days.get(0));
+        daysOfPresenceOfTheTeacher.add(days.get(1));
+        daysOfPresenceOfTheTeacher.add(days.get(2));
+        daysOfPresenceOfTheTeacher.add(days.get(3));
+        daysOfPresenceOfTheTeacher.add(days.get(4));
+        List<Subject> subjectsTeached = new ArrayList<>();
+        subjectsTeached.add(subjectRepository.findSubjectByNameOfTheSubject("Inglese"));
+        subjectsTeached.add(subjectRepository.findSubjectByNameOfTheSubject("Francese"));
+        subjectsTeached.add(subjectRepository.findSubjectByNameOfTheSubject("Tedesco"));
+        List<AttendanceRules> attendanceRules = new ArrayList<>();
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Monday", "08:00", "17:00")));
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Tuesday", "08:00", "17:00")));
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Wednesday", "08:00", "17:00")));
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Thursday", "08:00", "17:00")));
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Friday", "08:00", "17:00")));
+        Teacher t = new Teacher(null, "Inglese-francese-tedesco", "Lun-mar-mer-gio-ven-attivo", "", activated, daysOfPresenceOfTheTeacher, attendanceRules, subjectsTeached);
+        if (teacherRepository.findTeacherByNameAndSurname("Inglese-francese-tedesco", "Lun-mar-mer-gio-ven-attivo") == null) {
+            teacherRepository.save(t);
+        }
+    }
 
-        if(teacherRepository.findTeacherByNameAndSurname(name, surname) == null)
-            teacherRepository.save(provaDocente);
+    private static void teacherExample_Activated_LunMarMerGioVen_EngFraDe_fragmentedAttendanceRules(TeacherRepository teacherRepository, SubjectRepository subjectRepository, AttendanceRulesRepository attendanceRulesRepository, List<Day> days) {
+        boolean activated = true;
+        List<Day> daysOfPresenceOfTheTeacher = new ArrayList<>();
+        daysOfPresenceOfTheTeacher.add(days.get(0));
+        daysOfPresenceOfTheTeacher.add(days.get(1));
+        daysOfPresenceOfTheTeacher.add(days.get(2));
+        daysOfPresenceOfTheTeacher.add(days.get(3));
+        daysOfPresenceOfTheTeacher.add(days.get(4));
+        List<Subject> subjectsTeached = new ArrayList<>();
+        subjectsTeached.add(subjectRepository.findSubjectByNameOfTheSubject("Inglese"));
+        subjectsTeached.add(subjectRepository.findSubjectByNameOfTheSubject("Francese"));
+        subjectsTeached.add(subjectRepository.findSubjectByNameOfTheSubject("Tedesco"));
+        List<AttendanceRules> attendanceRules = new ArrayList<>();
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Monday", "08:00", "12:00")));
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Monday", "14:00", "16:00")));
+
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Tuesday", "10:00", "12:00")));
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Tuesday", "15:00", "17:00")));
+
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Wednesday", "08:00", "17:00")));
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Thursday", "08:00", "17:00")));
+        attendanceRules.add(attendanceRulesRepository.save(new AttendanceRules(null, "Friday", "08:00", "17:00")));
+
+        Teacher t = new Teacher(null, "Inglese-francese-tedesco", "Lun 8/12 14/16 - mar 10/12 15/17 - mer-gio-ven-attivo", "", activated, daysOfPresenceOfTheTeacher, attendanceRules, subjectsTeached);
+        if (teacherRepository.findTeacherByNameAndSurname("Inglese-francese-tedesco", "Lun-mar-mer-gio-ven-attivo") == null) {
+            teacherRepository.save(t);
+        }
     }
 }

@@ -139,7 +139,7 @@ const CalendarCreatorMain = () => {
         } else {
             return <>
                 <Button type="primary" size="middle" disabled>
-                    Crea >
+                    Crea calendario >
                 </Button>
             </>
         }

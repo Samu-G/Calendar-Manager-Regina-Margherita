@@ -22,12 +22,12 @@ export default function Sider(props) {
                 <Menu.Item key="1" icon={<CalendarOutlined/>} onClick={handleClick}>
                     Crea calendario
                 </Menu.Item>
-                <Menu.Item key="2" icon={<CarryOutOutlined/>} onClick={handleClick}>
-                    Calendari creati
-                </Menu.Item>
-                <Menu.Item key="3" icon={<BarChartOutlined/>} onClick={handleClick}>
-                    Statistiche
-                </Menu.Item>
+                {/*<Menu.Item key="2" icon={<CarryOutOutlined/>} onClick={handleClick}>*/}
+                {/*    Calendari creati*/}
+                {/*</Menu.Item>*/}
+                {/*<Menu.Item key="3" icon={<BarChartOutlined/>} onClick={handleClick}>*/}
+                {/*    Statistiche*/}
+                {/*</Menu.Item>*/}
                 <Menu.Item key="4" icon={<TeamOutlined/>} onClick={handleClick}>
                     Studenti
                 </Menu.Item>

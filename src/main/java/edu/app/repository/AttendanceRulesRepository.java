@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AttendanceRulesRepository extends JpaRepository<AttendanceRules, Long> {
     AttendanceRules findTimeSlotAttendanceRulesById(Long id);
+
+
 }
