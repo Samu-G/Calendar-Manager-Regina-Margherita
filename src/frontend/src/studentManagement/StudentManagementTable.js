@@ -14,20 +14,20 @@ const {Text, Title} = Typography;
 
 const columns = [
     {
-        title: 'Nome',
-        dataIndex: 'name',
-        key: 'name',
-        render: (name) => {
-          return <Text> {name} </Text>
-        },
-        width: "20%",
-    },
-    {
         title: 'Cognome',
         dataIndex: 'surname',
         key: 'surname',
         render: (surname) => {
             return <Text> {surname} </Text>
+        },
+        width: "20%",
+    },
+    {
+        title: 'Nome',
+        dataIndex: 'name',
+        key: 'name',
+        render: (name) => {
+            return <Text> {name} </Text>
         },
         width: "20%",
     },

@@ -40,7 +40,9 @@ public class TeacherController {
 
     @RequestMapping("/admin/getAllTeachers")
     public List<Teacher> getAllTeachers() {
-        return teacherService.getAllTeachers();
+        List<Teacher> teacherList = teacherService.getAllTeachers();
+        Collections.sort(teacherList);
+        return teacherList;
     }
 
     @RequestMapping("admin/getTeacherById")

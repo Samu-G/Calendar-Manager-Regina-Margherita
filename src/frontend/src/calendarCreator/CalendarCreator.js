@@ -98,17 +98,23 @@ export function CalendarCreator() {
             {/*</Space>*/}
 
             <AddRowModal showModal={showModal} setShowModal={setShowModal}/>
-            <Table columns={columns} dataSource={
-                rowsDataArray
-            } scroll={{x: 1300}} bordered
-                   title={() => <Button type="primary" shape="round" icon={<PlusOutlined/>}
-                                        onClick={() => {
-                                            setShowModal(true);
-                                            dispatch(freshPendingRow());
-                                        }}>
-                       Aggiungi una riga
-                   </Button>
-                   }></Table>
+            <Table
+                columns={columns}
+                dataSource={rowsDataArray}
+                scroll={{x: 1300}}
+                bordered
+
+                title={() => <Button type="primary" shape="round" icon={<PlusOutlined/>}
+                                     onClick={() => {
+                                         setShowModal(true);
+                                         dispatch(freshPendingRow());
+                                     }}>
+                    Aggiungi una riga
+                </Button>
+                }
+
+                pagination={false}
+            ></Table>
         </>
     );
 }

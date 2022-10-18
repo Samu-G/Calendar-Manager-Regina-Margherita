@@ -39,7 +39,7 @@ public class Teacher implements Comparable<Teacher> {
 
     @Override
     public int compareTo(Teacher other) {
-        return this.name.compareTo(other.name);
+        return this.surname.compareTo(other.surname);
     }
 
 }
