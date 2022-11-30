@@ -25,15 +25,19 @@ public class Application {
                           DayRepository dayRepository) {
 
         return args -> {
-//            createSubjectExample(subjectRepository);
+            createSubjectExample(subjectRepository);
 
-            // Creazione dei giorni con le relative fasce orarie
             List<Day> dayList = new ArrayList<>();
-            dayList.add(createMonday(dayRepository));
-            dayList.add(createTuesday(dayRepository));
-            dayList.add(createWednesday(dayRepository));
-            dayList.add(createThursday(dayRepository));
-            dayList.add(createFriday(dayRepository));
+            Day monday = createMonday(dayRepository);
+            Day tuesday = createTuesday(dayRepository);
+            Day wednesday = createWednesday(dayRepository);
+            Day thursday = createThursday(dayRepository);
+            Day friday = createFriday(dayRepository);
+            dayList.add(monday);
+            dayList.add(tuesday);
+            dayList.add(wednesday);
+            dayList.add(thursday);
+            dayList.add(friday);
 
 //            studentExample_Activated_Lun_ItaStoLatino(studentRepository, subjectRepository, dayList);
 //            studentExample_Activated_LunMarMerGioVen_ItaStoLatino(studentRepository, subjectRepository, dayList);
