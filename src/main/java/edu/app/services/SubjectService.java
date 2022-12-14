@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.Collections;
 import java.util.List;
 
 @AllArgsConstructor
@@ -29,7 +30,9 @@ public class SubjectService {
 
     @GetMapping
     public List<Subject> getAllSubjects() {
-        return subjectRepository.findAll();
+        List<Subject> subjectList = subjectRepository.findAll();
+        Collections.sort(subjectList);
+        return subjectList;
     }
 
     @GetMapping
@@ -38,9 +41,7 @@ public class SubjectService {
     }
 
     @PostMapping
-    public void addSubjectToStudent(ObjectNode json) {
-        Long studentId = json.get("id").asLong();
-        String subjectName = json.get("subjectName").toString();
+    public void addSubjectToStudent(Long studentId, String subjectName) {
         System.out.println(studentId);
         StringBuilder sb = new StringBuilder(subjectName);
         sb.deleteCharAt(subjectName.length() - 1);
@@ -52,9 +53,7 @@ public class SubjectService {
     }
 
     @PostMapping
-    public void addSubjectToTeacher(ObjectNode json) {
-        Long teacherId = json.get("id").asLong();
-        String subjectName = json.get("subjectName").toString();
+    public void addSubjectToTeacher(Long teacherId, String subjectName) {
         StringBuilder sb = new StringBuilder(subjectName);
         sb.deleteCharAt(subjectName.length() - 1);
         sb.deleteCharAt(0);

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @AllArgsConstructor
@@ -30,16 +31,16 @@ public class StudentService {
         return studentRepository.findStudentByNameAndSurname(name, surname);
     }
 
+    /**
+     * Aggiunge una nuova entità studente all'interno del db
+     * @param name
+     * @param surname
+     * @param fiscalCode
+     * @param emailAddress
+     */
     @PostMapping
-    public void addStudent(ObjectNode json) {
-        String name = json.get("name").textValue();
-        name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
-        String surname = json.get("surname").textValue();
-        surname = surname.substring(0, 1).toUpperCase() + surname.substring(1).toLowerCase();
-        String fiscalCode = json.get("fiscalCode").textValue();
-        fiscalCode = fiscalCode.toUpperCase();
-        String emailAddress = json.get("emailAddress").textValue();
-        emailAddress = emailAddress.toLowerCase();
+    public void addStudent(String name, String surname, String fiscalCode, String emailAddress) {
+
         boolean isPresent = true;
         List<Day> daysOfPresenceOfTheStudent = new ArrayList<>();
         daysOfPresenceOfTheStudent.add(dayRepository.findDayByDayName("Monday"));
@@ -55,37 +56,63 @@ public class StudentService {
         studentRepository.save(aNewStudent);
     }
 
+
+    /**
+     * Rimuove una entità studente dal database usando la sua chiave primaria
+     * @param studentId
+     */
     @PostMapping
-    public void removeStudent(ObjectNode json) {
-        Student toRemove = studentRepository.findStudentsById(json.get("studentId").asLong());
+    public void removeStudent(Long studentId) {
+        Student toRemove = studentRepository.findStudentsById(studentId);
         studentRepository.delete(toRemove);
     }
 
+
+    /**
+     * Modifica l'entità studente sul db tramite chiave primaria e imposta un nuovo valore
+     * @param studentId chiave primaria
+     * @param newFiscalCode codice fiscale inviato dal client
+     */
     @PostMapping
-    public void setFiscalCodeToStudent(ObjectNode json) {
-        Student toEdit = studentRepository.findStudentsById(json.get("studentId").asLong());
-        toEdit.setFiscalCode(json.get("newFiscalCode").textValue());
+    public void setFiscalCodeToStudent(Long studentId, String newFiscalCode) {
+        Student toEdit = studentRepository.findStudentsById(studentId);
+        toEdit.setFiscalCode(newFiscalCode);
         studentRepository.save(toEdit);
     }
 
+    /**
+     * Modifica l'entità studente sul db tramite chiave primaria e imposta un nuovo valore
+     * @param studentId chiave primaria
+     * @param newEmailAddress codice fiscale inviato dal client
+     */
     @PostMapping
-    public void setEmailAddressToStudent(ObjectNode json) {
-        Student toEdit = studentRepository.findStudentsById(json.get("studentId").asLong());
-        toEdit.setEmailAddress(json.get("newEmailAddress").textValue());
+    public void setEmailAddressToStudent(Long studentId, String newEmailAddress) {
+        Student toEdit = studentRepository.findStudentsById(studentId);
+        toEdit.setEmailAddress(newEmailAddress);
         studentRepository.save(toEdit);
     }
 
+    /**
+     * Modifica l'entità studente sul db tramite chiave primaria e imposta un nuovo valore
+     * @param studentId chiave primaria
+     * @param isPresent codice fiscale inviato dal client
+     */
     @PostMapping
-    public void setPresenceToStudent(ObjectNode json) {
-        Student toEdit = studentRepository.findStudentsById(json.get("studentId").asLong());
-        toEdit.setPresent(json.get("isPresent").asBoolean());
+    public void setPresenceToStudent(Long studentId, boolean isPresent) {
+        Student toEdit = studentRepository.findStudentsById(studentId);
+        toEdit.setPresent(isPresent);
         studentRepository.save(toEdit);
     }
 
+    /**
+     * Ritorna una lista di stringhe dei nomi dei giorni di presenza dello studente
+     * @param json
+     * @return
+     */
     @PostMapping
-    public List<String> getNameOfTheDaysOfPresenceFromStudent(ObjectNode json) {
+    public List<String> getNameOfTheDaysOfPresenceFromStudent(Long studentId) {
         List<String> nameOfTheDaysOfPresenceList = new ArrayList<>();
-        Student student = studentRepository.findStudentsById(json.get("studentId").asLong());
+        Student student = studentRepository.findStudentsById(studentId);
         for (Day day : student.getDaysOfPresence()) {
             nameOfTheDaysOfPresenceList.add(day.getDayName());
         }
@@ -93,9 +120,9 @@ public class StudentService {
     }
 
     @PostMapping
-    public List<String> getSubjectFollowedByTheStudent(ObjectNode json) {
+    public List<String> getSubjectFollowedByTheStudent(Long studentId) {
         List<String> nameOfTheSubjectsFollowed = new ArrayList<>();
-        Student student = studentRepository.findStudentsById(json.get("studentId").asLong());
+        Student student = studentRepository.findStudentsById(studentId);
         for (Subject subject : student.getSubjectsFollowed()) {
             nameOfTheSubjectsFollowed.add(subject.getNameOfTheSubject());
         }
@@ -103,10 +130,10 @@ public class StudentService {
     }
 
     @PostMapping
-    public List<String> getSubjectNotFollowedByTheStudent(ObjectNode json) {
+    public List<String> getSubjectNotFollowedByTheStudent(Long studentId) {
         List<Subject> allSubjects = subjectRepository.findAll();
         List<String> nameOfTheSubjectsNotFollowed = new ArrayList<>();
-        Student student = studentRepository.findStudentsById(json.get("studentId").asLong());
+        Student student = studentRepository.findStudentsById(studentId);
         for (Subject subject : allSubjects) {
             if (!student.getSubjectsFollowed().contains(subject)) {
                 nameOfTheSubjectsNotFollowed.add(subject.getNameOfTheSubject());
@@ -116,17 +143,17 @@ public class StudentService {
     }
 
     @PostMapping
-    public void removeSubjectFollowedByTheStudent(ObjectNode json) {
-        Student student = studentRepository.findStudentsById(json.get("studentId").asLong());
-        Subject toRemove = subjectRepository.findSubjectByNameOfTheSubject(json.get("subjectName").textValue());
+    public void removeSubjectFollowedByTheStudent(Long studentId, String subjectName) {
+        Student student = studentRepository.findStudentsById(studentId);
+        Subject toRemove = subjectRepository.findSubjectByNameOfTheSubject(subjectName);
         student.getSubjectsFollowed().remove(toRemove);
         studentRepository.save(student);
     }
 
     @PostMapping
-    public void addSubjectFollowedByTheStudent(ObjectNode json) {
-        Student student = studentRepository.findStudentsById(json.get("studentId").asLong());
-        Subject toAdd = subjectRepository.findSubjectByNameOfTheSubject(json.get("subjectName").textValue());
+    public void addSubjectFollowedByTheStudent(Long studentId, String subjectName) {
+        Student student = studentRepository.findStudentsById(studentId);
+        Subject toAdd = subjectRepository.findSubjectByNameOfTheSubject(subjectName);
         student.getSubjectsFollowed().add(toAdd);
         studentRepository.save(student);
     }
@@ -148,9 +175,15 @@ public class StudentService {
         studentRepository.save(student);
     }
 
+    /**
+     * Ritorna la lista degli studenti ordinata per cognome dello studente
+     * @return
+     */
     @GetMapping
     public List<Student> getAllStudents() {
-        return studentRepository.findAll();
+        List<Student> studentList = studentRepository.findAll();
+        Collections.sort(studentList);
+        return studentList;
     }
 
     @GetMapping

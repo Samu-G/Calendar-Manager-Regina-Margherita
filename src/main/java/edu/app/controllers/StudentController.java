@@ -18,52 +18,74 @@ public class StudentController {
 
     @PostMapping("/admin/addStudent")
     public void addStudent(@RequestBody ObjectNode json) {
-        studentService.addStudent(json);
+        String name = json.get("name").textValue();
+        name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+        String surname = json.get("surname").textValue();
+        surname = surname.substring(0, 1).toUpperCase() + surname.substring(1).toLowerCase();
+        String fiscalCode = json.get("fiscalCode").textValue();
+        fiscalCode = fiscalCode.toUpperCase();
+        String emailAddress = json.get("emailAddress").textValue();
+        emailAddress = emailAddress.toLowerCase();
+        studentService.addStudent(name, surname, fiscalCode, emailAddress);
     }
 
     @PostMapping("/admin/removeStudent")
     public void removeStudent(@RequestBody ObjectNode json) {
-        studentService.removeStudent(json);
+        Long studentId = json.get("studentId").asLong();
+        studentService.removeStudent(studentId);
     }
 
     @PostMapping("/admin/setFiscalCodeToStudent")
     public void setFiscalCodeToStudent(@RequestBody ObjectNode json) {
-        studentService.setFiscalCodeToStudent(json);
+        Long studentId = json.get("studentId").asLong();
+        String newFiscalCode = json.get("newFiscalCode").textValue();
+        studentService.setFiscalCodeToStudent(studentId, newFiscalCode);
     }
 
     @PostMapping("/admin/setEmailAddressToStudent")
     public void setEmailAddressToStudent(@RequestBody ObjectNode json) {
-        studentService.setEmailAddressToStudent(json);
+        Long studentId = json.get("studentId").asLong();
+        String emailAddress = json.get("newEmailAddress").textValue();
+        studentService.setEmailAddressToStudent(studentId, emailAddress);
     }
 
     @PostMapping("/admin/setPresenceToStudent")
     public void setPresenceToStudent(@RequestBody ObjectNode json) {
-        studentService.setPresenceToStudent(json);
+        Long studentId = json.get("studentId").asLong();
+        boolean isPresent = json.get("isPresent").asBoolean();
+        studentService.setPresenceToStudent(studentId, isPresent);
     }
 
     @PostMapping("/admin/getNameOfTheDaysOfPresenceFromStudent")
     public List<String> getNameOfTheDaysOfPresenceFromStudent(@RequestBody ObjectNode json) {
-        return adaptDaysNameInItalian(studentService.getNameOfTheDaysOfPresenceFromStudent(json));
+        Long studentId = json.get("studentId").asLong();
+        return adaptDaysNameInItalian(studentService.getNameOfTheDaysOfPresenceFromStudent(studentId));
     }
 
     @PostMapping("/admin/getSubjectFollowedByTheStudent")
     public List<String> getSubjectFollowedByTheStudent(@RequestBody ObjectNode json) {
-        return studentService.getSubjectFollowedByTheStudent(json);
+        Long studentId = json.get("studentId").asLong();
+        return studentService.getSubjectFollowedByTheStudent(studentId);
     }
 
     @PostMapping("/admin/getSubjectNotFollowedByTheStudent")
     public List<String> getSubjectNotFollowedByTheStudent(@RequestBody ObjectNode json) {
-        return studentService.getSubjectNotFollowedByTheStudent(json);
+        Long studentId = json.get("studentId").asLong();
+        return studentService.getSubjectNotFollowedByTheStudent(studentId);
     }
 
     @PostMapping("/admin/removeSubjectFollowedByTheStudent")
     public void removeSubjectFollowedByTheStudent(@RequestBody ObjectNode json) {
-        studentService.removeSubjectFollowedByTheStudent(json);
+        Long studentId = json.get("studentId").asLong();
+        String subjectName = json.get("subjectName").textValue();
+        studentService.removeSubjectFollowedByTheStudent(studentId, subjectName);
     }
 
     @PostMapping("/admin/addSubjectFollowedByTheStudent")
     public void addSubjectFollowedByTheStudent(@RequestBody ObjectNode json) {
-        studentService.addSubjectFollowedByTheStudent(json);
+        Long studentId = json.get("studentId").asLong();
+        String subjectName = json.get("subjectName").textValue();
+        studentService.addSubjectFollowedByTheStudent(studentId, subjectName);
     }
 
     @PostMapping("/admin/setDaysOfPresenceToStudent")
@@ -74,9 +96,7 @@ public class StudentController {
 
     @RequestMapping("/admin/getAllStudent")
     public List<Student> getAllStudents() {
-        List<Student> studentList = studentService.getAllStudents();
-        Collections.sort(studentList);
-        return studentList;
+        return studentService.getAllStudents();
     }
 
     @RequestMapping("/admin/getAllStudentsPresentOnMonday")
@@ -115,22 +135,10 @@ public class StudentController {
     }
 
 
-
-
     @PostMapping("admin/flipPresentToStudent")
     public void flipPresentToStudent(@RequestBody Student student) {
         studentService.flipPresentToStudent(student);
     }
-
-//    @PostMapping("/admin/setDayOfPresentToStudent")
-//    public void setDaysOfPresenceToStudent(@RequestBody ObjectNode json) {
-//        studentService.setDaysOfPresenceToStudent(json);
-//    }
-//
-//    @PostMapping("/admin/setCurrentYearToStudent")
-//    public void setCurrentYearToStudent(@RequestBody ObjectNode json) {
-//        studentService.setCurrentYearToStudent(json);
-//    }
 
     public static List<String> adaptDaysNameInItalian(List<String> dayNameList) {
         Collections.replaceAll(dayNameList, "Monday", "Lunedì");

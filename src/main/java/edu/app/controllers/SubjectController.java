@@ -30,9 +30,7 @@ public class SubjectController {
 
     @RequestMapping("/admin/getAllSubjects")
     public List<Subject> getAllSubjects() {
-        List<Subject> subjectList = subjectService.getAllSubjects();
-        Collections.sort(subjectList);
-        return subjectList;
+        return subjectService.getAllSubjects();
     }
 
     @PostMapping("/admin/addSubject")
@@ -41,6 +39,12 @@ public class SubjectController {
         subjectService.saveSubjectByName(subjectName);
     }
 
+    /**
+     * Questo rappresenta una alternativa di risposta che consente di inviare uno status http particolare
+     * (esempio per inviare segnali)
+     * @param json
+     * @return
+     */
     @RequestMapping("/admin/isDeletableSubjectById")
     public ResponseEntity<?> isDeletableSubjectById(@RequestBody ObjectNode json) {
         Long id = json.get("id").longValue();
@@ -60,7 +64,6 @@ public class SubjectController {
                 break;
             }
         }
-
         return new ResponseEntity<>(notDeletable, HttpStatus.OK);
     }
 
@@ -71,11 +74,15 @@ public class SubjectController {
 
     @RequestMapping("/admin/addSubjectToStudent")
     public void addSubjectToStudent(@RequestBody ObjectNode json) {
-        subjectService.addSubjectToStudent(json);
+        Long studentId =  json.get("id").asLong();
+        String subjectName = json.get("subjectName").toString();
+        subjectService.addSubjectToStudent(studentId, subjectName);
     }
 
     @RequestMapping("/admin/addSubjectToTeacher")
     public void addSubjectToTeacher(@RequestBody ObjectNode json) {
-        subjectService.addSubjectToTeacher(json);
+        Long studentId =  json.get("id").asLong();
+        String subjectName = json.get("subjectName").toString();
+        subjectService.addSubjectToTeacher(studentId, subjectName);
     }
 }
